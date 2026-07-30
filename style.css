@@ -276,7 +276,7 @@ nav.scrolled {
 }
 
 .hero-name {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-weight: 800;
   font-size: clamp(2rem, 4.5vw, 4.5rem);
   line-height: 1;
@@ -285,7 +285,7 @@ nav.scrolled {
 }
 
 .hero-typewriter {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-weight: 700;
   font-size: clamp(1.3rem, 2.5vw, 2.2rem);
   color: var(--accent);
@@ -481,7 +481,7 @@ nav.scrolled {
 }
 
 .stat-num {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-weight: 800;
   font-size: 1.8rem;
   color: var(--ink);
@@ -531,8 +531,8 @@ section {
 }
 
 .section-title {
-  font-family: 'Syne', sans-serif;
-  font-weight: 800;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
   font-size: clamp(2rem, 3.5vw, 2.8rem);
   color: var(--ink);
   letter-spacing: -0.03em;
@@ -567,14 +567,14 @@ section {
 
 .about-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 80px;
   align-items: start;
 }
 
 .about-left h3,
 .tech-stack h3 {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 1.3rem;
   margin-bottom: 18px;
 }
@@ -639,7 +639,7 @@ section {
 }
 
 .focus-list {
-  display: grid;
+  display: flex;
   gap: 12px;
   margin-top: 20px;
 }
@@ -650,6 +650,7 @@ section {
   border-radius: 12px;
   padding: 14px 18px;
   transition: .3s;
+  width: fit-content;
 }
 
 .focus-item:hover {
@@ -711,7 +712,7 @@ section {
 }
 
 .proto-title {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-weight: 700;
   font-size: 0.95rem;
   display: block;
@@ -764,7 +765,7 @@ section {
 }
 
 .proto-header h3 {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 1.4rem;
   font-weight: 800;
   color: var(--ink);
@@ -777,7 +778,7 @@ section {
 }
 
 .proto-body h4 {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 1.05rem;
   font-weight: 700;
   color: var(--ink);
@@ -870,9 +871,15 @@ section {
 .project-card.featured {
   grid-column: span 2;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
+  /* grid-template-columns: 1.4fr 0.6fr;
+  gap: 40px; */
   background: var(--white);
+}
+
+.project-card.featured .project-content {
+  display: grid;
+  grid-template-columns: 1.4fr 0.6fr;
+  gap: 40px;
 }
 
 .project-preview {
@@ -903,7 +910,7 @@ section {
 }
 
 .project-name {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-weight: 700;
   font-size: 1.25rem;
   color: var(--ink);
@@ -1008,7 +1015,7 @@ section {
 }
 
 .edu-degree {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-weight: 700;
   font-size: 1.2rem;
   color: var(--ink);
@@ -1287,4 +1294,8 @@ section {
   .project-card {
     padding: 24px 18px;
   }
+}
+
+.contact-form .btn-primary {
+  width: fit-content;
 }

@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Karthik | AI & Full-Stack Developer</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet" />
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div id="scroll-progress"></div>
+    <!-- Custom Cursor -->
+    <div id="cursor"></div>
+    <div id="cursor-ring"></div>
+
+    <!-- NAV -->
+    <nav id="navbar">
+        <a class="nav-logo" href="#hero">K<span>.</span></a>
+        <ul class="nav-links">
+            <li><a href="#about" class="nav-link">About</a></li>
+            <li><a href="#protosem" class="nav-link">ProtoSem</a></li>
+            <li><a href="#projects" class="nav-link">Projects</a></li>
+            <li><a href="#education" class="nav-link">Education</a></li>
+            <li><a href="#contact" class="nav-cta nav-link">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section id="hero">
+        <div class="hero-glow"></div>
+        <div class="hero-glow-2"></div>
+        <div class="hero-grid">
+            <div class="hero-content">
+                <p class="hero-eyebrow">AI Engineer | Full-Stack Developer | Problem Solver</p>
+                <h1 class="hero-name">Karthik Aravind M</h1>
+                <div class="hero-typewriter">
+                    <span id="typewriter-text"></span>
+                    <span class="typewriter-cursor"></span>
+                </div>
+                <p class="hero-desc">
+                    3rd-year CSE student at Kumaraguru College of Technology & Innovation Engineer Trainee at Forge. Building
+                    production-grade AI systems, RAG pipelines, multi-agent LLM systems, and full-stack solutions.
+                </p>
+                <div class="hero-actions">
+                    <a href="#projects" class="btn-primary">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5">
+                            <polyline points="13 17 18 12 13 7"></polyline>
+                            <polyline points="6 17 11 12 6 7"></polyline>
+                        </svg>
+                        View Projects
+                    </a>
+                    <a href="#contact" class="btn-secondary">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                        Let's Talk
+                    </a>
+                    <a href="assets/Karthik_Resume.pdf" class="btn-secondary" download>
+                        Download Resume
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-num">160<span>+</span></div>
+                        <div class="stat-label">DSA Problems Solved</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num">Forge</div>
+                        <div class="stat-label">Innovation Engineer Trainee</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num">3<span>rd</span></div>
+                        <div class="stat-label">Year KCT</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="terminal-card">
+                    <div class="terminal-bar">
+                        <div class="dot dot-r"></div>
+                        <div class="dot dot-y"></div>
+                        <div class="dot dot-g"></div>
+                        <div class="terminal-title">karthik.json</div>
+                    </div>
+                    <div class="terminal-body">
+                        <span class="t-tag">{</span><br>
+                        <span class="t-indent"><span class="t-key">"name"</span><span class="t-white">: </span><span
+                                class="t-str">"Karthik"</span><span class="t-white">,</span></span><br>
+                        <span class="t-indent"><span class="t-key">"role"</span><span class="t-white">: </span><span
+                                class="t-str">"AI & Full-Stack Dev"</span><span class="t-white">,</span></span><br>
+                        <span class="t-indent"><span class="t-key">"college"</span><span class="t-white">: </span><span
+                                class="t-str">"KCT"</span><span class="t-white">,</span></span><br>
+                        <span class="t-indent"><span class="t-key">"program"</span><span class="t-white">: </span><span
+                                class="t-str">"ProtoSem @ Forge"</span><span class="t-white">,</span></span><br>
+                        <span class="t-indent"><span class="t-key">"focus"</span><span class="t-white">:
+                                [</span></span><br>
+                        <span class="t-indent">&nbsp;&nbsp;<span class="t-str">"RAG Pipelines"</span><span
+                                class="t-white">,</span></span><br>
+                        <span class="t-indent">&nbsp;&nbsp;<span class="t-str">"LLM Agents"</span><span
+                                class="t-white">,</span></span><br>
+                        <span class="t-indent">&nbsp;&nbsp;<span class="t-str">"Voice AI"</span></span><br>
+                        <span class="t-indent"><span class="t-white">],</span></span><br>
+                        <span class="t-indent"><span class="t-key">"open_to"</span><span class="t-white">: </span><span
+                                class="t-str">"Internships"</span><span class="t-white">,</span></span><br>
+                        <span class="t-indent"><span class="t-key">"status"</span><span class="t-white">: </span><span
+                                class="t-str t-comment">&#x2728; Building in public</span></span><br>
+                        <span class="t-tag">}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+    
+        <div class="section-inner">
+    
+            <div class="section-eyebrow">
+                About Me
+            </div>
+    
+            <h2 class="section-title">
+                Passionate about building intelligent software.
+            </h2>
+        
+            <div class="about-grid">
+    
+                <!-- LEFT COLUMN -->
+    
+                <div class="about-left">
+    
+                    <h3>Who I Am</h3>
+    
+                    <p>
+                        I'm <strong>Karthik Aravind M</strong>, a third-year Computer
+                        Science student at Kumaraguru College of Technology and a
+                        Innovation Engineer Trainee at Forge.
+                    </p>
+    
+                    <p>
+                        I enjoy developing AI applications, RAG pipelines,
+                        multi-agent systems, and modern full-stack web applications.
+                        My focus is on creating scalable,
+                        production-ready software while continuously learning modern technologies.
+                    </p>
+    
+                    <h3>Current Focus</h3>
+    
+                    <div class="focus-list">
+    
+                        <div class="focus-item">
+                            🚀 Multi-Agent AI Systems
+                        </div>
+    
+                        <div class="focus-item">
+                            🎤 Voice AI
+                        </div>
+    
+                        <div class="focus-item">
+                            📚 RAG Pipelines
+                        </div>
+    
+                        <div class="focus-item">
+                            💻 Full Stack Development
+                        </div>
+    
+                    </div>
+    
+                </div>
+    
+                <!-- RIGHT COLUMN -->
+    
+                <div class="profile-card">
+    
+                    <h3>Profile</h3>
+    
+                    <div class="profile-row">
+                        <span>Name</span>
+                        <strong>Karthik Aravind M</strong>
+                    </div>
+    
+                    <div class="profile-row">
+                        <span>College</span>
+                        <strong>Kumaraguru College of Technology</strong>
+                    </div>
+    
+                    <div class="profile-row">
+                        <span>Degree</span>
+                        <strong>B.E CSE</strong>
+                    </div>
+    
+                    <div class="profile-row">
+                        <span>Year</span>
+                        <strong>3rd Year</strong>
+                    </div>
+    
+                    <div class="profile-row">
+                        <span>Program</span>
+                        <strong>ProtoSem 1.18 @ Forge</strong>
+                    </div>
+    
+                    <div class="profile-row">
+                        <span>Location</span>
+                        <strong>Coimbatore, Tamil Nadu</strong>
+                    </div>
+    
+                </div>
+    
+            </div>
+    
+            <!-- SKILLS -->
+    
+            <div class="tech-stack">
+    
+                <h3>Core Technologies</h3>
+    
+                <div class="about-chips">
+    
+                    <span class="chip">Java</span>
+                    <span class="chip">Spring Boot</span>
+                    <span class="chip">Python</span>
+                    <span class="chip">FastAPI</span>
+                    <span class="chip">React</span>
+                    <span class="chip">JavaScript</span>
+                    <span class="chip">Docker</span>
+                    <span class="chip">Git</span>
+                    <span class="chip">MySQL</span>
+                    <span class="chip">MongoDB</span>
+                    <span class="chip">LLMs</span>
+                    <span class="chip">RAG</span>
+                    <span class="chip">AI Agents</span>
+    
+                </div>
+    
+            </div>
+    
+        </div>
+    
+    </section>
+
+    <!-- PROTOSEM SECTION -->
+    <section id="protosem">
+        <div class="section-inner">
+            <div class="fade-up">
+                <p class="section-eyebrow">Product Internship</p>
+                <h2 class="section-title">ProtoSem @ Forge</h2>
+                <p class="section-sub">A comprehensive product innovation program by Forge, converting engineering
+                    concepts into market-ready industrial prototypes through weekly milestones.</p>
+            </div>
+
+            <div class="protosem-container fade-up">
+                <div class="protosem-sidebar">
+                    <button class="proto-tab active" data-target="week-0">
+                        <span class="proto-week">Week 0</span>
+                        <span class="proto-title">16 Personality Test</span>
+                    </button>
+                    <button class="proto-tab" data-target="week-2">
+                        <span class="proto-week">Week 1</span>
+                        <span class="proto-title">Portfolio Website</span>
+                    </button>
+                    <!-- <button class="proto-tab" data-target="week-3">
+                        <span class="proto-week">Week 2</span>
+                        <span class="proto-title">PoC & Hardware/Software Integration</span>
+                    </button> -->
+                    <!-- <button class="proto-tab" data-target="week-4">
+                        <span class="proto-week">Week 3</span>
+                        <span class="proto-title">Prototype Testing & Refinement</span>
+                    </button> -->
+                </div>
+
+                <div class="protosem-content">
+                    <!-- Week 1 Content -->
+                    <div class="proto-panel active" id="week-0">
+                        <div class="proto-header">
+                            <span class="proto-badge">Milestone 1</span>
+                            <h3>16 Personality Test</h3>
+                            <p class="proto-date">Weeks 0</p>
+                        </div>
+                        <div class="proto-body">
+                            <h4>Key Learnings</h4>
+                            <ul>
+                                <li>Learnt about how to test the personality of a person using a structured assessment</li>
+                            </ul>
+                            <h4>Assignments & Deliverables</h4>
+                            <div class="proto-assignment-card">
+                                <div class="assign-title">Assignment 1.1: Attend the assessment of 16Personality Test</div>
+                                <p>It gave the result as "Commander".</p>
+                                <a href="assets/docs/week1-assignment.pdf" target="_blank" rel="noopener noreferrer" class="assign-link">View
+                                    Documentation PDF →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Week 2 Content -->
+                    <div class="proto-panel" id="week-2">
+                        <div class="proto-header">
+                            <span class="proto-badge">Milestone 2</span>
+                            <h3>Portfolio Website</h3>
+                            <p class="proto-date">Weeks 1</p>
+                        </div>
+                        <div class="proto-body">
+                            <h4>Key Learnings</h4>
+                            <ul>
+                                <li>Designing a creative, professional website to showcase my skills, projects, achievements</li>
+                            </ul>
+                            <h4>Assignments & Deliverables</h4>
+                            <div class="proto-assignment-card">
+                                <div class="assign-title">Assignment 2.1: Create a personal portfolio website</div>
+                                <p>Created my website as a professional, creative one.</p>
+                                <a javascript:void(0); class="assign-link">View WebPage →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Week 3 Content -->
+                    <!-- <div class="proto-panel" id="week-3">
+                        <div class="proto-header">
+                            <span class="proto-badge">Milestone 3</span>
+                            <h3>PoC & Functional Integration</h3>
+                            <p class="proto-date">Weeks 5 – 6</p>
+                        </div>
+                        <div class="proto-body">
+                            <h4>Key Learnings</h4>
+                            <ul>
+                                <li>Rapid prototyping methods and connecting IoT sensors to backend API servers.</li>
+                                <li>Managing WebSocket connections for sub-second telemetry updates.</li>
+                            </ul>
+                            <h4>Assignments & Deliverables</h4>
+                            <div class="proto-assignment-card">
+                                <div class="assign-title">Assignment 3.1: Minimum Viable Prototype Integration</div>
+                                <p>Built a working proof-of-concept integrating real-time telemetry streaming into a
+                                    custom FastAPI dashboard.</p>
+                                <a javascript:void(0); class="assign-link">View Prototype Code →</a>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <!-- Week 4 Content -->
+                    <!-- <div class="proto-panel" id="week-4">
+                        <div class="proto-header">
+                            <span class="proto-badge">Milestone 4</span>
+                            <h3>Field Testing, Verification & Pitch</h3>
+                            <p class="proto-date">Weeks 7 – 8</p>
+                        </div>
+                        <div class="proto-body">
+                            <h4>Key Learnings</h4>
+                            <ul>
+                                <li>Executing structured test plans under real-world operating conditions.</li>
+                                <li>Pitching industrial products to venture mentors and industry evaluators.</li>
+                            </ul>
+                            <h4>Assignments & Deliverables</h4>
+                            <div class="proto-assignment-card">
+                                <div class="assign-title">Assignment 4.1: Final Prototype Report & Evaluation Deck</div>
+                                <p>Documented benchmark results, error tolerances, unit cost projections, and commercial
+                                    viability analysis.</p>
+                                <a javascript:void(0); class="assign-link">View Pitch Deck →</a>
+                            </div>
+                        </div>
+                    </div> -->
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+        <div class="section-inner">
+            <div class="fade-up">
+                <p class="section-eyebrow">Projects</p>
+                <h2 class="section-title">Things I've built.</h2>
+                <p class="section-sub">Production-grade AI systems and full-stack platforms engineered from scratch.</p>
+            </div>
+            <div class="projects-grid">
+
+                <!-- Featured: Multi-Agent Dev Assistant -->
+                <div class="project-card featured fade-up">
+                    <div class="project-content">
+
+                    <div>
+                        <p class="project-num">01 — FEATURED</p>
+                        
+                        <h3 class="project-name">Multi-Agent Dev Assistant</h3>
+                        <p class="project-desc">Full-stack AI developer assistant powered by a 5-agent LangGraph
+                            pipeline: Planner → Architect → Coder → Reviewer → Summary, with conditional retry routing.
+                            Features streaming chat, Codebase RAG, sandboxed file operations, and real-time SSE.</p>
+                        <div class="project-tags">
+                            <span class="tag">FastAPI</span>
+                            <span class="tag">React</span>
+                            <span class="tag">LangGraph</span>
+                            <span class="tag">Groq LLaMA</span>
+                            <span class="tag">ChromaDB</span>
+                            <span class="tag">SSE</span>
+                        </div>
+                        <a href="https://github.com/yourusername/multi-agent-dev-assistant" target="_blank" rel="noopener noreferrer"
+                            class="project-link">View on GitHub →</a>
+                    </div>
+                    
+                    <div>
+                        <ul class="project-highlights">
+                            <li>5-agent pipeline with conditional retry routing via LangGraph</li>
+                            <li>Codebase RAG with ChromaDB for context-aware code generation</li>
+                            <li>Sandboxed file operations inside isolated session environments</li>
+                            <li>Real-time streaming response UI using Server-Sent Events</li>
+                        </ul>
+                    </div>
+                    </div>
+                    <div class="project-preview">
+                        <img src="images/multi-agent-dev-assistant.png" alt="Multi-Agent Dev Assistant Screenshot" loading="lazy">
+                    </div>
+                </div>
+
+                <!-- VoiceIQ -->
+                <div class="project-card fade-up">
+                    <p class="project-num">02</p>
+                    <h3 class="project-name">VoiceIQ</h3>
+                    <p class="project-desc">Real-time browser-based voice AI customer service agent with barge-in
+                        interruption, entity highlighting, sentiment auto-escalation, and multi-turn memory.</p>
+                    <div class="project-tags">
+                        <span class="tag">Faster-Whisper</span>
+                        <span class="tag">Silero VAD</span>
+                        <span class="tag">Piper TTS</span>
+                        <span class="tag">WebSocket</span>
+                    </div>
+                    <div class="project-preview">
+                        <img src="images/voiceiq.png" alt="VoiceIQ Screenshot" loading="lazy">
+                    </div>
+                    <a javascript:void(0); class="project-link">View Project →</a>
+                </div>
+
+                <!-- Smart Bus Tracking -->
+                <div class="project-card fade-up">
+                    <p class="project-num">03</p>
+                    <h3 class="project-name">Smart Bus Tracking System</h3>
+                    <p class="project-desc">Hackathon project featuring real-time location telemetry processing, route
+                        optimization alerts, and local backend services for public transit monitoring.</p>
+                    <div class="project-tags">
+                        <span class="tag">Java</span>
+                        <span class="tag">Spring Boot</span>
+                        <span class="tag">WebSockets</span>
+                        <span class="tag">Leaflet JS</span>
+                    </div>
+                    <a javascript:void(0); class="project-link">View Project →</a>
+                </div>
+
+                <!-- AI Interview Bias Detector -->
+                <div class="project-card fade-up">
+                    <p class="project-num">04</p>
+                    <h3 class="project-name">AI + ML Email Classifier</h3>
+                    <p class="project-desc">Contains Regex, Statistical ML model, LLM based classification in parallel pipelines.</p>
+                    <div class="project-tags">
+                        <span class="tag">FastAPI</span>
+                        <span class="tag">Python NLP</span>
+                        <span class="tag">HuggingFace</span>
+                        <span class="tag">React</span>
+                    </div>
+                    <a javascript:void(0); class="project-link">View Project →</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section id="education">
+        <div class="section-inner">
+            <div class="fade-up">
+                <p class="section-eyebrow">Academic Background</p>
+                <h2 class="section-title">Education & Qualifications</h2>
+                <p class="section-sub">Solid computer science fundamentals paired with practical, project-driven
+                    learning.</p>
+            </div>
+
+            <div class="education-timeline fade-up">
+                <div class="edu-card">
+                    <div class="edu-period">2023 – 2027 (Expected)</div>
+                    <div class="edu-main">
+                        <h3 class="edu-degree">B.E. Computer Science & Engineering</h3>
+                        <p class="edu-school">Kumaraguru College of Technology, Coimbatore</p>
+                        <p class="edu-details">Currently in 3rd Year. Relevant Coursework: Data
+                            Structures & Algorithms, Object-Oriented Programming (Java), Operating Systems, Computer
+                            Networks, Database Management Systems, Software Engineering & Agile Practices.</p>
+                    </div>
+                </div>
+
+                <div class="edu-card">
+                    <div class="edu-period">ProtoSem Batch 1.18</div>
+                    <div class="edu-main">
+                        <h3 class="edu-degree">Innovation Engineer Trainee</h3>
+                        <p class="edu-school">Forge Innovation & Ventures</p>
+                        <p class="edu-details">Comprehensive immersion program focusing on hardware/software
+                            prototyping, product validation, system architecture design, and industry-oriented
+                            engineering practices.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+        <div class="section-inner">
+            <div class="contact-box fade-up">
+                <p class="section-eyebrow">Get in Touch</p>
+                <h2 class="section-title">Let's build something together.</h2>
+                <p class="section-sub">I'm actively seeking internship opportunities, AI project collaborations, or tech
+                    discussions. Drop a line!</p>
+
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <span class="contact-label">Email</span>
+                            <a href="mailto:karthik@kct.ac.in" class="contact-val">karthik@kct.ac.in</a>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-label">Location</span>
+                            <span class="contact-val">Coimbatore, Tamil Nadu, India</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-label">Profiles</span>
+                            <div class="social-links">
+                                <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer">GitHub</a>
+                                <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                                <a href="https://leetcode.com/yourusername" target="_blank" rel="noopener noreferrer">LeetCode</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" placeholder="Your Name" aria-label="Your Name" required />
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" placeholder="Your Email" aria-label="Your Email" required />
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" name="message" rows="4" placeholder="Your Message" aria-label="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary">Send Message</button>
+                        <div id="formStatus" class="form-status"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scroll to Top Button -->
+    <button id="scroll-top" aria-label="Scroll to top">↑</button>
+
+    <!-- JavaScript File -->
+    <script src="script.js"></script>
+</body>
+
+
+
+</html>

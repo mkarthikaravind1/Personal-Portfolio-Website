@@ -72,9 +72,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const progressBar = document.getElementById('scroll-progress');
   const sections = document.querySelectorAll('section');
   const navLinks = document.querySelectorAll('.nav-link');
+  const navToggle = document.getElementById('navToggle');
+  const navLinksEl = document.querySelector('.nav-links');
 
   window.addEventListener('scroll', () => {
     const scrollY = window.scrollY;
+    let ticking = false;
+
+    window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        handleScroll(); // wrap your existing scroll logic in this named function
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
 
     // Toggle navbar style
     if (scrollY > 50) {
@@ -118,6 +131,14 @@ document.addEventListener('DOMContentLoaded', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
+  navToggle?.addEventListener('click', () => {
+    navLinksEl?.classList.toggle('open');
+  });
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => navLinksEl?.classList.remove('open'));
+  });
+
   // 5. Smooth Scroll for Nav Links
   navLinks.forEach(link => {
     link.addEventListener('click', function (e) {
@@ -146,13 +167,6 @@ document.addEventListener('DOMContentLoaded', () => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
-
-        const skillFills = entry.target.querySelectorAll('.skill-fill');
-        skillFills.forEach(fill => {
-          const width = fill.getAttribute('data-width');
-          if (width) fill.style.width = `${width}%`;
-        });
-
         obs.unobserve(entry.target);
       }
     });

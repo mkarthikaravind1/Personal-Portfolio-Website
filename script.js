@@ -116,6 +116,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  window.addEventListener('scroll', handleScroll);
+  
   scrollTopBtn?.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
@@ -163,31 +165,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-  // 7. EmailJS Init + Contact Form Handler
-  // FIX: init called once, at the top of this section, before the form listener
-  emailjs.init('YOUR_PUBLIC_KEY');
+  // 7. Contact Form Handler
+const contactForm = document.getElementById('contactForm');
+const formStatus = document.getElementById('formStatus');
 
-  const contactForm = document.getElementById('contactForm');
-  const formStatus = document.getElementById('formStatus');
+if (contactForm) {
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = contactForm.querySelector('button[type="submit"]');
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
 
-  if (contactForm) {
-    contactForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const btn = contactForm.querySelector('button[type="submit"]');
-      btn.textContent = 'Sending…';
-      btn.disabled = true;
-
-      try {
-        await emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', contactForm);
-        formStatus.textContent = '✓ Message sent! I\'ll get back to you soon.';
-        contactForm.reset();
-      } catch (err) {
-        formStatus.textContent = '✗ Something went wrong. Try emailing me directly.';
-      } finally {
-        btn.textContent = 'Send Message';
-        btn.disabled = false;
-      }
-    });
-  }
+    try {
+      await emailjs.sendForm('service_wfu1bng', 'template_ir8j9a5', contactForm);
+      formStatus.textContent = '✓ Message sent! I\'ll get back to you soon.';
+      formStatus.style.color = 'green';
+      contactForm.reset();
+    } catch (err) {
+      formStatus.textContent = '✗ Something went wrong. Try emailing me directly.';
+      formStatus.style.color = 'red';
+    } finally {
+      btn.textContent = 'Send Message';
+      btn.disabled = false;
+    }
+  });
+}
 
 });

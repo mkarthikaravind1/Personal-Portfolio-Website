@@ -233,9 +233,3 @@ Hybrid email classification using:
 - AI & Full-Stack Developer
 - Innovation Engineer Trainee @ Forge
 - Computer Science Engineering Student
-
----
-
-## ⭐ Support
-
-If you like this project, consider giving it a ⭐ on GitHub!

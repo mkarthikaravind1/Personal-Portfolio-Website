@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // 2. Typewriter Effect
-  const words = ['AI & Full-Stack Developer', 'Innovation Engineer Trainee @ Forge', 'LangGraph & RAG Engineer'];
+  const words = ['AI & Full-Stack Developer', 'Innovation Engineer Trainee', 'LangGraph & RAG Engineer'];
   let wordIndex = 0;
   let charIndex = 0;
   let isDeleting = false;

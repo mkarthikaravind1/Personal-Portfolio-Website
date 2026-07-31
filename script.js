@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  emailjs.init('YOUR_PUBLIC_KEY');
+  emailjs.init('mSj_k6cCVJ_s9yJkU');
 
   // 1. Custom Cursor Tracking
   const cursor = document.getElementById('cursor');

@@ -226,12 +226,6 @@ Hybrid email classification using:
 
 ---
 
-## 📄 License
-
-This project is licensed under the MIT License.
-
----
-
 ## 👨‍💻 Author
 
 **Karthik Aravind M**

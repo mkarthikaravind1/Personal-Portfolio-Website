@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Syne:wght@700;800&display=swap"
         rel="stylesheet" />
 
     <link rel="stylesheet" href="style.css" />
@@ -39,6 +39,7 @@
             <li><a href="#protosem" class="nav-link">ProtoSem</a></li>
             <li><a href="#projects" class="nav-link">Projects</a></li>
             <li><a href="#education" class="nav-link">Education</a></li>
+            <li><a href="#certifications" class="nav-link">Certifications</a></li>
             <li><a href="#contact" class="nav-cta nav-link">Contact Me</a></li>
         </ul>
     </nav>
@@ -135,7 +136,8 @@
     <section id="about">
     
         <div class="section-inner">
-    
+            
+            <div class="fade-up">
             <div class="section-eyebrow">
                 About Me
             </div>
@@ -143,7 +145,7 @@
             <h2 class="section-title">
                 Passionate about building intelligent software.
             </h2>
-        
+            </div>
             <div class="about-grid">
     
                 <!-- LEFT COLUMN -->
@@ -215,6 +217,24 @@
     
                 </div>
     
+            </div>
+
+            <div class="tech-stack" style="margin-top: 24px;">
+                <h3>DSA Progress</h3>
+                <div class="hero-stats" style="border-top: none; padding-top: 0; margin-top: 16px;">
+                    <div class="stat-item">
+                        <div class="stat-num">100<span>+</span></div>
+                        <div class="stat-label">LeetCode</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num">60<span>+</span></div>
+                        <div class="stat-label">GeeksforGeeks</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num">160<span>+</span></div>
+                        <div class="stat-label">Total Solved</div>
+                    </div>
+                </div>
             </div>
     
         </div>
@@ -454,7 +474,7 @@
                 <div class="project-card fade-up">
                     <p class="project-num">03</p>
                     <h3 class="project-name">Smart Bus Tracking System</h3>
-                    <p class="project-desc">Hackathon project featuring real-time location telemetry processing, route
+                    <p class="project-desc">Innovation Practicum project featuring real-time location telemetry processing, route
                         optimization alerts, and local backend services for public transit monitoring.</p>
                     <div class="project-tags">
                         <span class="tag">Java</span>
@@ -511,6 +531,49 @@
         </div>
     </section>
 
+    <!-- CERTIFICATIONS -->
+    <section id="certifications">
+        <div class="section-inner">
+            <div class="fade-up">
+                <p class="section-eyebrow">Certifications</p>
+                <h2 class="section-title">Courses & Credentials</h2>
+                <!-- Add after the h2 in #certifications: -->
+                <p class="section-sub">Verified credentials from programs and platforms I've completed.</p>
+            </div>
+            <div class="education-timeline fade-up">
+    
+                <div class="edu-card">
+                    <div class="edu-period">Dec 2025</div>
+                    <div class="edu-main">
+                        <h3 class="edu-degree">Full-Stack WebDev Bootcamp</h3>
+                        <p class="edu-school">Udemy</p>
+                        <p class="edu-details">Covered HTML, CSS, Javascript, Node js, Express js, MongoDB, React js.</p>
+                    </div>
+                </div>
+
+                <div class="edu-card">
+                    <div class="edu-period">Aug 2025</div>
+                    <div class="edu-main">
+                        <h3 class="edu-degree">Java Programming for Beginners</h3>
+                        <p class="edu-school">Udemy</p>
+                        <p class="edu-details">Covered basics of Java, Introduction to Jakarta EE, Object - Oriented Programming.</p>
+                    </div>
+                </div>
+    
+                <!-- Add more cards below as you earn them -->
+                <!-- <div class="edu-card">
+                <div class="edu-period">Month Year</div>
+                <div class="edu-main">
+                <h3 class="edu-degree">Certificate Name</h3>
+                <p class="edu-school">Issuing Platform</p>
+                <p class="edu-details">What you learned.</p>
+                </div>
+            </div> -->
+    
+            </div>
+        </div>
+    </section>
+
     <!-- CONTACT -->
     <section id="contact">
         <div class="section-inner">
@@ -563,6 +626,7 @@
     <button id="scroll-top" aria-label="Scroll to top">↑</button>
 
     <!-- JavaScript File -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script src="script.js"></script>
 </body>
 

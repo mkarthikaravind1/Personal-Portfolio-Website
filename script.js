@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+  emailjs.init('YOUR_PUBLIC_KEY');
 
   // 1. Custom Cursor Tracking
   const cursor = document.getElementById('cursor');
@@ -6,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (cursor && cursorRing) {
     document.addEventListener('mousemove', (e) => {
-      // Using requestAnimationFrame prevents layout thrashing
       requestAnimationFrame(() => {
         cursor.style.left = `${e.clientX}px`;
         cursor.style.top = `${e.clientY}px`;
@@ -57,16 +57,14 @@ document.addEventListener('DOMContentLoaded', () => {
   protoTabs.forEach(tab => {
     tab.addEventListener('click', () => {
       const targetId = tab.getAttribute('data-target');
-
       protoTabs.forEach(t => t.classList.remove('active'));
       protoPanels.forEach(p => p.classList.remove('active'));
-
       tab.classList.add('active');
       document.getElementById(targetId)?.classList.add('active');
     });
   });
 
-  // 4. Combined Scroll Handlers (Navbar, Scroll-To-Top, Progress, & Active Nav Highlight)
+  // 4. Combined Scroll Handlers
   const navbar = document.getElementById('navbar');
   const scrollTopBtn = document.getElementById('scroll-top');
   const progressBar = document.getElementById('scroll-progress');
@@ -75,19 +73,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const navToggle = document.getElementById('navToggle');
   const navLinksEl = document.querySelector('.nav-links');
 
-  window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
-    let ticking = false;
+  // FIX: ticking declared OUTSIDE the listener so it persists between events
 
-    window.addEventListener('scroll', () => {
-    if (!ticking) {
-      requestAnimationFrame(() => {
-        handleScroll(); // wrap your existing scroll logic in this named function
-        ticking = false;
-      });
-      ticking = true;
-    }
-  });
+  function handleScroll() {
+    const scrollY = window.scrollY;
 
     // Toggle navbar style
     if (scrollY > 50) {
@@ -125,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
         link.classList.add('active');
       }
     });
-  });
+  }
 
   scrollTopBtn?.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -160,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 6. Scroll Intersection Observer (Fade-In & Skill Fill Animation)
+  // 6. Scroll Intersection Observer (Fade-In Animation)
   const observerOptions = { threshold: 0.15 };
 
   const observer = new IntersectionObserver((entries, obs) => {
@@ -174,17 +163,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-  // 7. Contact Form Handler
+  // 7. EmailJS Init + Contact Form Handler
+  // FIX: init called once, at the top of this section, before the form listener
+  emailjs.init('YOUR_PUBLIC_KEY');
+
   const contactForm = document.getElementById('contactForm');
   const formStatus = document.getElementById('formStatus');
 
   if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
+    contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      if (formStatus) {
-        formStatus.textContent = 'Thank you for your message! I will get back to you soon.';
+      const btn = contactForm.querySelector('button[type="submit"]');
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
+
+      try {
+        await emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', contactForm);
+        formStatus.textContent = '✓ Message sent! I\'ll get back to you soon.';
+        contactForm.reset();
+      } catch (err) {
+        formStatus.textContent = '✗ Something went wrong. Try emailing me directly.';
+      } finally {
+        btn.textContent = 'Send Message';
+        btn.disabled = false;
       }
-      contactForm.reset();
     });
   }
+
 });

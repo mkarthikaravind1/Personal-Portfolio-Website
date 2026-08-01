@@ -246,7 +246,7 @@ nav.scrolled {
 .hero-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 40px;
+  gap: 20px;
   align-items: center;
   max-width: 1280px;
   margin: 0 auto;
@@ -321,7 +321,7 @@ nav.scrolled {
 .hero-desc {
   font-size: 1.05rem;
   color: var(--ink-muted);
-  max-width: 480px;
+  max-width: 640px;    
   line-height: 1.75;
   margin-bottom: 28px;
 }
@@ -543,7 +543,7 @@ section {
 .section-sub {
   font-size: 1rem;
   color: var(--ink-muted);
-  max-width: 540px;
+  max-width: 1040px;
   line-height: 1.7;
   margin-bottom: 12px;
 }

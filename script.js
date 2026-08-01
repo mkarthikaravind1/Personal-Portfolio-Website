@@ -5,17 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const cursor = document.getElementById('cursor');
   const cursorRing = document.getElementById('cursor-ring');
 
-  if (cursor && cursorRing) {
-    document.addEventListener('mousemove', (e) => {
-      requestAnimationFrame(() => {
-        cursor.style.left = `${e.clientX}px`;
-        cursor.style.top = `${e.clientY}px`;
-        cursorRing.style.left = `${e.clientX}px`;
-        cursorRing.style.top = `${e.clientY}px`;
-      });
-    });
-  }
-
   // 2. Typewriter Effect
   const words = ['AI & Full-Stack Developer', 'Innovation Engineer Trainee', 'LangGraph & RAG Engineer'];
   let wordIndex = 0;

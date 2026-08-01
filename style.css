@@ -1006,7 +1006,7 @@ section {
 
 .edu-card {
   display: grid;
-  grid-template-columns: 220px 1fr;
+  grid-template-columns: 120px 1fr;
   gap: 32px;
   background: var(--tint);
   border: 1.5px solid var(--border);

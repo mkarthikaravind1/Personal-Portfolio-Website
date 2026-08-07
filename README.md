@@ -13,15 +13,14 @@ A modern, responsive, and interactive personal portfolio website built using **H
 - ✨ Modern and minimal UI
 - 📱 Fully responsive design
 - 🎯 Animated typewriter effect
-- 🖱️ Custom animated cursor (Desktop)
 - 📊 Scroll progress indicator
 - 🔥 Smooth scrolling navigation
 - 📌 Active navigation highlighting
 - 🎨 Fade-in animations using Intersection Observer
 - ⬆️ Scroll-to-top button
+- 💼 Experience section
 - 📂 Projects showcase section
 - 🎓 Education timeline
-- 💼 Experience section
 - 🚀 ProtoSem milestone showcase with tab switching
 - 🏆 Certifications section
 - 📬 Contact form integrated with EmailJS
@@ -40,8 +39,6 @@ A modern, responsive, and interactive personal portfolio website built using **H
 ---
 
 ## 📁 Project Structure
-
-```
 Portfolio-Website/
 │
 ├── index.html
@@ -49,19 +46,17 @@ Portfolio-Website/
 ├── script.js
 │
 ├── assets/
-│   ├── favicon.png
-│   └── Karthik_Resume.pdf
+│ ├── favicon.png
+│ └── Karthik_Resume.pdf
 │
 └── README.md
-```
 
 ---
 
 ## ✨ Sections Included
 
 - Hero
-- About Me
-- Skills
+- About Me & Skills
 - Experience
 - ProtoSem Journey
 - Projects
@@ -76,7 +71,7 @@ Portfolio-Website/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/Personal-Portfolio-Website.git
+git clone https://github.com/mkarthikaravind1/Personal-Portfolio-Website.git
 ```
 
 ### 2. Open the Project
@@ -85,11 +80,7 @@ Open the folder in **Visual Studio Code**.
 
 ### 3. Run
 
-Simply open
-
-```
-index.html
-```
+Simply open - index.html
 
 or use the **Live Server** extension.
 
@@ -121,7 +112,6 @@ emailjs.sendForm(
 ## 🎨 Interactive Features
 
 - Animated typing text
-- Custom cursor
 - Floating terminal animation
 - Smooth scrolling
 - Active navbar highlight
@@ -165,37 +155,53 @@ The website is optimized for:
 
 ### Multi-Agent Dev Assistant
 
-- LangGraph-based multi-agent architecture
+Full-stack AI developer assistant powered by a 5-agent LangGraph pipeline with:
+
 - FastAPI backend
 - React frontend
-- ChromaDB integration
-- Server-Sent Events (SSE)
+- LangGraph + Groq LLaMA
+- ChromaDB for Codebase RAG
+- Server-Sent Events (SSE) for real-time streaming
 
 ### VoiceIQ
 
 Real-time browser-based Voice AI customer service system with:
 
-- Faster Whisper
+- Faster Whisper (STT)
 - Silero VAD
 - Piper TTS
 - WebSockets
 
-### Smart Bus Tracking System
+### Multimodal AI Study Assistant
 
-- Java
-- Spring Boot
-- WebSockets
-- Leaflet.js
+Full-stack AI-powered study platform with:
+
+- FastAPI backend
+- React frontend
+- ChromaDB for RAG-based tutor chat
+- MySQL
+- Groq LLM for lesson and quiz generation
 
 ### AI + ML Email Classifier
 
 Hybrid email classification using:
 
 - Regex Rules
-- Machine Learning
+- Machine Learning (HuggingFace)
 - LLM Classification
 - FastAPI
 - React
+
+### DocMind - RAG Assistant
+
+Full-stack RAG-powered document assistant with:
+
+- FastAPI backend
+- ChromaDB for semantic search
+- Three-tier RBAC (Admin, Manager, User)
+- Input/output guardrails
+- Docker
+- React frontend
 
 ---
 

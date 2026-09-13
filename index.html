@@ -313,6 +313,10 @@
                         <span class="proto-week">Week 6</span>
                         <span class="proto-title">Project Planning, UI/UX & Hardware Basics</span>
                     </button>
+                    <button class="proto-tab" data-target="week-7">
+                        <span class="proto-week">Week 7</span>
+                        <span class="proto-title">Hardware, IoT & RTOS</span>
+                    </button>
                 </div>
     
                 <div class="protosem-content">
@@ -720,6 +724,86 @@
                                     intersection of software and hardware systems.</li>
                                 <li>Soldering a working circuit made abstract electronics concepts tangible — there is real value
                                     in physically building something to understand how it works.</li>
+                            </ul>
+                    
+                        </div>
+                    </div>
+
+                    <!-- Week 7 -->
+                    <div class="proto-panel" id="week-7">
+                        <div class="proto-header">
+                            <span class="proto-badge">Week 7</span>
+                            <h3>Hardware, IoT & RTOS</h3>
+                            <p class="proto-date">07 Sep – 12 Sep 2026</p>
+                        </div>
+                        <div class="proto-body">
+                    
+                            <h4>Overview</h4>
+                            <p>Week 7 was the most hardware-intensive week of ProtoSem so far. It covered basic hardware terminology,
+                                ESP32 embedded programming, a full progression of IoT experiments from basic GPIO to cloud and voice
+                                control, a project team meeting with a startup, and culminated in a FreeRTOS-based real-time systems
+                                assignment — bridging embedded hardware with operating system-level task design.</p>
+                    
+                            <h4>Weekly Activities</h4>
+                            <p>Monday revisited basic hardware terminology and included a team meeting of the Visionaries group, where
+                                we presented and discussed the MUP Tracker — the final product our team is building as part of
+                                ProtoSem. Tuesday was a hands-on ESP32 session: we programmed the ESP32 to display our team number
+                                (24) on an OLED display, and then built a reaction-based video game using an ultrasonic sensor —
+                                combining display interfacing with sensor input in a single session. Wednesday shifted to product
+                                design, where we completed the concept generation and concept assessment phases for our project —
+                                evaluating solution ideas against feasibility, impact, and alignment with the problem statement.
+                                Thursday covered IoT Experiments 1 through 3: blinking an LED on the ESP32, controlling a bulb
+                                on/off through a locally hosted website using Arduino, and controlling the same bulb via Google Voice
+                                Assistant through that website. Friday included IoT Experiments 4 and 5 — controlling a bulb through
+                                a Firebase-connected website and automating the bulb using an LDR sensor for light-dependent
+                                switching — followed by a meeting with a startup, gaining exposure to real-world product and business
+                                perspectives. Saturday was dedicated to the RTOS assignment: designing and implementing a
+                                FreeRTOS-based temperature alert system using a DHT11 sensor on the ESP32.</p>
+                    
+                            <h4>Assignments & Deliverables</h4>
+                            <div class="proto-assignment-card">
+                                <div class="assign-title">ESP32 OLED Display & Ultrasonic Game</div>
+                                <p>Programmed an ESP32 to render our team number (24) on an OLED display using I2C, then developed
+                                    a simple interactive game driven by an ultrasonic distance sensor — covering display interfacing,
+                                    sensor reading, and real-time logic on embedded hardware.</p>
+                            </div>
+                            <div class="proto-assignment-card">
+                                <div class="assign-title">Concept Generation & Assessment</div>
+                                <p>Produced a structured concept generation document exploring multiple solution directions for our
+                                    project, followed by a concept assessment that scored each idea against criteria including
+                                    technical feasibility, user impact, and scope — narrowing down to the most viable approach.</p>
+                            </div>
+                            <div class="proto-assignment-card">
+                                <div class="assign-title">IoT Experiments 1–5</div>
+                                <p>Completed a progressive series of five IoT experiments on the ESP32: (1) blinking an LED, (2)
+                                    toggling a bulb via a locally hosted website, (3) controlling the bulb through Google Voice
+                                    Assistant, (4) controlling the bulb through a Firebase-connected web interface, and (5)
+                                    automating the bulb using an LDR sensor for ambient light-based switching.</p>
+                            </div>
+                            <div class="proto-assignment-card">
+                                <div class="assign-title">RTOS Assignment — FreeRTOS Temperature Alert System</div>
+                                <p>Designed and implemented a multi-task FreeRTOS system on the ESP32 using a DHT11 sensor. The
+                                    system comprises four independent tasks: a Temperature Task that samples the sensor every 200 ms
+                                    and sends a task notification when temperature reaches or exceeds 30°C; an LED Task that stays
+                                    blocked until notified, then pulses the LED on for 100 ms; a Button Task that captures a single
+                                    button press event to acknowledge the alert without repeated triggering; and a UART Task that
+                                    independently prints the current temperature, threshold, and alert status at regular intervals.
+                                    Inter-task communication uses FreeRTOS task notifications exclusively — no shared variables —
+                                    satisfying a maximum alert latency of 100 ms and jitter of ±5 ms.</p>
+                            </div>
+                    
+                            <h4>Key Learnings</h4>
+                            <ul>
+                                <li>ESP32 is a versatile embedded platform — combining display output, sensor input, and wireless
+                                    connectivity in a single low-cost board.</li>
+                                <li>The IoT experiment progression from local control → voice control → cloud control → sensor
+                                    automation illustrated how connected products are layered in complexity.</li>
+                                <li>Concept assessment is a critical gate before committing to a build direction — scoring ideas
+                                    against real criteria prevents building the wrong thing.</li>
+                                <li>FreeRTOS task notifications are a clean, efficient primitive for inter-task signalling —
+                                    avoiding the race conditions and coupling that shared variables introduce.</li>
+                                <li>Designing timing requirements (sampling period, alert deadline, jitter) before writing code
+                                    forces precision in real-time system thinking.</li>
                             </ul>
                     
                         </div>

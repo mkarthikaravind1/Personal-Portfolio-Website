@@ -1250,3 +1250,105 @@ section {
 .contact-form .btn-primary {
   width: fit-content;
 }
+
+/* ── IOT PAGE ── */
+.iot-back-link {
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  margin-bottom: 18px;
+}
+
+.iot-back-link:hover {
+  text-decoration: underline;
+}
+
+.iot-section {
+  padding: 40px 60px;
+}
+
+.iot-project {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+}
+
+.iot-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+}
+
+.iot-gallery img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.iot-gallery img:hover {
+  transform: scale(1.03);
+  box-shadow: var(--shadow);
+}
+
+.iot-video-wrap video {
+  width: 100%;
+  max-width: 720px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border);
+  display: block;
+}
+
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 15, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.lightbox-overlay.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.lightbox-overlay img {
+  max-width: 90vw;
+  max-height: 85vh;
+  border-radius: 8px;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 24px;
+  right: 32px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--white);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .iot-section {
+    padding: 32px 24px;
+  }
+
+  .iot-project {
+    padding: 20px;
+  }
+}

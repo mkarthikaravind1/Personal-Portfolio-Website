@@ -14,8 +14,222 @@
 
     <link rel="stylesheet" href="style.css" />
     <meta name="description"
-        content="IoT projects by Karthik Aravind M — ESP32 experiments, FreeRTOS systems, and embedded hardware builds." />
+        content="IoT & embedded systems work by Karthik Aravind M — ESP32 and Arduino experiments spanning Wi-Fi control, voice and cloud automation, sensor-driven closed loops, and FreeRTOS task design." />
     <link rel="icon" type="image/png" href="assets/favicon.png" />
+
+    <!-- Page-scoped additions on top of style.css -->
+    <style>
+        .video-frame,
+        .code-frame {
+            background: var(--ink);
+            border-radius: 16px;
+            overflow: hidden;
+            max-width: 720px;
+            box-shadow: var(--shadow-lg), 0 0 0 1px rgba(255, 255, 255, 0.06);
+            margin-bottom: 20px;
+        }
+
+        .video-frame { border-radius: 20px; }
+
+        .video-frame video {
+            display: block;
+            width: 100%;
+            background: #000;
+        }
+
+        .code-frame { max-width: 100%; }
+
+        .code-block {
+            margin: 0;
+            padding: 20px;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.85);
+            background: transparent;
+        }
+
+        .chip-link {
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .quicknav {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-top: 18px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        .quicknav a {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--ink-muted);
+            text-decoration: none;
+        }
+
+        .quicknav a:hover { color: var(--accent); }
+
+        .drive-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+            background: var(--white);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px 24px;
+            margin-top: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .drive-card .drive-text strong {
+            display: block;
+            color: var(--ink);
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .drive-card .drive-text span {
+            font-size: 0.85rem;
+            color: var(--ink-muted);
+        }
+
+        .hw-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .hw-card {
+            background: var(--white);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 14px 16px;
+        }
+
+        .hw-card .hw-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--ink);
+            margin-bottom: 2px;
+        }
+
+        .hw-card .hw-role {
+            font-size: 0.78rem;
+            color: var(--ink-faint);
+        }
+
+        .steps {
+            list-style: none;
+            margin: 0 0 20px;
+            padding: 0;
+            counter-reset: stepnum;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .steps li {
+            position: relative;
+            padding-left: 40px;
+            font-size: 0.9rem;
+            color: var(--ink-muted);
+            line-height: 1.6;
+        }
+
+        .steps li::before {
+            counter-increment: stepnum;
+            content: counter(stepnum);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: var(--accent-soft);
+            color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .steps li strong {
+            color: var(--ink);
+            display: block;
+            margin-bottom: 2px;
+            font-weight: 600;
+        }
+
+        .wiring-note {
+            background: var(--accent-soft);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            padding: 14px 18px;
+            font-size: 0.88rem;
+            color: var(--ink-muted);
+            margin-bottom: 20px;
+        }
+
+        .wiring-note strong { color: var(--ink); }
+
+        .flow-line {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent);
+            background: var(--accent-soft);
+            border: 1px dashed var(--accent-mid);
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .subhead {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 1.02rem;
+            color: var(--ink);
+            margin: 20px 0 10px;
+        }
+
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+        }
+
+        .compare-table th,
+        .compare-table td {
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .compare-table th {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--ink-faint);
+        }
+
+        .compare-table td { color: var(--ink-muted); }
+        .compare-table td:first-child { color: var(--ink); font-weight: 600; }
+
+        @media (max-width: 600px) {
+            .compare-table { display: block; overflow-x: auto; }
+        }
+    </style>
 </head>
 
 <body>
@@ -31,198 +245,794 @@
             <li><a href="index.html#projects" class="nav-link">Projects</a></li>
             <li><a href="iot.html" class="nav-link active">IoT Works</a></li>
             <li><a href="index.html#education" class="nav-link">Education</a></li>
+            <li><a href="index.html#certifications" class="nav-link">Certifications</a></li>
             <li><a href="index.html#contact" class="nav-cta nav-link">Contact Me</a></li>
         </ul>
     </nav>
 
     <!-- IOT HERO -->
-    <section id="iot-hero">
+    <section id="hero" style="padding-bottom: 8px;">
         <div class="hero-glow"></div>
-        <div class="section-inner">
+        <div class="hero-glow-2"></div>
+        <div class="section-inner" style="position: relative; z-index: 1;">
             <a href="index.html" class="iot-back-link">← Back to Portfolio</a>
-            <p class="section-eyebrow">Hardware & Embedded Systems</p>
-            <h1 class="section-title" style="font-size: clamp(1.8rem, 4vw, 2.6rem); margin-top: 6px;">IoT & Embedded
-                Works</h1>
+            <p class="section-eyebrow">Hardware &amp; Embedded Systems</p>
+            <h1 class="section-title" style="font-size: clamp(1.8rem, 4vw, 2.6rem); margin-top: 6px;">
+                IoT &amp; Embedded Works
+            </h1>
             <p class="section-sub" style="max-width: 720px;">
-                A collection of ESP32-based IoT experiments and real-time embedded systems built during
-                ProtoSem 1.18 — spanning sensor automation, cloud/voice control, and FreeRTOS task design.
+                Seven builds from ProtoSem 1.18 on the ESP32 and Arduino Uno — starting with a single GPIO blink and
+                working up through local, voice, and cloud control, a light-driven closed loop, a four-task FreeRTOS
+                alert system, and a sensor-driven game. Each entry below includes the components used, how it was
+                built, the wiring, and the firmware.
             </p>
+
+            <div class="hero-stats" style="margin-top: 24px;">
+                <div class="stat-item">
+                    <div class="stat-num">5</div>
+                    <div class="stat-label">IoT Experiments</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num">2</div>
+                    <div class="stat-label">Standalone Projects</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num">ESP32</div>
+                    <div class="stat-label">+ Arduino Uno</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num">4</div>
+                    <div class="stat-label">Control Methods</div>
+                </div>
+            </div>
+
+            <div class="tech-stack" style="margin-top: 28px;">
+                <p style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--ink-faint); margin-bottom: 10px;">
+                    Tap a part to jump to where it's used
+                </p>
+                <div class="about-chips">
+                    <a href="#exp1" class="chip chip-link">ESP32 DevKit</a>
+                    <a href="#exp2" class="chip chip-link">Arduino Uno</a>
+                    <a href="#prj1" class="chip chip-link">DHT11</a>
+                    <a href="#exp5" class="chip chip-link">LDR Module</a>
+                    <a href="#prj2" class="chip chip-link">HC-SR04 Ultrasonic</a>
+                    <a href="#exp2" class="chip chip-link">Relay Module</a>
+                    <a href="#prj2" class="chip chip-link">OLED (I2C)</a>
+                    <a href="#exp4" class="chip chip-link">Firebase</a>
+                    <a href="#exp3" class="chip chip-link">IFTTT</a>
+                    <a href="#prj1" class="chip chip-link">FreeRTOS</a>
+                </div>
+            </div>
+
+            <div class="quicknav">
+                <a href="#exp1">Experiments →</a>
+                <a href="#prj1">Projects →</a>
+                <a href="#compare">Comparison →</a>
+                <a href="#learnings">Key Learnings →</a>
+            </div>
+
+            <div class="drive-card fade-up">
+                <div class="drive-text">
+                    <strong>Full Demo Recordings — Google Drive</strong>
+                    <span>Full-HD versions of every video on this page, plus lab test footage.</span>
+                </div>
+                <a href="https://drive.google.com/drive/folders/PASTE_YOUR_FOLDER_ID_HERE" target="_blank"
+                    rel="noopener noreferrer" class="btn-primary">Open Drive ↗</a>
+            </div>
         </div>
     </section>
 
-        <!-- EXPERIMENT 1: LED Blink -->
-        <section class="iot-section">
-            <div class="section-inner">
-                <div class="iot-project fade-up">
-                    <div class="proto-badge">IoT Experiment 1</div>
-                    <h2 class="edu-degree" style="margin: 8px 0 10px;">Blinking an LED on ESP32</h2>
-                    <p style="color: var(--ink-muted); line-height: 1.8; margin-bottom: 20px; max-width: 900px;">
-                        The first experiment in the IoT progression — programming the ESP32 to blink an onboard/external
-                        LED, confirming the board setup, GPIO control, and toolchain before moving on to networked control.
-                    </p>
-        
-                    <!-- <h4 style="margin-bottom: 10px;">Photos</h4>
-                    <div class="iot-gallery">
-                        <img src="assets/iot/images/exp1-led-1.jpg" alt="ESP32 LED blink setup" loading="lazy">
-                        <img src="assets/iot/images/exp1-led-2.jpg" alt="ESP32 LED blink My Work" loading="lazy">
-                    </div> -->
-        
-                    <h4 style="margin: 20px 0 10px;">Demo Video</h4>
-                    <div class="iot-video-wrap">
-                        <video controls preload="metadata" poster="assets/iot/images/exp1-led-1.jpg">
-                            <source src="assets/iot/videos/Karthik_Aravind_M_Assignment - 1.mp4" type="video/mp4">
-                            Your browser doesn't support embedded video.
-                        </video>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- EXPERIMENT 2: Local Website Control -->
-        <section class="iot-section" style="background: var(--tint);">
-            <div class="section-inner">
-                <div class="iot-project fade-up">
-                    <div class="proto-badge">IoT Experiment 2</div>
-                    <h2 class="edu-degree" style="margin: 8px 0 10px;">Bulb Control via Locally Hosted Website</h2>
-                    <p style="color: var(--ink-muted); line-height: 1.8; margin-bottom: 20px; max-width: 900px;">
-                        Controlling a bulb's on/off state through a locally hosted website using Arduino — the ESP32 serves
-                        a simple web page on the local network, and toggling a button on that page switches the bulb.
-                    </p>
-        
-                    <!-- <h4 style="margin-bottom: 10px;">Photos</h4>
-                    <div class="iot-gallery">
-                        <img src="assets/iot/images/exp2-website-1.jpg" alt="Local website bulb control interface"
-                            loading="lazy">
-                        <img src="assets/iot/images/exp2-website-2.jpg" alt="ESP32 relay and bulb wiring" loading="lazy">
-                    </div> -->
-        
-                    <h4 style="margin: 20px 0 10px;">Demo Video</h4>
-                    <div class="iot-video-wrap">
-                        <video controls preload="metadata" poster="assets/iot/images/exp2-website-1.jpg">
-                            <source src="assets/iot/videos/Karthik_Aravind_M_Assignment - 2.mp4" type="video/mp4">
-                            Your browser doesn't support embedded video.
-                        </video>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- EXPERIMENT 3: Google Voice Assistant Control -->
-        <section class="iot-section">
-            <div class="section-inner">
-                <div class="iot-project fade-up">
-                    <div class="proto-badge">IoT Experiment 3</div>
-                    <h2 class="edu-degree" style="margin: 8px 0 10px;">Bulb Control via Google Voice Assistant</h2>
-                    <p style="color: var(--ink-muted); line-height: 1.8; margin-bottom: 20px; max-width: 900px;">
-                        Extending Experiment 2's website with voice control — the same bulb can now be switched on or off
-                        through a Google Voice Assistant command routed to the local web interface.
-                    </p>
-        
-                    <!-- <h4 style="margin-bottom: 10px;">Photos</h4>
-                    <div class="iot-gallery">
-                        <img src="assets/iot/images/exp3-voice-1.jpg" alt="Google Voice Assistant setup for bulb control"
-                            loading="lazy">
-                        <img src="assets/iot/images/exp3-voice-2.jpg" alt="Voice command triggering bulb" loading="lazy">
-                    </div> -->
-        
-                    <h4 style="margin: 20px 0 10px;">Demo Video</h4>
-                    <div class="iot-video-wrap">
-                        <video controls preload="metadata" poster="assets/iot/images/exp3-voice-1.jpg">
-                            <source src="assets/iot/videos/Karthik_Aravind_M_Assignment - 3.mp4" type="video/mp4">
-                            Your browser doesn't support embedded video.
-                        </video>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- EXPERIMENT 4: Firebase Control -->
-        <section class="iot-section" style="background: var(--tint);">
-            <div class="section-inner">
-                <div class="iot-project fade-up">
-                    <div class="proto-badge">IoT Experiment 4</div>
-                    <h2 class="edu-degree" style="margin: 8px 0 10px;">Bulb Control via Firebase-Connected Website</h2>
-                    <p style="color: var(--ink-muted); line-height: 1.8; margin-bottom: 20px; max-width: 900px;">
-                        Moving from local to cloud control — the bulb is now controlled through a website connected to
-                        Firebase, allowing the ESP32 to read state changes from the cloud database from anywhere.
-                    </p>
-        
-                    <!-- <h4 style="margin-bottom: 10px;">Photos</h4>
-                    <div class="iot-gallery">
-                        <img src="assets/iot/images/exp4-firebase-1.jpg" alt="Firebase-connected control website"
-                            loading="lazy">
-                        <img src="assets/iot/images/exp4-firebase-2.jpg" alt="Firebase console showing bulb state"
-                            loading="lazy">
-                    </div> -->
-        
-                    <h4 style="margin: 20px 0 10px;">Demo Video</h4>
-                    <div class="iot-video-wrap">
-                        <video controls preload="metadata" poster="assets/iot/images/exp4-firebase-1.jpg">
-                            <source src="assets/iot/videos/Karthik_Aravind_M_Assignment - 4.mp4" type="video/mp4">
-                            Your browser doesn't support embedded video.
-                        </video>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- EXPERIMENT 5: LDR Automation -->
-        <section class="iot-section">
-            <div class="section-inner">
-                <div class="iot-project fade-up">
-                    <div class="proto-badge">IoT Experiment 5</div>
-                    <h2 class="edu-degree" style="margin: 8px 0 10px;">Bulb Automation via LDR Sensor</h2>
-                    <p style="color: var(--ink-muted); line-height: 1.8; margin-bottom: 20px; max-width: 900px;">
-                        The final experiment closes the loop with autonomous sensing — an LDR (light-dependent resistor)
-                        automatically switches the bulb on or off based on ambient light levels, with no manual or remote
-                        trigger needed.
-                    </p>
-        
-                    <!-- <h4 style="margin-bottom: 10px;">Photos</h4>
-                    <div class="iot-gallery">
-                        <img src="assets/iot/images/exp5-ldr-1.jpg" alt="LDR sensor wiring for bulb automation" loading="lazy">
-                        <img src="assets/iot/images/exp5-ldr-2.jpg" alt="LDR sensor triggering bulb in low light"
-                            loading="lazy">
-                    </div> -->
-        
-                    <h4 style="margin: 20px 0 10px;">Demo Video</h4>
-                    <div class="iot-video-wrap">
-                        <video controls preload="metadata" poster="assets/iot/images/exp5-ldr-1.jpg">
-                            <source src="assets/iot/videos/Karthik_Aravind_M_Assignment - 5.mp4" type="video/mp4">
-                            Your browser doesn't support embedded video.
-                        </video>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <!-- EXPERIMENT 1: LED Blink -->
+    <section class="iot-section" id="exp1">
+        <div class="section-inner">
+            <div class="iot-project fade-up">
+                <div class="proto-badge">IoT Experiment 1</div>
+                <h2 class="edu-degree" style="margin: 8px 0 10px;">Blinking an LED on ESP32</h2>
+                <p style="color: var(--ink-muted); line-height: 1.8; margin-bottom: 16px; max-width: 900px;">
+                    The starting point of the whole sequence — programming the ESP32 to blink an onboard LED. It's a
+                    small result on its own, but it confirms the board setup, GPIO control, and toolchain that every
+                    later experiment builds on top of.
+                </p>
 
-    <!-- PROJECT 2: FreeRTOS Temperature Alert System -->
-    <section class="iot-section" style="background: var(--tint);">
+                <div class="flow-line">code upload → GPIO write → LED response</div>
+
+                <h3 class="subhead">Components &amp; Hardware</h3>
+                <div class="hw-grid">
+                    <div class="hw-card">
+                        <div class="hw-name">ESP32 DevKit V4</div>
+                        <div class="hw-role">Main microcontroller</div>
+                    </div>
+                    <div class="hw-card">
+                        <div class="hw-name">USB Cable</div>
+                        <div class="hw-role">Power &amp; programming link</div>
+                    </div>
+                    <div class="hw-card">
+                        <div class="hw-name">Arduino IDE</div>
+                        <div class="hw-role">Firmware upload</div>
+                    </div>
+                </div>
+
+                <h3 class="subhead">How I Built This</h3>
+                <ol class="steps">
+                    <li><strong>Install the toolchain.</strong> Arduino IDE, plus ESP32 board support added through
+                        the Boards Manager.</li>
+                    <li><strong>Select board &amp; port.</strong> Tools → Board → ESP32 Dev Module, then pick the
+                        correct serial port.</li>
+                    <li><strong>Upload the sketch.</strong> Paste the code below and hit Upload.</li>
+                    <li><strong>Verify the result.</strong> Watch the onboard LED blink, and check Serial Monitor at
+                        115200 baud if it doesn't.</li>
+                </ol>
+
+                <div class="wiring-note">
+                    <strong>Wiring:</strong> none needed — this uses the LED already wired to the board.
+                </div>
+
+                <h3 class="subhead">Source Code</h3>
+                <div class="code-frame">
+                    <div class="terminal-bar">
+                        <div class="dot dot-r"></div>
+                        <div class="dot dot-y"></div>
+                        <div class="dot dot-g"></div>
+                        <div class="terminal-title">exp1_led_blink.ino</div>
+                    </div>
+                    <pre class="code-block"><code>// Experiment 1 — Blinking an LED on ESP32
+#define LED_PIN 2   // Onboard LED on most ESP32 DevKit boards
+
+void setup() {
+  pinMode(LED_PIN, OUTPUT);
+  Serial.begin(115200);
+}
+
+void loop() {
+  digitalWrite(LED_PIN, HIGH);
+  Serial.println("LED ON");
+  delay(500);
+
+  digitalWrite(LED_PIN, LOW);
+  Serial.println("LED OFF");
+  delay(500);
+}</code></pre>
+                </div>
+
+                <h3 class="subhead">Demo Video</h3>
+                <div class="video-frame">
+                    <div class="terminal-bar">
+                        <div class="dot dot-r"></div>
+                        <div class="dot dot-y"></div>
+                        <div class="dot dot-g"></div>
+                        <div class="terminal-title">exp1_led_blink.mp4</div>
+                    </div>
+                    <video controls preload="metadata" poster="assets/iot/images/exp1-led-1.jpg">
+                        <source src="assets/iot/videos/Karthik_Aravind_M_Assignment - 1.mp4" type="video/mp4">
+                        Your browser doesn't support embedded video.
+                    </video>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPERIMENT 2: Local Website Control -->
+    <section class="iot-section" style="background: var(--tint);" id="exp2">
+        <div class="section-inner">
+            <div class="iot-project fade-up">
+                <div class="proto-badge">IoT Experiment 2</div>
+                <h2 class="edu-degree" style="margin: 8px 0 10px;">Bulb Control via Locally Hosted Website</h2>
+                <p style="color: var(--ink-muted); line-height: 1.8; margin-bottom: 16px; max-width: 900px;">
+                    Control moves off the board and onto a page a person can actually click. The ESP32 hosts a
+                    lightweight website on the local network using Arduino, and toggling a button there switches a
+                    bulb connected through the board.
+                </p>
+
+                <div class="flow-line">browser click → local Wi-Fi request → ESP32 → relay → bulb</div>
+
+                <h3 class="subhead">Components &amp; Hardware</h3>
+                <div class="hw-grid">
+                    <div class="hw-card">
+                        <div class="hw-name">ESP32 DevKit V4</div>
+                        <div class="hw-role">Runs the web server</div>
+                    </div>
+                    <div class="hw-card">
+                        <div class="hw-name">5V Relay Module</div>
+                        <div class="hw-role">Switches the bulb</div>
+                    </div>
+                    <div class="hw-card">
+                        <div class="hw-name">Bulb &amp; Holder</div>
+                        <div class="hw-role">The load being switched</div>
+                    </div>
+                    <div class="hw-card">
+                        <div class="hw-name">Local Wi-Fi (2.4GHz)</div>
+                        <div class="hw-role">Connects browser to board</div>
+                    </div>
+                </div>
+
+                <h3 class="subhead">How I Built This</h3>
+                <ol class="steps">
+                    <li><strong>Wire the relay.</strong> IN to a GPIO, VCC/GND to power, COM/NO in line with the
+                        bulb's live wire.</li>
+                    <li><strong>Connect to Wi-Fi.</strong> Add the SSID/password to the sketch and confirm the
+                        assigned IP over Serial.</li>
+                    <li><strong>Start the web server.</strong> WebServer.h listens on port 80 and exposes
+                        <code>/api/on</code> and <code>/api/off</code>.</li>
+                    <li><strong>Build the control page.</strong> A small HTML page with ON/OFF buttons that call
+                        those endpoints.</li>
+                    <li><strong>Test it.</strong> Load the ESP32's IP from a browser on the same network and toggle
+                        the bulb.</li>
+                </ol>
+
+                <div class="wiring-note">
+                    <strong>Wiring note:</strong> this is the first experiment with mains-adjacent wiring. The
+                    relay's low-voltage side (VCC / GND / IN) connects to the ESP32; its high-voltage side (COM / NO)
+                    sits in series with the bulb's live wire. Always wire and check this side with the bulb unplugged
+                    from the wall first.
+                </div>
+
+                <h3 class="subhead">Source Code</h3>
+                <div class="code-frame">
+                    <div class="terminal-bar">
+                        <div class="dot dot-r"></div>
+                        <div class="dot dot-y"></div>
+                        <div class="dot dot-g"></div>
+                        <div class="terminal-title">exp2_local_web_control.ino</div>
+                    </div>
+                    <pre class="code-block"><code>// Experiment 2 — Bulb control via a locally hosted website
+#include &lt;WiFi.h&gt;
+#include &lt;WebServer.h&gt;
+
+const char* ssid     = "YOUR_WIFI_SSID";
+const char* password = "YOUR_WIFI_PASSWORD";
+
+#define RELAY_PIN 26
+WebServer server(80);
+bool bulbState = false;
+
+const char* page = R"rawliteral(
+&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;body style="font-family:sans-serif;text-align:center;margin-top:60px;"&gt;
+&lt;h2&gt;Bulb Control&lt;/h2&gt;
+&lt;button onclick="fetch('/api/on')"&gt;Turn ON&lt;/button&gt;
+&lt;button onclick="fetch('/api/off')"&gt;Turn OFF&lt;/button&gt;
+&lt;/body&gt;&lt;/html&gt;
+)rawliteral";
+
+void handleRoot() { server.send(200, "text/html", page); }
+
+void handleOn() {
+  digitalWrite(RELAY_PIN, HIGH);
+  bulbState = true;
+  server.send(200, "text/plain", "ON");
+}
+
+void handleOff() {
+  digitalWrite(RELAY_PIN, LOW);
+  bulbState = false;
+  server.send(200, "text/plain", "OFF");
+}
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(RELAY_PIN, OUTPUT);
+  digitalWrite(RELAY_PIN, LOW);
+
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("\nIP address: " + WiFi.localIP().toString());
+
+  server.on("/", handleRoot);
+  server.on("/api/on", handleOn);
+  server.on("/api/off", handleOff);
+  server.begin();
+}
+
+void loop() {
+  server.handleClient();
+}</code></pre>
+                </div>
+
+                <h3 class="subhead">Demo Video</h3>
+                <div class="video-frame">
+                    <div class="terminal-bar">
+                        <div class="dot dot-r"></div>
+                        <div class="dot dot-y"></div>
+                        <div class="dot dot-g"></div>
+                        <div class="terminal-title">exp2_local_web_control.mp4</div>
+                    </div>
+                    <video controls preload="metadata" poster="assets/iot/images/exp2-website-1.jpg">
+                        <source src="assets/iot/videos/Karthik_Aravind_M_Assignment - 2.mp4" type="video/mp4">
+                        Your browser doesn't support embedded video.
+                    </video>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPERIMENT 3: Google Voice Assistant Control -->
+    <section class="iot-section" id="exp3">
+        <div class="section-inner">
+            <div class="iot-project fade-up">
+                <div class="proto-badge">IoT Experiment 3</div>
+                <h2 class="edu-degree" style="margin: 8px 0 10px;">Bulb Control via Google Voice Assistant</h2>
+                <p style="color: var(--ink-muted); line-height: 1.8; margin-bottom: 16px; max-width: 900px;">
+                    The same bulb from Experiment 2, but the trigger is now spoken instead of clicked. A Google
+                    Voice Assistant command gets routed through IFTTT to the existing local website, so the hardware
+                    side stayed untouched — only the way a command reaches it changed.
+                </p>
+
+                <div class="flow-line">voice command → Google Assistant → IFTTT → ESP32 endpoint → bulb</div>
+
+                <h3 class="subhead">Components &amp; Hardware</h3>
+                <div class="hw-grid">
+                    <div class="hw-card">
+                        <div class="hw-name">Same ESP32 + Relay Setup</div>
+                        <div class="hw-role">Reused from Experiment 2</div>
+                    </div>
+                    <div class="hw-card">
+                        <div class="hw-name">Google Assistant</div>
+                        <div class="hw-role">Voice recognition</div>
+                    </div>
+                    <div class="hw-card">
+                        <div class="hw-name">IFTTT + Webhooks</div>
+                        <div class="hw-role">Routes voice → request</div>
+                    </div>
+                </div>
+
+                <h3 class="subhead">How I Built This</h3>
+                <ol class="steps">
+                    <li><strong>Create an IFTTT applet.</strong> Trigger: Google Assistant, with a phrase like
+                        "turn on the bulb".</li>
+                    <li><strong>Set the action to Webhooks.</strong> Point it at the ESP32's <code>/api/on</code>
+                        endpoint from Experiment 2.</li>
+                    <li><strong>Repeat for OFF.</strong> A second applet with the OFF phrase pointed at
+                        <code>/api/off</code>.</li>
+                    <li><strong>Test end-to-end.</strong> Say the command and confirm the bulb switches, checking
+                        Serial Monitor for the incoming request.</li>
+                </ol>
+
+                <div class="wiring-note">
+                    <strong>Wiring:</strong> unchanged — this experiment reuses Experiment 2's relay and bulb wiring
+                    exactly. Nothing new to connect.
+                </div>
+
+                <h3 class="subhead">Applet Configuration</h3>
+                <div class="code-frame">
+                    <div class="terminal-bar">
+                        <div class="dot dot-r"></div>
+                        <div class="dot dot-y"></div>
+                        <div class="dot dot-g"></div>
+                        <div class="terminal-title">ifttt_webhook_config.txt</div>
+                    </div>
+                    <pre class="code-block"><code>Applet trigger : Google Assistant — "turn on the bulb"
+Applet action  : Webhooks — Make a web request
+
+URL    : http://&lt;ESP32_IP_OR_TUNNEL&gt;/api/on
+Method : GET
+Content Type : text/plain
+
+// Repeat with "turn off the bulb" -> /api/off</code></pre>
+                </div>
+
+                <h3 class="subhead">Demo Video</h3>
+                <div class="video-frame">
+                    <div class="terminal-bar">
+                        <div class="dot dot-r"></div>
+                        <div class="dot dot-y"></div>
+                        <div class="dot dot-g"></div>
+                        <div class="terminal-title">exp3_voice_control.mp4</div>
+                    </div>
+                    <video controls preload="metadata" poster="assets/iot/images/exp3-voice-1.jpg">
+                        <source src="assets/iot/videos/Karthik_Aravind_M_Assignment - 3.mp4" type="video/mp4">
+                        Your browser doesn't support embedded video.
+                    </video>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPERIMENT 4: Firebase Control -->
+    <section class="iot-section" style="background: var(--tint);" id="exp4">
+        <div class="section-inner">
+            <div class="iot-project fade-up">
+                <div class="proto-badge">IoT Experiment 4</div>
+                <h2 class="edu-degree" style="margin: 8px 0 10px;">Bulb Control via Firebase-Connected Website</h2>
+                <p style="color: var(--ink-muted); line-height: 1.8; margin-bottom: 16px; max-width: 900px;">
+                    Local control becomes remote control. The bulb is now switched through a website backed by
+                    Firebase, with the ESP32 watching the cloud database for state changes instead of only
+                    listening on the local network — reachable from anywhere, not just the same Wi-Fi.
+                </p>
+
+                <div class="flow-line">website → Firebase Realtime Database → ESP32 stream → relay → bulb</div>
+
+                <h3 class="subhead">Components &amp; Hardware</h3>
+                <div class="hw-grid">
+                    <div class="hw-card">
+                        <div class="hw-name">ESP32 DevKit V4</div>
+                        <div class="hw-role">Streams DB state</div>
+                    </div>
+                    <div class="hw-card">
+                        <div class="hw-name">Relay + Bulb</div>
+                        <div class="hw-role">Reused from Exp. 2</div>
+                    </div>
+                    <div class="hw-card">
+                        <div class="hw-name">Firebase Project</div>
+                        <div class="hw-role">Realtime Database</div>
+                    </div>
+                </div>
+
+                <h3 class="subhead">How I Built This</h3>
+                <ol class="steps">
+                    <li><strong>Create a Firebase project.</strong> Enable the Realtime Database and grab the API
+                        key and database URL.</li>
+                    <li><strong>Add Firebase to the sketch.</strong> Firebase_ESP_Client.h with the project
+                        credentials.</li>
+                    <li><strong>Stream a database path.</strong> Listen on <code>/appliances/bulbState</code> for
+                        changes.</li>
+                    <li><strong>Drive the relay from that value.</strong> Update the GPIO whenever the streamed
+                        value changes.</li>
+                    <li><strong>Build the web front end.</strong> A page that writes true/false to that same path.
+                    </li>
+                </ol>
+
+                <div class="wiring-note">
+                    <strong>Wiring:</strong> identical to Experiment 2's relay/bulb circuit — this step changes the
+                    software path only.
+                </div>
+
+                <h3 class="subhead">Source Code</h3>
+                <div class="code-frame">
+                    <div class="terminal-bar">
+                        <div class="dot dot-r"></div>
+                        <div class="dot dot-y"></div>
+                        <div class="dot dot-g"></div>
+                        <div class="terminal-title">exp4_firebase_control.ino</div>
+                    </div>
+                    <pre class="code-block"><code>// Experiment 4 — Bulb control via a Firebase-connected website
+#include &lt;WiFi.h&gt;
+#include &lt;Firebase_ESP_Client.h&gt;
+
+#define WIFI_SSID     "YOUR_WIFI_SSID"
+#define WIFI_PASSWORD "YOUR_WIFI_PASSWORD"
+#define API_KEY       "YOUR_FIREBASE_API_KEY"
+#define DATABASE_URL  "YOUR_PROJECT.firebaseio.com"
+
+#define RELAY_PIN 26
+
+FirebaseData fbdo;
+FirebaseAuth auth;
+FirebaseConfig config;
+bool bulbState = false;
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(RELAY_PIN, OUTPUT);
+
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  while (WiFi.status() != WL_CONNECTED) delay(300);
+
+  config.api_key = API_KEY;
+  config.database_url = DATABASE_URL;
+  Firebase.begin(&config, &auth);
+  Firebase.RTDB.beginStream(&fbdo, "/appliances/bulbState");
+}
+
+void loop() {
+  if (Firebase.RTDB.readStream(&fbdo) && fbdo.streamAvailable()) {
+    bulbState = fbdo.to&lt;bool&gt;();
+    digitalWrite(RELAY_PIN, bulbState ? HIGH : LOW);
+    Serial.println(bulbState ? "Bulb -> ON" : "Bulb -> OFF");
+  }
+}</code></pre>
+                </div>
+
+                <h3 class="subhead">Demo Video</h3>
+                <div class="video-frame">
+                    <div class="terminal-bar">
+                        <div class="dot dot-r"></div>
+                        <div class="dot dot-y"></div>
+                        <div class="dot dot-g"></div>
+                        <div class="terminal-title">exp4_firebase_control.mp4</div>
+                    </div>
+                    <video controls preload="metadata" poster="assets/iot/images/exp4-firebase-1.jpg">
+                        <source src="assets/iot/videos/Karthik_Aravind_M_Assignment - 4.mp4" type="video/mp4">
+                        Your browser doesn't support embedded video.
+                    </video>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPERIMENT 5: LDR Automation -->
+    <section class="iot-section" id="exp5">
+        <div class="section-inner">
+            <div class="iot-project fade-up">
+                <div class="proto-badge">IoT Experiment 5</div>
+                <h2 class="edu-degree" style="margin: 8px 0 10px;">Bulb Automation via LDR Sensor</h2>
+                <p style="color: var(--ink-muted); line-height: 1.8; margin-bottom: 16px; max-width: 900px;">
+                    The closing experiment takes the person out of the loop. An LDR reads ambient light and the
+                    board decides on its own whether the bulb should be on — no button, no voice command, no remote
+                    trigger, just the system responding to its environment.
+                </p>
+
+                <div class="flow-line">ambient light → LDR reading → threshold check → relay → bulb</div>
+
+                <h3 class="subhead">Components &amp; Hardware</h3>
+                <div class="hw-grid">
+                    <div class="hw-card">
+                        <div class="hw-name">ESP32 DevKit V4</div>
+                        <div class="hw-role">Reads &amp; decides</div>
+                    </div>
+                    <div class="hw-card">
+                        <div class="hw-name">LDR Module</div>
+                        <div class="hw-role">Ambient light sensor</div>
+                    </div>
+                    <div class="hw-card">
+                        <div class="hw-name">Relay + Bulb</div>
+                        <div class="hw-role">Reused from Exp. 2</div>
+                    </div>
+                </div>
+
+                <h3 class="subhead">How I Built This</h3>
+                <ol class="steps">
+                    <li><strong>Wire the LDR.</strong> Analog output to an ADC-capable GPIO, power from 3.3V.</li>
+                    <li><strong>Read ambient light.</strong> Sample the analog value on a short interval.</li>
+                    <li><strong>Set a threshold.</strong> Decide the raw reading that counts as "dark enough".</li>
+                    <li><strong>Drive the relay from that threshold.</strong> No manual input from here on.</li>
+                </ol>
+
+                <div class="wiring-note">
+                    <strong>Wiring note:</strong> the LDR module's analog output goes to GPIO34, an input-only ADC
+                    pin on the ESP32; VCC and GND go to 3.3V and ground. The relay/bulb side is unchanged from
+                    Experiment 2.
+                </div>
+
+                <h3 class="subhead">Source Code</h3>
+                <div class="code-frame">
+                    <div class="terminal-bar">
+                        <div class="dot dot-r"></div>
+                        <div class="dot dot-y"></div>
+                        <div class="dot dot-g"></div>
+                        <div class="terminal-title">exp5_ldr_automation.ino</div>
+                    </div>
+                    <pre class="code-block"><code>// Experiment 5 — Bulb automation via an LDR sensor
+#define LDR_PIN   34   // ADC-only input pin
+#define RELAY_PIN 26
+
+int threshold = 2500;  // tune to the room's lighting
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(RELAY_PIN, OUTPUT);
+}
+
+void loop() {
+  int lightLevel = analogRead(LDR_PIN);
+  bool shouldBeOn = lightLevel &gt; threshold;
+
+  digitalWrite(RELAY_PIN, shouldBeOn ? HIGH : LOW);
+  Serial.printf("LDR: %d -> Bulb %s\n", lightLevel, shouldBeOn ? "ON" : "OFF");
+
+  delay(500);
+}</code></pre>
+                </div>
+
+                <h3 class="subhead">Demo Video</h3>
+                <div class="video-frame">
+                    <div class="terminal-bar">
+                        <div class="dot dot-r"></div>
+                        <div class="dot dot-y"></div>
+                        <div class="dot dot-g"></div>
+                        <div class="terminal-title">exp5_ldr_automation.mp4</div>
+                    </div>
+                    <video controls preload="metadata" poster="assets/iot/images/exp5-ldr-1.jpg">
+                        <source src="assets/iot/videos/Karthik_Aravind_M_Assignment - 5.mp4" type="video/mp4">
+                        Your browser doesn't support embedded video.
+                    </video>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMPARISON TABLE -->
+    <section class="iot-section" style="background: var(--tint);" id="compare">
+        <div class="section-inner">
+            <div class="iot-project fade-up">
+                <div class="proto-badge">At a Glance</div>
+                <h2 class="edu-degree" style="margin: 8px 0 16px;">How the five experiments compare</h2>
+                <table class="compare-table">
+                    <thead>
+                        <tr>
+                            <th>Experiment</th>
+                            <th>Trigger</th>
+                            <th>Range</th>
+                            <th>Core Tech</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1 — LED Blink</td>
+                            <td>Code upload</td>
+                            <td>On-device</td>
+                            <td>GPIO</td>
+                        </tr>
+                        <tr>
+                            <td>2 — Local Web Control</td>
+                            <td>Browser click</td>
+                            <td>Local Wi-Fi</td>
+                            <td>HTTP + Relay</td>
+                        </tr>
+                        <tr>
+                            <td>3 — Voice Control</td>
+                            <td>Spoken command</td>
+                            <td>Anywhere (voice)</td>
+                            <td>IFTTT Webhooks</td>
+                        </tr>
+                        <tr>
+                            <td>4 — Firebase Control</td>
+                            <td>Web app</td>
+                            <td>Anywhere (internet)</td>
+                            <td>Firebase RTDB</td>
+                        </tr>
+                        <tr>
+                            <td>5 — LDR Automation</td>
+                            <td>Ambient light</td>
+                            <td>Local, autonomous</td>
+                            <td>Analog sensor</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECT 1: FreeRTOS Temperature Alert System -->
+    <section class="iot-section" id="prj1">
         <div class="section-inner">
             <div class="iot-project fade-up">
                 <div class="proto-badge">Project</div>
                 <h2 class="edu-degree" style="margin: 8px 0 10px;">FreeRTOS Temperature Alert System</h2>
-                <p style="color: var(--ink-muted); line-height: 1.8; margin-bottom: 20px; max-width: 900px;">
-                    A multi-task FreeRTOS system on the ESP32 using a DHT11 sensor. The system runs four independent
-                    tasks: a Temperature Task sampling every 200 ms that sends a notification when the reading hits
-                    30°C or above, an LED Task that stays blocked until notified and then pulses for 100 ms, a Button
-                    Task that acknowledges the alert on a single press, and a UART Task that independently logs
-                    temperature, threshold, and alert status. Inter-task communication uses FreeRTOS task
-                    notifications exclusively — no shared variables — meeting a max alert latency of 100 ms and
-                    jitter of ±5 ms.
+                <p style="color: var(--ink-muted); line-height: 1.8; margin-bottom: 16px; max-width: 900px;">
+                    A multi-task FreeRTOS system on the ESP32 built around a DHT11 sensor, with all inter-task
+                    communication handled through FreeRTOS task notifications — no shared variables anywhere in the
+                    design.
                 </p>
 
-                <!-- <h4 style="margin-bottom: 10px;">Photos</h4>
-                <div class="iot-gallery">
-                    <img src="assets/iot/images/rtos-circuit-1.jpg" alt="FreeRTOS DHT11 circuit setup" loading="lazy">
-                    <img src="assets/iot/images/rtos-circuit-2.jpg" alt="ESP32 wiring for temperature alert system"
-                        loading="lazy">
-                    <img src="assets/iot/images/rtos-serial-output.jpg"
-                        alt="Serial monitor output of temperature alerts" loading="lazy">
-                </div> -->
+                <div class="flow-line">DHT11 reading → notify → LED pulse / button ack / UART log</div>
 
-                <h4 style="margin: 20px 0 10px;">Demo Video</h4>
-                <div class="iot-video-wrap">
+                <h3 class="subhead">Components &amp; Hardware</h3>
+                <div class="hw-grid">
+                    <div class="hw-card">
+                        <div class="hw-name">ESP32 DevKit V4</div>
+                        <div class="hw-role">Runs all four tasks</div>
+                    </div>
+                    <div class="hw-card">
+                        <div class="hw-name">DHT11 Sensor</div>
+                        <div class="hw-role">Temperature input</div>
+                    </div>
+                    <div class="hw-card">
+                        <div class="hw-name">Push Button</div>
+                        <div class="hw-role">Acknowledges alert</div>
+                    </div>
+                    <div class="hw-card">
+                        <div class="hw-name">LED</div>
+                        <div class="hw-role">Alert indicator</div>
+                    </div>
+                    <div class="hw-card">
+                        <div class="hw-name">4.7–10kΩ Resistor</div>
+                        <div class="hw-role">DHT11 pull-up</div>
+                    </div>
+                </div>
+
+                <h3 class="subhead">How I Built This</h3>
+                <ol class="steps">
+                    <li><strong>Wire the DHT11.</strong> Data line to a GPIO with a pull-up resistor to 3.3V.</li>
+                    <li><strong>Wire the button and LED.</strong> Button on a GPIO with internal pull-up, LED on any
+                        free digital output.</li>
+                    <li><strong>Create the four tasks.</strong> Temperature, LED, Button, and UART, each spun up
+                        with <code>xTaskCreate</code>.</li>
+                    <li><strong>Notify instead of share.</strong> Use <code>xTaskNotify</code> /
+                        <code>ulTaskNotifyTake</code> so no task reaches into another's variables.</li>
+                    <li><strong>Tune the timing.</strong> 200 ms sampling, 100 ms LED pulse, all kept inside the
+                        100 ms / ±5 ms latency budget.</li>
+                </ol>
+
+                <div class="wiring-note">
+                    <strong>Wiring note:</strong> the DHT11 data pin needs a 4.7–10kΩ pull-up resistor to 3.3V to
+                    read reliably. The button uses <code>INPUT_PULLUP</code> so it doesn't float when unpressed.
+                </div>
+
+                <h3 class="subhead">Source Code</h3>
+                <div class="code-frame">
+                    <div class="terminal-bar">
+                        <div class="dot dot-r"></div>
+                        <div class="dot dot-y"></div>
+                        <div class="dot dot-g"></div>
+                        <div class="terminal-title">rtos_temp_alert.ino</div>
+                    </div>
+                    <pre class="code-block"><code>// Project — FreeRTOS Temperature Alert System
+#include &lt;DHT.h&gt;
+
+#define DHT_PIN    4
+#define LED_PIN    2
+#define BUTTON_PIN 15
+#define TEMP_THRESHOLD 30.0
+
+DHT dht(DHT_PIN, DHT11);
+TaskHandle_t ledTaskHandle;
+
+float currentTemp = 0;
+bool alertActive = false;
+
+void TemperatureTask(void* pv) {
+  for (;;) {
+    currentTemp = dht.readTemperature();
+    if (currentTemp &gt;= TEMP_THRESHOLD && !alertActive) {
+      alertActive = true;
+      xTaskNotifyGive(ledTaskHandle);
+    }
+    vTaskDelay(pdMS_TO_TICKS(200));
+  }
+}
+
+void LEDTask(void* pv) {
+  pinMode(LED_PIN, OUTPUT);
+  for (;;) {
+    ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+    digitalWrite(LED_PIN, HIGH);
+    vTaskDelay(pdMS_TO_TICKS(100));
+    digitalWrite(LED_PIN, LOW);
+  }
+}
+
+void ButtonTask(void* pv) {
+  pinMode(BUTTON_PIN, INPUT_PULLUP);
+  for (;;) {
+    if (digitalRead(BUTTON_PIN) == LOW && alertActive) {
+      alertActive = false;
+      vTaskDelay(pdMS_TO_TICKS(250)); // simple debounce
+    }
+    vTaskDelay(pdMS_TO_TICKS(20));
+  }
+}
+
+void UARTTask(void* pv) {
+  for (;;) {
+    Serial.printf("Temp: %.1fC | Threshold: %.1fC | Alert: %s\n",
+                  currentTemp, TEMP_THRESHOLD, alertActive ? "ACTIVE" : "clear");
+    vTaskDelay(pdMS_TO_TICKS(500));
+  }
+}
+
+void setup() {
+  Serial.begin(115200);
+  dht.begin();
+
+  xTaskCreate(LEDTask,         "LEDTask",   2048, NULL, 2, &ledTaskHandle);
+  xTaskCreate(TemperatureTask, "TempTask",  2048, NULL, 1, NULL);
+  xTaskCreate(ButtonTask,      "BtnTask",   2048, NULL, 1, NULL);
+  xTaskCreate(UARTTask,        "UARTTask",  2048, NULL, 1, NULL);
+}
+
+void loop() {
+  // Empty — everything runs inside FreeRTOS tasks
+}</code></pre>
+                </div>
+
+                <ul class="project-highlights" style="margin-bottom: 20px;">
+                    <li>Temperature Task samples every 200 ms and notifies once the reading hits 30°C or above</li>
+                    <li>LED Task stays blocked until notified, then pulses on for 100 ms</li>
+                    <li>Button Task acknowledges the active alert on a single press</li>
+                    <li>UART Task independently logs temperature, threshold, and alert status</li>
+                    <li>Meets a max alert latency of 100 ms with jitter of ±5 ms</li>
+                </ul>
+
+                <h3 class="subhead">Demo Video</h3>
+                <div class="video-frame">
+                    <div class="terminal-bar">
+                        <div class="dot dot-r"></div>
+                        <div class="dot dot-y"></div>
+                        <div class="dot dot-g"></div>
+                        <div class="terminal-title">rtos_temp_alert.mp4</div>
+                    </div>
                     <video controls preload="metadata" poster="assets/iot/images/rtos-circuit-1.jpg">
                         <source src="assets/iot/videos/rtos-demo.mp4" type="video/mp4">
                         Your browser doesn't support embedded video.
@@ -232,31 +1042,153 @@
         </div>
     </section>
 
-    <!-- PROJECT 3: ESP32 OLED + Ultrasonic Game -->
-    <section class="iot-section">
+    <!-- PROJECT 2: ESP32 OLED + Ultrasonic Game -->
+    <section class="iot-section" style="background: var(--tint);" id="prj2">
         <div class="section-inner">
             <div class="iot-project fade-up">
                 <div class="proto-badge">Project</div>
-                <h2 class="edu-degree" style="margin: 8px 0 10px;">ESP32 OLED Display & Ultrasonic Game</h2>
-                <p style="color: var(--ink-muted); line-height: 1.8; margin-bottom: 20px; max-width: 900px;">
-                    Programmed an ESP32 to render our team number (24) on an OLED display over I2C, then built a
-                    simple interactive game driven by an ultrasonic distance sensor — combining display interfacing,
-                    real-time sensor reading, and reaction-based logic on embedded hardware.
+                <h2 class="edu-degree" style="margin: 8px 0 10px;">ESP32 OLED Display &amp; Ultrasonic Game</h2>
+                <p style="color: var(--ink-muted); line-height: 1.8; margin-bottom: 16px; max-width: 900px;">
+                    Two smaller pieces built in one session: rendering our team number on an I2C OLED display, then
+                    a short reaction-based game driven by live ultrasonic distance readings — display interfacing
+                    and real-time sensor input in the same sketch.
                 </p>
 
-                <h4 style="margin-bottom: 10px;">Photos</h4>
-                <div class="iot-gallery">
+                <div class="flow-line">ultrasonic pulse → echo timing → distance → OLED output</div>
+
+                <h3 class="subhead">Components &amp; Hardware</h3>
+                <div class="hw-grid">
+                    <div class="hw-card">
+                        <div class="hw-name">ESP32 DevKit V4</div>
+                        <div class="hw-role">Runs display + sensor</div>
+                    </div>
+                    <div class="hw-card">
+                        <div class="hw-name">SSD1306 OLED (I2C)</div>
+                        <div class="hw-role">128×64 display</div>
+                    </div>
+                    <div class="hw-card">
+                        <div class="hw-name">HC-SR04 Ultrasonic</div>
+                        <div class="hw-role">Distance sensor</div>
+                    </div>
+                </div>
+
+                <h3 class="subhead">How I Built This</h3>
+                <ol class="steps">
+                    <li><strong>Wire the OLED over I2C.</strong> SDA/SCL to the ESP32's default I2C pins.</li>
+                    <li><strong>Wire the ultrasonic sensor.</strong> Trig and Echo to two free digital GPIOs.</li>
+                    <li><strong>Display the team number.</strong> Render "24" on the OLED at startup.</li>
+                    <li><strong>Read live distance.</strong> Trigger a pulse and time the echo to get distance in
+                        cm.</li>
+                    <li><strong>Turn distance into gameplay.</strong> Map a distance threshold into simple reaction
+                        feedback on the display.</li>
+                </ol>
+
+                <div class="wiring-note">
+                    <strong>Wiring note:</strong> the OLED uses the ESP32's default I2C pins (SDA on GPIO21, SCL on
+                    GPIO22). The HC-SR04's Echo pin outputs 5V — a voltage divider or level shifter protects the
+                    ESP32's 3.3V-only GPIO if you're running it from 5V.
+                </div>
+
+                <h3 class="subhead">Source Code</h3>
+                <div class="code-frame">
+                    <div class="terminal-bar">
+                        <div class="dot dot-r"></div>
+                        <div class="dot dot-y"></div>
+                        <div class="dot dot-g"></div>
+                        <div class="terminal-title">oled_ultrasonic_game.ino</div>
+                    </div>
+                    <pre class="code-block"><code>// Project — ESP32 OLED Display & Ultrasonic Reaction Game
+#include &lt;Wire.h&gt;
+#include &lt;Adafruit_SSD1306.h&gt;
+
+#define TRIG_PIN 5
+#define ECHO_PIN 18
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+
+long readDistanceCM() {
+  digitalWrite(TRIG_PIN, LOW);  delayMicroseconds(2);
+  digitalWrite(TRIG_PIN, HIGH); delayMicroseconds(10);
+  digitalWrite(TRIG_PIN, LOW);
+  long duration = pulseIn(ECHO_PIN, HIGH);
+  return duration * 0.034 / 2;
+}
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(TRIG_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
+
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+  display.clearDisplay();
+  display.setTextSize(3);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(30, 20);
+  display.print("24");
+  display.display();
+  delay(1500);
+}
+
+void loop() {
+  long distance = readDistanceCM();
+
+  display.clearDisplay();
+  display.setTextSize(2);
+  display.setCursor(0, 0);
+  display.print(distance);
+  display.println(" cm");
+
+  if (distance &lt; 10) {
+    display.setTextSize(1);
+    display.setCursor(0, 40);
+    display.print("Hit!");
+  }
+  display.display();
+  delay(150);
+}</code></pre>
+                </div>
+
+                <h3 class="subhead">Photos</h3>
+                <div class="iot-gallery" style="margin-bottom: 20px;">
                     <img src="assets/iot/images/esp32-oled-1.jpg" alt="ESP32 OLED display showing team number"
                         loading="lazy">
                 </div>
 
-                <h4 style="margin: 20px 0 10px;">Demo Video</h4>
-                <div class="iot-video-wrap">
+                <h3 class="subhead">Demo Video</h3>
+                <div class="video-frame">
+                    <div class="terminal-bar">
+                        <div class="dot dot-r"></div>
+                        <div class="dot dot-y"></div>
+                        <div class="dot dot-g"></div>
+                        <div class="terminal-title">oled_ultrasonic_game.mp4</div>
+                    </div>
                     <video controls preload="metadata" poster="assets/iot/images/ultrasonic-game-setup.jpg">
                         <source src="assets/iot/videos/ultrasonic-game-demo.mp4" type="video/mp4">
                         Your browser doesn't support embedded video.
                     </video>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- KEY LEARNINGS -->
+    <section class="iot-section" id="learnings">
+        <div class="section-inner">
+            <div class="iot-project fade-up">
+                <div class="proto-badge">Reflection</div>
+                <h2 class="edu-degree" style="margin: 8px 0 16px;">What this run taught me</h2>
+                <ul class="project-highlights">
+                    <li>The ESP32 turned out to be genuinely multi-purpose — display output, sensor input, and
+                        wireless control all on the same board across these builds.</li>
+                    <li>Going local control → voice control → cloud control → sensor automation made it clear that
+                        connected products add complexity in layers, not all at once.</li>
+                    <li>FreeRTOS task notifications are a much cleaner way to signal between tasks than shared
+                        variables — there's no race condition to reason about.</li>
+                    <li>Setting the timing budget — sampling rate, alert deadline, jitter tolerance — before writing
+                        any code forced far more precision than starting from the code itself.</li>
+                </ul>
             </div>
         </div>
     </section>

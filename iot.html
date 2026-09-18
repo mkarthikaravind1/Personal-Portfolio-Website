@@ -747,10 +747,19 @@ void loop() {
                 <p style="color: var(--ink-muted); line-height: 1.8; margin-bottom: 16px; max-width: 900px;">
                     The closing experiment takes the person out of the loop. An LDR reads ambient light and the
                     board decides on its own whether the bulb should be on — no button, no voice command, no remote
-                    trigger, just the system responding to its environment.
+                    trigger, just the system responding to its environment. Every earlier experiment needed a human
+                    or a cloud request to act as the trigger; this one closes the loop entirely on-device.
                 </p>
 
                 <div class="flow-line">ambient light → LDR reading → threshold check → relay → bulb</div>
+
+                <h3 class="subhead">Learning Objectives</h3>
+                <ul class="project-highlights" style="margin-bottom: 20px;">
+                    <li>Read a continuous analog signal instead of reacting to a single discrete event</li>
+                    <li>Convert a raw ADC value into a simple on/off decision using a threshold</li>
+                    <li>Reuse an existing actuator (the Experiment 2 relay) with an entirely new trigger source</li>
+                    <li>Understand why threshold-based automation still needs a person to calibrate it once</li>
+                </ul>
 
                 <h3 class="subhead">Components &amp; Hardware</h3>
                 <div class="hw-grid">
@@ -766,6 +775,33 @@ void loop() {
                         <div class="hw-name">Relay + Bulb</div>
                         <div class="hw-role">Reused from Exp. 2</div>
                     </div>
+                </div>
+
+                <div class="wiring-note" style="margin-bottom: 20px;">
+                    <strong>Key specifications — LDR module:</strong> analog light sensor · output range 0–4095 on
+                    the ESP32's 12-bit ADC · higher reading means a darker room · powered from 3.3V · not a
+                    calibrated lux value, just a relative brightness reading.
+                </div>
+
+                <h3 class="subhead">Wiring Architecture</h3>
+                <div class="code-frame">
+                    <div class="terminal-bar">
+                        <div class="dot dot-r"></div>
+                        <div class="dot dot-y"></div>
+                        <div class="dot dot-g"></div>
+                        <div class="terminal-title">wiring_diagram.txt</div>
+                    </div>
+                    <pre class="code-block"><code>            ESP32 DevKit
+          ┌───────────────────┐
+          │                   │
+  LDR AO ─┤ GPIO34 (ADC-only) │
+  LDR VCC ┤ 3.3V              │
+  LDR GND ┤ GND               │
+          │                   │
+          │ GPIO26 ───────────┼──── Relay IN
+          └───────────────────┘
+                                Relay COM/NO → Bulb
+                                (same circuit as Experiment 2)</code></pre>
                 </div>
 
                 <h3 class="subhead">How I Built This</h3>
@@ -794,22 +830,83 @@ void loop() {
 #define LDR_PIN   34   // ADC-only input pin
 #define RELAY_PIN 26
 
-int threshold = 2500;  // tune to the room's lighting
+int threshold  = 2500;  // tune to the room's lighting
+int hysteresis = 150;   // gap around the threshold so the relay doesn't chatter
+bool bulbState = false;
 
 void setup() {
   Serial.begin(115200);
   pinMode(RELAY_PIN, OUTPUT);
+  digitalWrite(RELAY_PIN, LOW);
+  Serial.println("LDR automation ready.");
+  Serial.printf("Threshold: %d (+/- %d)\n", threshold, hysteresis);
 }
 
 void loop() {
   int lightLevel = analogRead(LDR_PIN);
-  bool shouldBeOn = lightLevel &gt; threshold;
 
-  digitalWrite(RELAY_PIN, shouldBeOn ? HIGH : LOW);
-  Serial.printf("LDR: %d -> Bulb %s\n", lightLevel, shouldBeOn ? "ON" : "OFF");
+  if (!bulbState && lightLevel &gt; threshold + hysteresis) {
+    bulbState = true;
+    digitalWrite(RELAY_PIN, HIGH);
+  } else if (bulbState && lightLevel &lt; threshold - hysteresis) {
+    bulbState = false;
+    digitalWrite(RELAY_PIN, LOW);
+  }
 
+  Serial.printf("LDR: %d -> Bulb %s\n", lightLevel, bulbState ? "ON" : "OFF");
   delay(500);
 }</code></pre>
+                </div>
+
+                <h3 class="subhead">Code Breakdown</h3>
+                <ul class="project-highlights" style="margin-bottom: 20px;">
+                    <li><code>analogRead(LDR_PIN)</code> — reads the raw light level from the 12-bit ADC (0–4095)</li>
+                    <li><code>threshold</code> — the raw value that separates "dark enough" from "bright enough";
+                        tuned by trial and error for the room it sits in</li>
+                    <li><code>hysteresis</code> — a small buffer zone around the threshold so a reading hovering
+                        right at the line doesn't flip the relay on and off repeatedly</li>
+                    <li><code>bulbState</code> — tracked in code rather than re-derived every loop, so the
+                        hysteresis check has something to compare against</li>
+                    <li><code>digitalWrite(RELAY_PIN, ...)</code> — drives the exact relay wired in Experiment 2</li>
+                    <li><code>delay(500)</code> — a simple 500 ms sampling interval; no interrupts needed for a
+                        signal that changes this slowly</li>
+                </ul>
+
+                <h3 class="subhead">Testing &amp; Results</h3>
+                <div class="code-frame">
+                    <div class="terminal-bar">
+                        <div class="dot dot-r"></div>
+                        <div class="dot dot-y"></div>
+                        <div class="dot dot-g"></div>
+                        <div class="terminal-title">Serial Monitor — 115200 baud</div>
+                    </div>
+                    <pre class="code-block"><code>LDR: 3421 -> Bulb ON
+LDR: 3390 -> Bulb ON
+LDR: 2810 -> Bulb ON
+LDR: 1875 -> Bulb OFF
+LDR: 1690 -> Bulb OFF
+LDR: 1640 -> Bulb OFF
+LDR: 2760 -> Bulb ON</code></pre>
+                </div>
+                <p style="color: var(--ink-muted); line-height: 1.8; margin-bottom: 20px; max-width: 900px;">
+                    The bulb reacts as soon as a reading crosses the threshold — at a 500 ms sampling rate the
+                    switch feels immediate to a person in the room, with no noticeable lag.
+                </p>
+
+                <h3 class="subhead">Key Learnings</h3>
+                <div class="hw-grid" style="margin-bottom: 20px;">
+                    <div class="hw-card">
+                        <div class="hw-name">Analog Sensing</div>
+                        <div class="hw-role">A continuous signal, not a single event</div>
+                    </div>
+                    <div class="hw-card">
+                        <div class="hw-name">Threshold Tuning</div>
+                        <div class="hw-role">Picking a value that fits the room</div>
+                    </div>
+                    <div class="hw-card">
+                        <div class="hw-name">Autonomous Logic</div>
+                        <div class="hw-role">The board decides, no trigger needed</div>
+                    </div>
                 </div>
 
                 <h3 class="subhead">Demo Video</h3>
@@ -882,7 +979,7 @@ void loop() {
     </section>
 
     <!-- PROJECT 1: FreeRTOS Temperature Alert System -->
-    <section class="iot-section" id="prj1">
+    <!-- <section class="iot-section" id="prj1">
         <div class="section-inner">
             <div class="iot-project fade-up">
                 <div class="proto-badge">Project</div>
@@ -1037,7 +1134,7 @@ void loop() {
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <!-- PROJECT 2: ESP32 OLED + Ultrasonic Game -->
     <section class="iot-section" style="background: var(--tint);" id="prj2">

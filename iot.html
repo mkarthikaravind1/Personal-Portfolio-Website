@@ -364,6 +364,27 @@
                     <strong>Wiring:</strong> none needed — this uses the LED already wired to the board.
                 </div>
 
+                <h3 class="subhead">Core Concepts</h3>
+                <p style="color: var(--ink-muted); line-height: 1.8; margin-bottom: 16px; max-width: 900px;">
+                    A GPIO (General Purpose Input/Output) pin can be set as an output and driven HIGH (3.3V) or
+                    LOW (0V) in software. Blinking an LED is really just toggling that voltage on a timer —
+                    <code>digitalWrite()</code> sets the pin state, and <code>delay()</code> controls how long it
+                    holds before switching. This experiment exists to prove the upload pipeline (IDE → board
+                    driver → flash memory → running sketch) works before anything more complex is layered on.
+                </p>
+                
+                <h3 class="subhead">System Design</h3>
+                <div class="code-frame">
+                    <div class="terminal-bar">
+                        <div class="dot dot-r"></div>
+                        <div class="dot dot-y"></div>
+                        <div class="dot dot-g"></div>
+                        <div class="terminal-title">system-design.txt</div>
+                    </div>
+                    <pre
+                        class="code-block"><code>Arduino IDE  ──upload──▶  ESP32 Flash  ──run──▶  loop()  ──GPIO2──▶  Onboard LED</code></pre>
+                </div>
+
                 <h3 class="subhead">Source Code</h3>
                 <div class="code-frame">
                     <div class="terminal-bar">
@@ -404,6 +425,22 @@ void loop() {
                         Your browser doesn't support embedded video.
                     </video>
                 </div>
+
+                <h3 class="subhead">Challenges &amp; Fixes</h3>
+                <p style="color: var(--ink-muted); line-height: 1.8; margin-bottom: 16px; max-width: 900px;">
+                    The board wasn't detected on the first upload attempt — the Boards Manager hadn't finished
+                    installing ESP32 support, so the port list stayed empty. Reinstalling the ESP32 board
+                    package and re-selecting "ESP32 Dev Module" fixed it.
+                </p>
+                
+                <h3 class="subhead">Reflection</h3>
+                <p style="color: var(--ink-muted); line-height: 1.8; margin-bottom: 16px; max-width: 900px;">
+                    This was less about the LED and more about getting the whole upload chain — IDE, board
+                    package, driver, port — working reliably, since every later experiment depends on it.
+                </p>
+                
+                <a href="https://github.com/mkarthikaravind1/IoT-Embedded-Works/tree/main/exp1-led-blink" target="_blank"
+                    rel="noopener noreferrer" class="assign-link">View Repository →</a>
             </div>
         </div>
     </section>
@@ -461,6 +498,28 @@ void loop() {
                     relay's low-voltage side (VCC / GND / IN) connects to the ESP32; its high-voltage side (COM / NO)
                     sits in series with the bulb's live wire. Always wire and check this side with the bulb unplugged
                     from the wall first.
+                </div>
+
+                <h3 class="subhead">Core Concepts</h3>
+                <p style="color: var(--ink-muted); line-height: 1.8; margin-bottom: 16px; max-width: 900px;">
+                    The ESP32 runs a tiny HTTP server on port 80 using <code>WebServer.h</code>. A browser on the
+                    same Wi-Fi network sends a GET request to a route like <code>/api/on</code>; the ESP32 matches
+                    that route to a handler function and flips a GPIO connected to a relay. The relay acts as an
+                    electrically isolated switch, letting a 3.3V logic signal control a mains-powered bulb safely.
+                </p>
+                
+                <h3 class="subhead">System Design</h3>
+                <div class="code-frame">
+                    <div class="terminal-bar">
+                        <div class="dot dot-r"></div>
+                        <div class="dot dot-y"></div>
+                        <div class="dot dot-g"></div>
+                        <div class="terminal-title">system-design.txt</div>
+                    </div>
+                    <pre class="code-block"><code>Browser (button click)
+                     │  HTTP GET /api/on
+                     ▼
+                ESP32 WebServer  ──GPIO26──▶  Relay Module  ──COM/NO──▶  Bulb</code></pre>
                 </div>
 
                 <h3 class="subhead">Source Code</h3>
@@ -540,6 +599,24 @@ void loop() {
                         Your browser doesn't support embedded video.
                     </video>
                 </div>
+
+                <h3 class="subhead">Challenges &amp; Fixes</h3>
+                <p style="color: var(--ink-muted); line-height: 1.8; margin-bottom: 16px; max-width: 900px;">
+                    The relay clicked but the bulb stayed off on the first test — the relay board was wired in
+                    the Normally Closed (NC) position instead of Normally Open (NO), so the bulb was live only
+                    when the relay was de-energized. Rewiring to NO fixed the ON/OFF logic.
+                </p>
+                
+                <h3 class="subhead">Reflection</h3>
+                <p style="color: var(--ink-muted); line-height: 1.8; margin-bottom: 16px; max-width: 900px;">
+                    This was the first experiment where a software action (a button click) produced a real-world,
+                    mains-adjacent effect — it made the relay's role as a safety boundary between logic and load
+                    very concrete.
+                </p>
+                
+                <a href="https://github.com/mkarthikaravind1/IoT-Embedded-Works/tree/main/exp2-local-web-control" target="_blank"
+                    rel="noopener noreferrer" class="assign-link">View Repository →</a>
+
             </div>
         </div>
     </section>
@@ -591,7 +668,28 @@ void loop() {
                     exactly. Nothing new to connect.
                 </div>
 
-                <h3 class="subhead">Applet Configuration</h3>
+                <h3 class="subhead">Core Concepts</h3>
+                <p style="color: var(--ink-muted); line-height: 1.8; margin-bottom: 16px; max-width: 900px;">
+                    IFTTT (If This Then That) connects a trigger service to an action service without writing a
+                    backend. Here, Google Assistant recognizing a spoken phrase is the trigger, and a Webhooks
+                    action fires a plain HTTP GET request — the same request a browser button would send in
+                    Experiment 2. Voice control didn't need new firmware; it just added a new way to call an
+                    endpoint that already existed.
+                </p>
+                
+                <h3 class="subhead">System Design</h3>
+                <div class="code-frame">
+                    <div class="terminal-bar">
+                        <div class="dot dot-r"></div>
+                        <div class="dot dot-y"></div>
+                        <div class="dot dot-g"></div>
+                        <div class="terminal-title">system-design.txt</div>
+                    </div>
+                    <pre class="code-block"><code>"Turn on the bulb" ──▶ Google Assistant ──▶ IFTTT Applet
+                        ──Webhooks GET /api/on──▶ ESP32 (Exp. 2 endpoint) ──▶ Relay ──▶ Bulb</code></pre>
+                </div>
+
+                <h3 class="subhead">Configuration</h3>
                 <div class="code-frame">
                     <div class="terminal-bar">
                         <div class="dot dot-r"></div>
@@ -622,6 +720,24 @@ Content Type : text/plain
                         Your browser doesn't support embedded video.
                     </video>
                 </div>
+
+                <h3 class="subhead">Challenges &amp; Fixes</h3>
+                <p style="color: var(--ink-muted); line-height: 1.8; margin-bottom: 16px; max-width: 900px;">
+                    IFTTT's Webhooks service couldn't reach the ESP32's local IP directly from the cloud — local
+                    IPs aren't reachable from outside the home network. This needed either a port-forwarded
+                    router rule or a tunnel exposing the local endpoint, since the ESP32 itself had no public
+                    address.
+                </p>
+                
+                <h3 class="subhead">Reflection</h3>
+                <p style="color: var(--ink-muted); line-height: 1.8; margin-bottom: 16px; max-width: 900px;">
+                    This experiment showed that "voice control" is mostly a routing problem — the hard part
+                    wasn't understanding speech, it was getting an external trigger to reach a device sitting on
+                    a private network.
+                </p>
+                
+                <a href="https://github.com/mkarthikaravind1/IoT-Embedded-Works/tree/main/exp3-voice-control" target="_blank"
+                    rel="noopener noreferrer" class="assign-link">View Repository →</a>
             </div>
         </div>
     </section>
@@ -674,6 +790,39 @@ Content Type : text/plain
                     <strong>Wiring:</strong> identical to Experiment 2's relay/bulb circuit — this step changes the
                     software path only.
                 </div>
+
+                <h3 class="subhead">Core Concepts</h3>
+                <p style="color: var(--ink-muted); line-height: 1.8; margin-bottom: 16px; max-width: 900px;">
+                    Firebase Realtime Database stores data as JSON and pushes live updates to every connected
+                    client. Instead of the ESP32 waiting for direct HTTP requests (Exp. 2's model), it opens a
+                    persistent stream on a database path and reacts whenever that value changes — from anywhere
+                    with internet access, not just the local network.
+                </p>
+                
+                <h3 class="subhead">System Design</h3>
+                <div class="code-frame">
+                    <div class="terminal-bar">
+                        <div class="dot dot-r"></div>
+                        <div class="dot dot-y"></div>
+                        <div class="dot dot-g"></div>
+                        <div class="terminal-title">system-design.txt</div>
+                    </div>
+                    <pre class="code-block"><code>Web App ──writes true/false──▶ Firebase Realtime DB (/appliances/bulbState)
+                                                        │ stream push
+                                                        ▼
+                                          ESP32 (Firebase_ESP_Client) ──GPIO26──▶ Relay ──▶ Bulb</code></pre>
+                </div>
+                
+                <h3 class="subhead">Configuration</h3>
+                <ol class="steps">
+                    <li><strong>Create a Firebase project.</strong> console.firebase.google.com → Add project.</li>
+                    <li><strong>Enable Realtime Database.</strong> Build → Realtime Database → Create database,
+                        started in test mode.</li>
+                    <li><strong>Grab credentials.</strong> Project Settings for the Web API key, and the database
+                        URL from the Realtime Database console.</li>
+                    <li><strong>Seed the initial path.</strong> Manually add <code>/appliances/bulbState: false</code>
+                        so the ESP32 has a value to stream on first boot.</li>
+                </ol>
 
                 <h3 class="subhead">Source Code</h3>
                 <div class="code-frame">
@@ -734,6 +883,24 @@ void loop() {
                         Your browser doesn't support embedded video.
                     </video>
                 </div>
+
+                <h3 class="subhead">Challenges &amp; Fixes</h3>
+                <p style="color: var(--ink-muted); line-height: 1.8; margin-bottom: 16px; max-width: 900px;">
+                    Leaving the database in test mode meant anyone with the URL could write to it. For anything
+                    beyond a class demo, database rules would need to require authentication before allowing
+                    writes to <code>/appliances/bulbState</code>.
+                </p>
+                
+                <h3 class="subhead">Reflection</h3>
+                <p style="color: var(--ink-muted); line-height: 1.8; margin-bottom: 16px; max-width: 900px;">
+                    Moving from local HTTP to a cloud database changed the ESP32's role from a server answering
+                    requests to a client subscribing to state — a genuinely different architecture, not just a
+                    different address to call.
+                </p>
+                
+                <a href="https://github.com/mkarthikaravind1/IoT-Embedded-Works/tree/main/exp4-firebase-control" target="_blank"
+                    rel="noopener noreferrer" class="assign-link">View Repository →</a>
+
             </div>
         </div>
     </section>
@@ -909,6 +1076,14 @@ LDR: 2760 -> Bulb ON</code></pre>
                     </div>
                 </div>
 
+                <h3 class="subhead">Challenges &amp; Fixes</h3>
+                <p style="color: var(--ink-muted); line-height: 1.8; margin-bottom: 16px; max-width: 900px;">
+                    With a single threshold, the relay chattered — rapidly clicking on/off — whenever ambient
+                    light hovered right at the cutoff (e.g. a cloud passing over). Adding the
+                    <code>hysteresis</code> buffer around the threshold fixed it by requiring the light level to
+                    clear the threshold by a margin before switching state.
+                </p>
+
                 <h3 class="subhead">Demo Video</h3>
                 <div class="video-frame">
                     <div class="terminal-bar">
@@ -922,6 +1097,16 @@ LDR: 2760 -> Bulb ON</code></pre>
                         Your browser doesn't support embedded video.
                     </video>
                 </div>
+
+                <h3 class="subhead">Reflection</h3>
+                <p style="color: var(--ink-muted); line-height: 1.8; margin-bottom: 16px; max-width: 900px;">
+                    This was the first build with no human or cloud trigger at all — the logic lived entirely on
+                    the device. It also made clear that "automatic" still means a person had to calibrate the
+                    threshold for the specific room first.
+                </p>
+                
+                <a href="https://github.com/mkarthikaravind1/IoT-Embedded-Works/tree/main/exp5-ldr-automation" target="_blank"
+                    rel="noopener noreferrer" class="assign-link">View Repository →</a>
             </div>
         </div>
     </section>
@@ -1183,6 +1368,27 @@ void loop() {
                     ESP32's 3.3V-only GPIO if you're running it from 5V.
                 </div>
 
+                <h3 class="subhead">Core Concepts</h3>
+                <p style="color: var(--ink-muted); line-height: 1.8; margin-bottom: 16px; max-width: 900px;">
+                    The HC-SR04 measures distance by timing a sound pulse: it sends an ultrasonic burst on
+                    <code>TRIG</code> and the <code>ECHO</code> pin stays HIGH for exactly as long as the sound
+                    took to bounce back. Multiplying that time by the speed of sound (and halving it for the
+                    round trip) gives distance. The OLED is driven over I2C, a two-wire protocol (SDA/SCL) that
+                    lets the ESP32 address and update the display without a dedicated pin per pixel.
+                </p>
+                
+                <h3 class="subhead">System Design</h3>
+                <div class="code-frame">
+                    <div class="terminal-bar">
+                        <div class="dot dot-r"></div>
+                        <div class="dot dot-y"></div>
+                        <div class="dot dot-g"></div>
+                        <div class="terminal-title">system-design.txt</div>
+                    </div>
+                    <pre
+                        class="code-block"><code>HC-SR04 ──pulseIn(ECHO)──▶ ESP32 ──distance calc──▶ SSD1306 OLED (I2C: SDA21/SCL22)</code></pre>
+                </div>
+
                 <h3 class="subhead">Source Code</h3>
                 <div class="code-frame">
                     <div class="terminal-bar">
@@ -1263,6 +1469,23 @@ void loop() {
                         Your browser doesn't support embedded video.
                     </video>
                 </div>
+
+                <h3 class="subhead">Challenges &amp; Fixes</h3>
+                <p style="color: var(--ink-muted); line-height: 1.8; margin-bottom: 16px; max-width: 900px;">
+                    The HC-SR04's ECHO pin outputs 5V logic, but the ESP32's GPIOs are only 3.3V-tolerant.
+                    Running it without a level shifter risked damaging the pin — a simple resistor voltage
+                    divider on the ECHO line brought it down to a safe ~3.3V before wiring it in.
+                </p>
+                
+                <h3 class="subhead">Reflection</h3>
+                <p style="color: var(--ink-muted); line-height: 1.8; margin-bottom: 16px; max-width: 900px;">
+                    Combining a display and a sensor in one sketch was a good forcing function for writing
+                    non-blocking-ish code — the display refresh and the sensor read both had to happen inside the
+                    same loop without either one stalling the other.
+                </p>
+                
+                <a href="https://github.com/mkarthikaravind1/IoT-Embedded-Works/tree/main/prj2-oled-ultrasonic-game"
+                    target="_blank" rel="noopener noreferrer" class="assign-link">View Repository →</a>
             </div>
         </div>
     </section>

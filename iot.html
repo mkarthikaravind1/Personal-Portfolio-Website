@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="style.css" />
     <meta name="description"
         content="IoT & embedded systems work by Karthik Aravind M — ESP32 and Arduino experiments spanning Wi-Fi control, voice and cloud automation, sensor-driven closed loops, and FreeRTOS task design." />
-    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
 
     <!-- Page-scoped additions on top of style.css -->
     <style>
@@ -235,7 +235,6 @@
 <body>
     <div id="scroll-progress"></div>
 
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
     <nav id="navbar">
         <a class="nav-logo" href="index.html#hero">KAM<span>.</span></a>
         <ul class="nav-links">
@@ -248,6 +247,7 @@
             <li><a href="index.html#certifications" class="nav-link">Certifications</a></li>
             <li><a href="index.html#contact" class="nav-cta nav-link">Contact Me</a></li>
         </ul>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
     </nav>
 
     <!-- IOT HERO -->
@@ -273,7 +273,7 @@
                 </div>
                 <div class="stat-item">
                     <div class="stat-num">1</div>
-                    <div class="stat-label">Standalone Projects</div>
+                    <div class="stat-label">Standalone Project</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-num">ESP32</div>
@@ -296,7 +296,7 @@
                     <a href="#exp4" class="chip chip-link">Experiment 4</a>
                     <a href="#exp5" class="chip chip-link">Experiment 5</a>
                     <!-- <a href="#prj1" class="chip chip-link">Project 1</a> -->
-                    <a href="#prj2" class="chip chip-link">Project 2</a>
+                    <a href="#prj2" class="chip chip-link">Project 1</a>
                 </div>
             </div>
 
@@ -593,7 +593,7 @@ void loop() {
                         <div class="dot dot-g"></div>
                         <div class="terminal-title">exp2_local_web_control.mp4</div>
                     </div>
-                    <video controls preload="metadata" poster="assets/iot/images/exp2-website-1.jpg">
+                    <video controls preload="metadata">
                         <source src="assets/iot/videos/Karthik_Aravind_M_Assignment - 2.mp4" type="video/mp4">
                         Your browser doesn't support embedded video.
                     </video>
@@ -714,7 +714,7 @@ Content Type : text/plain
                         <div class="dot dot-g"></div>
                         <div class="terminal-title">exp3_voice_control.mp4</div>
                     </div>
-                    <video controls preload="metadata" poster="assets/iot/images/exp3-voice-1.jpg">
+                    <video controls preload="metadata">
                         <source src="assets/iot/videos/Karthik_Aravind_M_Assignment - 3.mp4" type="video/mp4">
                         Your browser doesn't support embedded video.
                     </video>
@@ -877,7 +877,7 @@ void loop() {
                         <div class="dot dot-g"></div>
                         <div class="terminal-title">exp4_firebase_control.mp4</div>
                     </div>
-                    <video controls preload="metadata" poster="assets/iot/images/exp4-firebase-1.jpg">
+                    <video controls preload="metadata">
                         <source src="assets/iot/videos/Karthik_Aravind_M_Assignment - 4.mp4" type="video/mp4">
                         Your browser doesn't support embedded video.
                     </video>
@@ -1091,7 +1091,7 @@ LDR: 2760 -> Bulb ON</code></pre>
                         <div class="dot dot-g"></div>
                         <div class="terminal-title">exp5_ldr_automation.mp4</div>
                     </div>
-                    <video controls preload="metadata" poster="assets/iot/images/exp5-ldr-1.jpg">
+                    <video controls preload="metadata">
                         <source src="assets/iot/videos/Karthik_Aravind_M_Assignment - 5.mp4" type="video/mp4">
                         Your browser doesn't support embedded video.
                     </video>
@@ -1463,7 +1463,7 @@ void loop() {
                         <div class="dot dot-g"></div>
                         <div class="terminal-title">oled_ultrasonic_game.mp4</div>
                     </div>
-                    <video controls preload="metadata" poster="assets/iot/images/ultrasonic-game-setup.jpg">
+                    <video controls preload="metadata">
                         <source src="assets/iot/videos/ultrasonic-game-demo.mp4" type="video/mp4">
                         Your browser doesn't support embedded video.
                     </video>
@@ -1500,10 +1500,10 @@ void loop() {
                         wireless control all on the same board across these builds.</li>
                     <li>Going local control → voice control → cloud control → sensor automation made it clear that
                         connected products add complexity in layers, not all at once.</li>
-                    <li>FreeRTOS task notifications are a much cleaner way to signal between tasks than shared
-                        variables — there's no race condition to reason about.</li>
-                    <li>Setting the timing budget — sampling rate, alert deadline, jitter tolerance — before writing
-                        any code forced far more precision than starting from the code itself.</li>
+                    <li>A relay is the safety boundary between 3.3V logic and a mains load — wiring it correctly
+                        (NO vs NC) matters as much as the code that drives it.</li>
+                    <li>Sensor-driven automation still needs tuning: the LDR build only became stable once hysteresis
+                        was added around the threshold.</li>
                 </ul>
             </div>
         </div>
@@ -1536,8 +1536,12 @@ void loop() {
                 }
             }
             window.addEventListener('scroll', handleScroll);
+            handleScroll();
             scrollTopBtn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
             navToggle?.addEventListener('click', () => navLinksEl?.classList.toggle('open'));
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', () => navLinksEl?.classList.remove('open'));
+            });
 
             // Fade-up animation
             const observer = new IntersectionObserver((entries, obs) => {

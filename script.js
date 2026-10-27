@@ -1,11 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   emailjs.init('mSj_k6cCVJ_s9yJkU');
 
-  // 1. Custom Cursor Tracking
-  const cursor = document.getElementById('cursor');
-  const cursorRing = document.getElementById('cursor-ring');
-
-  // 2. Typewriter Effect
+  // 1. Typewriter Effect
   const words = ['AI & Full-Stack Developer', 'Innovation Engineer Trainee', 'LangGraph & RAG Engineer'];
   let wordIndex = 0;
   let charIndex = 0;
@@ -39,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   type();
 
-  // 3. ProtoSem Tab Switcher
+  // 2. ProtoSem Tab Switcher
   const protoTabs = document.querySelectorAll('.proto-tab');
   const protoPanels = document.querySelectorAll('.proto-panel');
 
@@ -53,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 4. Combined Scroll Handlers
+  // 3. Combined Scroll Handlers
   const navbar = document.getElementById('navbar');
   const scrollTopBtn = document.getElementById('scroll-top');
   const progressBar = document.getElementById('scroll-progress');
@@ -61,8 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const navLinks = document.querySelectorAll('.nav-link');
   const navToggle = document.getElementById('navToggle');
   const navLinksEl = document.querySelector('.nav-links');
-
-  // FIX: ticking declared OUTSIDE the listener so it persists between events
 
   function handleScroll() {
     const scrollY = window.scrollY;
@@ -106,7 +100,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   window.addEventListener('scroll', handleScroll);
-  
+  handleScroll();
+
   scrollTopBtn?.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
@@ -119,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
     link.addEventListener('click', () => navLinksEl?.classList.remove('open'));
   });
 
-  // 5. Smooth Scroll for Nav Links
+  // 4. Smooth Scroll for Nav Links
   navLinks.forEach(link => {
     link.addEventListener('click', function (e) {
       const targetId = this.getAttribute('href');
@@ -140,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 6. Scroll Intersection Observer (Fade-In Animation)
+  // 5. Scroll Intersection Observer (Fade-In Animation)
   const observerOptions = { threshold: 0.15 };
 
   const observer = new IntersectionObserver((entries, obs) => {
@@ -154,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-  // 7. Contact Form Handler
+  // 6. Contact Form Handler
 const contactForm = document.getElementById('contactForm');
 const formStatus = document.getElementById('formStatus');
 

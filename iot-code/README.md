@@ -8,7 +8,7 @@ ESP32 firmware and web code for the five ProtoSem IoT tasks. The write-up, wirin
 | `task2-adafruit-mqtt/` | Adafruit IO dashboard & MQTT | `task2_adafruit_mqtt.ino` |
 | `task3-ifttt-adafruit/` | IFTTT + Adafruit IO automation | `task3_ifttt_adafruit.ino`, `ifttt_applets.md` |
 | `task4-firebase-dashboard/` | Firebase login + monitoring dashboard | `firmware/`, `web/` (login, dashboard), `firestore.rules`, `firebase.json` |
-| `task5-logging-automation/` | DHT11 + LDR, auto/manual mode, Firestore logging, chart, CSV | `firmware/`, `calibration/`, `web/` |
+| `task5-logging-automation/` | DHT11 + LDR, auto/manual mode, Firestore logging (`readings` collection), chart, CSV | `firmware/`, `calibration/`, `web/` |
 
 ## Pin map
 

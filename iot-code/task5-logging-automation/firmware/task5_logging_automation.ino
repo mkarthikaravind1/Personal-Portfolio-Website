@@ -6,7 +6,8 @@
 //
 // Every 2 s : read control/device (mode, bulbState, threshold) and apply it
 // Every 5 s : update sensors/current with the latest readings
-// Every 30 s: append a timestamped entry to the logs collection
+// Every 3 min: append a timestamped entry to the readings collection
+//              (document ID = local date + time, e.g. readings/sep11_1745)
 //
 // Automatic mode uses hysteresis around the dashboard threshold:
 //   LDR < threshold - 50  -> dark   -> bulb ON
@@ -39,7 +40,7 @@
 
 const unsigned long CONTROL_MS = 2000;
 const unsigned long SENSOR_MS  = 5000;
-const unsigned long LOG_MS     = 30000;
+const unsigned long LOG_MS     = 180000;   // 3 minutes
 
 DHT dht(DHT_PIN, DHT_TYPE);
 FirebaseData fbdo;
@@ -134,20 +135,21 @@ void applyLogic() {
   }
 }
 
-// Fills the shared field set used by both sensors/current and logs/*
-void fillFields(FirebaseJson& c) {
+// Fills the shared field set used by sensors/current and readings/*.
+// The threshold is only stored on sensors/current.
+void fillFields(FirebaseJson& c, bool withThreshold) {
   c.set("fields/temperature/doubleValue", isnan(temperature) ? 0 : temperature);
   c.set("fields/humidity/doubleValue", isnan(humidity) ? 0 : humidity);
   c.set("fields/ldr/integerValue", String(ldrValue));
   c.set("fields/bulbState/booleanValue", bulbState);
   c.set("fields/mode/stringValue", mode);
-  c.set("fields/threshold/integerValue", String(threshold));
+  if (withThreshold) c.set("fields/threshold/integerValue", String(threshold));
   c.set("fields/timestamp/timestampValue", isoTimestamp());
 }
 
 void updateCurrent() {
   FirebaseJson c;
-  fillFields(c);
+  fillFields(c, true);
   if (!Firebase.Firestore.patchDocument(&fbdo, FIREBASE_PROJECT_ID, "", "sensors/current", c.raw(),
                                         "temperature,humidity,ldr,bulbState,mode,threshold,timestamp")) {
     Serial.println("sensors/current write failed: " + fbdo.errorReason());
@@ -156,10 +158,15 @@ void updateCurrent() {
 
 void appendLog() {
   FirebaseJson c;
-  fillFields(c);
+  fillFields(c, false);
+
+  // Readable, unique-per-3-minutes ID in local time: "sep11_1745"
   time_t now;
   time(&now);
-  String path = "logs/" + String((unsigned long)now);   // epoch seconds = sortable, unique per 30 s
+  char id[16];
+  strftime(id, sizeof(id), "%b%d_%H%M", localtime(&now));
+  for (char* p = id; *p; p++) *p = tolower(*p);
+  String path = "readings/" + String(id);
   if (Firebase.Firestore.createDocument(&fbdo, FIREBASE_PROJECT_ID, "", path.c_str(), c.raw())) {
     Serial.println("Logged -> " + path);
   } else {
@@ -182,7 +189,8 @@ void setup() {
   }
   Serial.println("\nWi-Fi connected: " + WiFi.localIP().toString());
 
-  configTime(0, 0, "pool.ntp.org", "time.google.com");
+  // IST (UTC+5:30) so reading IDs use local time; timestamps stay in UTC
+  configTime(19800, 0, "pool.ntp.org", "time.google.com");
   Serial.print("Syncing time");
   while (time(nullptr) < 1700000000) {
     delay(300);

@@ -997,7 +997,7 @@ void loop() {
             <div class="iot-project">
                 <div class="proto-badge">IoT Task 3</div>
                 <h2 class="edu-degree" style="margin: 8px 0 10px;">IFTTT + Adafruit IO IoT Automation</h2>
-                <div class="flow-line">"Hey Google, bulb on" → IFTTT applet → Adafruit IO feed → MQTT → ESP32 → bulb</div>
+                <div class="flow-line">"Okay Google, activate Bulb On" → IFTTT applet → Adafruit IO feed → MQTT → ESP32 → bulb</div>
 
                 <h3 class="subhead">Objective of the IoT Automation</h3>
                 <p class="prose">
@@ -1023,7 +1023,7 @@ void loop() {
 
                 <h3 class="subhead">Trigger → Action Concept</h3>
                 <div class="concept-grid">
-                    <div class="concept"><h4>Trigger ("If This")</h4><p>The event IFTTT watches for. Here: <b>Google Assistant: activate scene "bulb on"</b>, said on the phone.</p></div>
+                    <div class="concept"><h4>Trigger ("If This")</h4><p>The event IFTTT watches for. Here: <b>Google Assistant: activate scene "Bulb On"</b>, said on the phone.</p></div>
                     <div class="concept"><h4>Action ("Then That")</h4><p>What IFTTT does when the trigger fires. Here: <b>Adafruit: send data to Adafruit IO</b>, which writes <code>ON</code> into the <code>bulb</code> feed.</p></div>
                     <div class="concept"><h4>Role of Adafruit IO</h4><p>The bridge between IFTTT and the device. IFTTT can't reach an ESP32 on a hotspot, but it can write to a feed. Adafruit IO then pushes that value to the ESP32 over MQTT.</p></div>
                 </div>
@@ -1041,17 +1041,20 @@ void loop() {
                     <table class="compare-table">
                         <thead><tr><th>Applet</th><th>Trigger (If This)</th><th>Action (Then That)</th><th>Feed → Value</th></tr></thead>
                         <tbody>
-                            <tr><td>Bulb ON</td><td>Google Assistant: "bulb on"</td><td>Adafruit: send data to Adafruit IO</td><td><code>bulb</code> → <code>ON</code></td></tr>
-                            <tr><td>Bulb OFF</td><td>Google Assistant: "bulb off"</td><td>Adafruit: send data to Adafruit IO</td><td><code>bulb</code> → <code>OFF</code></td></tr>
+                            <tr><td>Bulb ON</td><td>Google Assistant: "Okay Google, activate Bulb On"</td><td>Adafruit: send data to Adafruit IO</td><td><code>bulb</code> → <code>ON</code></td></tr>
+                            <tr><td>Bulb OFF</td><td>Google Assistant: "Okay Google, activate Bulb Off"</td><td>Adafruit: send data to Adafruit IO</td><td><code>bulb</code> → <code>OFF</code></td></tr>
                         </tbody>
                     </table>
                 </div>
                 <ol class="steps">
-                    <li><strong>Create the applet.</strong> In IFTTT, Create → If This → Google Assistant → "Activate scene" → scene name <code>bulb on</code>.</li>
+                    <li><strong>Create the applet.</strong> In IFTTT, Create → If This → Google Assistant → "Activate scene" → scene name <code>Bulb On</code>.</li>
                     <li><strong>Connect Adafruit.</strong> Then That → Adafruit → "Send data to Adafruit IO". Authorize IFTTT to access the Adafruit IO account.</li>
                     <li><strong>Pick the feed and value.</strong> Feed <code>bulb</code>, data <code>ON</code>. Save the applet.</li>
-                    <li><strong>Repeat for OFF</strong> with the scene <code>bulb off</code> and the value <code>OFF</code>.</li>
+                    <li><strong>Repeat for OFF</strong> with the scene <code>Bulb Off</code> and the value <code>OFF</code>.</li>
                 </ol>
+                <div class="photo-grid wide">
+                    <figure class="photo"><img src="assets/iot/images/task3-ifttt-applet.png" alt="IFTTT applet: If you say Okay Google, activate Bulb On, then Send data to bulb feed, by karthik24bcs124, Connected" loading="lazy"><figcaption>My IFTTT applet (by karthik24bcs124), <b>Connected</b>: trigger "Okay Google, activate Bulb On", action "Send data to bulb feed".</figcaption></figure>
+                </div>
 
                 <h3 class="subhead">How the Trigger Reaches the IoT System</h3>
                 <figure class="diagram">
@@ -1385,8 +1388,8 @@ void loop() {
 
                 <h3 class="subhead">Database Structure</h3>
                 <figure class="diagram">
-                    <img src="assets/iot/diagrams/task5-database.svg" alt="Firestore structure: control/device, sensors/current and logs collection with their fields" loading="lazy">
-                    <figcaption>Firestore collections. Task 4 uses <code>control</code> and <code>sensors</code>. Task 5 adds <code>logs</code>.</figcaption>
+                    <img src="assets/iot/diagrams/task5-database.svg" alt="Firestore structure: control/device, sensors/current and readings collection with their fields" loading="lazy">
+                    <figcaption>Firestore collections. Task 4 uses <code>control</code> and <code>sensors</code>. Task 5 adds <code>readings</code>.</figcaption>
                 </figure>
                 <div class="photo-grid wide">
                     <figure class="photo"><img src="assets/iot/images/task4-firestore-control.png" alt="Firestore control/device document with bulbState, mode, threshold, updatedAt" loading="lazy"><figcaption><code>control/device</code>: commands written by the dashboard.</figcaption></figure>
@@ -1576,7 +1579,7 @@ switchLink.addEventListener("click", (e) =&gt; {
                     </div>
                 </details>
                 <details class="code-details">
-                    <summary>dashboard.js (51 lines): click to expand</summary>
+                    <summary>dashboard.js (161 lines): click to expand</summary>
                     <div class="code-frame">
                         <div class="terminal-bar">
                             <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
@@ -1687,9 +1690,9 @@ service cloud.firestore {
       allow read, write: if request.auth != null;
     }
 
-    // Historical log (Task 5): append-only — entries can be added and read,
-    // never edited or deleted from the client
-    match /logs/{logId} {
+    // Historical readings (Task 5): append-only — entries can be added and
+    // read, never edited or deleted from the client
+    match /readings/{readingId} {
       allow read, create: if request.auth != null;
       allow update, delete: if false;
     }
@@ -1882,7 +1885,7 @@ void loop() {
             <div class="iot-project">
                 <div class="proto-badge">IoT Task 5</div>
                 <h2 class="edu-degree" style="margin: 8px 0 10px;">Firebase Logging, Automation &amp; Data Export</h2>
-                <div class="flow-line">DHT11 + LDR → ESP32 logic → Firestore (current + logs) → dashboard chart → CSV</div>
+                <div class="flow-line">DHT11 + LDR → ESP32 logic → Firestore (current + readings) → dashboard chart → CSV</div>
 
                 <h3 class="subhead">Objective of the Complete IoT System</h3>
                 <p class="prose">
@@ -1894,7 +1897,7 @@ void loop() {
 
                 <h3 class="subhead">Final System Architecture</h3>
                 <figure class="diagram">
-                    <img src="assets/iot/diagrams/task5-architecture.svg" alt="Three-layer architecture: ESP32 device layer, Firestore cloud layer with control, sensors and logs, and dashboard application layer" loading="lazy">
+                    <img src="assets/iot/diagrams/task5-architecture.svg" alt="Three-layer architecture: ESP32 device layer, Firestore cloud layer with control, sensors and readings, and dashboard application layer" loading="lazy">
                     <figcaption>Device, cloud and application layers, with how often each one reads and writes.</figcaption>
                 </figure>
 
@@ -2009,13 +2012,13 @@ void loop() {
                 <h3 class="subhead">Historical Data Logging in Firebase</h3>
                 <p class="prose">
                     <code>sensors/current</code> is overwritten every 5 s, so on its own it keeps no history. For
-                    logging, the ESP32 also <strong>adds a new document</strong> to the <code>logs</code> collection
-                    every 30 s. The document ID is the Unix epoch time, so entries are unique and already in order. The
-                    security rules make <code>logs</code> append-only: entries can be created and read, but never
+                    logging, the ESP32 also <strong>adds a new document</strong> to the <code>readings</code> collection
+                    every 3 minutes. The document ID is the local date and time, such as <code>sep11_1745</code>, so
+                    entries are easy to read and unique. The security rules make <code>readings</code> append-only: entries can be created and read, but never
                     edited or deleted from a client.
                 </p>
 
-                <h3 class="subhead">Database Structure for Logs</h3>
+                <h3 class="subhead">Database Structure for Logs (<code>readings</code>)</h3>
                 <div class="table-wrap">
                     <table class="compare-table">
                         <thead><tr><th>Field</th><th>Type</th><th>Records</th></tr></thead>
@@ -2026,7 +2029,6 @@ void loop() {
                             <tr><td><code>ldr</code></td><td>integer</td><td>Light level, 0–4095</td></tr>
                             <tr><td><code>bulbState</code></td><td>boolean</td><td>Bulb ON / OFF at that moment</td></tr>
                             <tr><td><code>mode</code></td><td>string</td><td><code>manual</code> or <code>automatic</code></td></tr>
-                            <tr><td><code>threshold</code></td><td>integer</td><td>LDR threshold in effect</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -2036,36 +2038,50 @@ void loop() {
                     what the system did.
                 </p>
 
-                <h3 class="subhead">Firebase Data</h3>
+                <h3 class="subhead">Firebase Log Data</h3>
                 <div class="photo-grid wide">
+                    <figure class="photo"><img src="assets/iot/images/task5-firestore-readings.png" alt="Firestore readings collection with documents sep11_1745 to sep11_1812; sep11_1745 shows bulbState true, humidity 64, ldr 420, mode automatic, temperature 25 and timestamp" loading="lazy"><figcaption><code>readings</code> collection: one document every 3 minutes (<code>sep11_1745</code> → <code>sep11_1812</code>), each with a timestamp, temperature, humidity, LDR, bulb state and mode.</figcaption></figure>
                     <figure class="photo"><img src="assets/iot/images/task5-firestore-sensors.png" alt="Firestore sensors/current with temperature 29.5, humidity 65, ldr 700, mode manual, threshold 500 and timestamp" loading="lazy"><figcaption><code>sensors/current</code>: 29.5 °C, 65 %, LDR 700, mode, threshold and timestamp.</figcaption></figure>
                     <figure class="photo"><img src="assets/iot/images/task5-firestore-auto.png" alt="Firestore control/device in automatic mode with bulbState true" loading="lazy"><figcaption><code>control/device</code> switched to <code>automatic</code>, bulb ON.</figcaption></figure>
                 </div>
 
                 <h3 class="subhead">Historical Data on the Dashboard, Chart &amp; CSV Download</h3>
                 <p class="prose">
-                    The dashboard listens to the newest 50 <code>logs</code> entries (<code>orderBy("timestamp", "desc"),
+                    The dashboard listens to the newest 50 <code>readings</code> entries (<code>orderBy("timestamp", "desc"),
                     limit(50)</code>). It draws them as a <strong>Chart.js line graph</strong> (temperature and humidity
                     on the left axis, LDR on the right) and as the <em>Sensor History</em> table. <strong>Download
                     CSV</strong> fetches the <em>full</em> log in time order, builds a CSV file in the browser, and
                     downloads it as <code>iot-sensor-log-YYYY-MM-DD.csv</code>.
                 </p>
-                <div class="photo-grid wide">
-                    <figure class="photo"><img src="assets/iot/images/task5-history-csv.png" alt="Historical Data chart area, Sensor History table and Download CSV button" loading="lazy"><figcaption>Historical Data chart, Sensor History table and the Download CSV button.</figcaption></figure>
-                    <figure class="photo"><img src="assets/iot/images/task5-history-ui.jpg" alt="Laptop showing the history section of the dashboard" loading="lazy"><figcaption>History section on the deployed dashboard.</figcaption></figure>
+                <p class="prose">
+                    Recorded reading from Firestore, in the same columns as the dashboard's <em>Sensor History</em>
+                    table (document <code>readings/sep11_1745</code>, shown in the screenshot above):
+                </p>
+                <div class="table-wrap">
+                    <table class="compare-table">
+                        <thead><tr><th>Document</th><th>Timestamp</th><th>Temperature</th><th>Humidity</th><th>LDR</th><th>Bulb</th><th>Mode</th></tr></thead>
+                        <tbody>
+                            <tr><td><code>sep11_1745</code></td><td>11 Sep 2026, 5:45:05 PM</td><td>25 °C</td><td>64 %</td><td>420</td><td>ON</td><td>automatic</td></tr>
+                        </tbody>
+                    </table>
                 </div>
+                <p class="prose">
+                    The same collection holds readings every 3 minutes up to <code>sep11_1812</code> (10 documents).
+                    LDR 420 is below the dark limit of 450, so in automatic mode the bulb is ON, as the automatic
+                    lighting logic expects.
+                </p>
                 <div class="code-frame">
                     <div class="terminal-bar">
                         <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
                         <div class="terminal-title">iot-sensor-log-YYYY-MM-DD.csv (column layout)</div>
                     </div>
-                    <pre class="code-block"><code>Timestamp,Temperature (C),Humidity (%),LDR,Bulb,Mode,Threshold
-&lt;ISO time&gt;,&lt;°C&gt;,&lt;%&gt;,&lt;0-4095&gt;,ON|OFF,manual|automatic,&lt;threshold&gt;</code></pre>
+                    <pre class="code-block"><code>Timestamp,Temperature (C),Humidity (%),LDR,Bulb,Mode
+&lt;ISO time&gt;,&lt;°C&gt;,&lt;%&gt;,&lt;0-4095&gt;,ON|OFF,manual|automatic</code></pre>
                 </div>
 
                 <h3 class="subhead">Complete Source Code</h3>
                 <details class="code-details">
-                    <summary>task5_logging_automation.ino (222 lines): click to expand</summary>
+                    <summary>task5_logging_automation.ino (230 lines): click to expand</summary>
                     <div class="code-frame">
                         <div class="terminal-bar">
                             <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
@@ -2079,7 +2095,8 @@ void loop() {
 //
 // Every 2 s : read control/device (mode, bulbState, threshold) and apply it
 // Every 5 s : update sensors/current with the latest readings
-// Every 30 s: append a timestamped entry to the logs collection
+// Every 3 min: append a timestamped entry to the readings collection
+//              (document ID = local date + time, e.g. readings/sep11_1745)
 //
 // Automatic mode uses hysteresis around the dashboard threshold:
 //   LDR &lt; threshold - 50  -&gt; dark   -&gt; bulb ON
@@ -2112,7 +2129,7 @@ void loop() {
 
 const unsigned long CONTROL_MS = 2000;
 const unsigned long SENSOR_MS  = 5000;
-const unsigned long LOG_MS     = 30000;
+const unsigned long LOG_MS     = 180000;   // 3 minutes
 
 DHT dht(DHT_PIN, DHT_TYPE);
 FirebaseData fbdo;
@@ -2207,20 +2224,21 @@ void applyLogic() {
   }
 }
 
-// Fills the shared field set used by both sensors/current and logs/*
-void fillFields(FirebaseJson&amp; c) {
+// Fills the shared field set used by sensors/current and readings/*.
+// The threshold is only stored on sensors/current.
+void fillFields(FirebaseJson&amp; c, bool withThreshold) {
   c.set("fields/temperature/doubleValue", isnan(temperature) ? 0 : temperature);
   c.set("fields/humidity/doubleValue", isnan(humidity) ? 0 : humidity);
   c.set("fields/ldr/integerValue", String(ldrValue));
   c.set("fields/bulbState/booleanValue", bulbState);
   c.set("fields/mode/stringValue", mode);
-  c.set("fields/threshold/integerValue", String(threshold));
+  if (withThreshold) c.set("fields/threshold/integerValue", String(threshold));
   c.set("fields/timestamp/timestampValue", isoTimestamp());
 }
 
 void updateCurrent() {
   FirebaseJson c;
-  fillFields(c);
+  fillFields(c, true);
   if (!Firebase.Firestore.patchDocument(&amp;fbdo, FIREBASE_PROJECT_ID, "", "sensors/current", c.raw(),
                                         "temperature,humidity,ldr,bulbState,mode,threshold,timestamp")) {
     Serial.println("sensors/current write failed: " + fbdo.errorReason());
@@ -2229,10 +2247,15 @@ void updateCurrent() {
 
 void appendLog() {
   FirebaseJson c;
-  fillFields(c);
+  fillFields(c, false);
+
+  // Readable, unique-per-3-minutes ID in local time: "sep11_1745"
   time_t now;
   time(&amp;now);
-  String path = "logs/" + String((unsigned long)now);   // epoch seconds = sortable, unique per 30 s
+  char id[16];
+  strftime(id, sizeof(id), "%b%d_%H%M", localtime(&amp;now));
+  for (char* p = id; *p; p++) *p = tolower(*p);
+  String path = "readings/" + String(id);
   if (Firebase.Firestore.createDocument(&amp;fbdo, FIREBASE_PROJECT_ID, "", path.c_str(), c.raw())) {
     Serial.println("Logged -&gt; " + path);
   } else {
@@ -2255,7 +2278,8 @@ void setup() {
   }
   Serial.println("\nWi-Fi connected: " + WiFi.localIP().toString());
 
-  configTime(0, 0, "pool.ntp.org", "time.google.com");
+  // IST (UTC+5:30) so reading IDs use local time; timestamps stay in UTC
+  configTime(19800, 0, "pool.ntp.org", "time.google.com");
   Serial.print("Syncing time");
   while (time(nullptr) &lt; 1700000000) {
     delay(300);
@@ -2303,7 +2327,7 @@ void loop() {
                             <div class="terminal-title">task5-logging-automation/web/js/dashboard.js</div>
                         </div>
                         <pre class="code-block"><code>// Task 5 dashboard: live readings, manual/automatic mode, LDR threshold,
-// history table + chart from the logs collection, and CSV export.
+// history table + chart from the readings collection, and CSV export.
 import { auth, db } from "./firebase-config.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {
@@ -2314,7 +2338,7 @@ import {
 const $ = (id) =&gt; document.getElementById(id);
 const controlRef = doc(db, "control", "device");
 const sensorRef = doc(db, "sensors", "current");
-const logsQuery = query(collection(db, "logs"), orderBy("timestamp", "desc"), limit(50));
+const readingsQuery = query(collection(db, "readings"), orderBy("timestamp", "desc"), limit(50));
 
 let control = { bulbState: false, mode: "manual", threshold: 500 };
 let chart;
@@ -2345,7 +2369,7 @@ function startListeners() {
     renderControl();
   });
 
-  onSnapshot(logsQuery, (snap) =&gt; {
+  onSnapshot(readingsQuery, (snap) =&gt; {
     // Newest first from Firestore; oldest first reads better on a chart
     const rows = snap.docs.map((d) =&gt; d.data()).filter((r) =&gt; r.timestamp).reverse();
     renderTable(rows);
@@ -2438,20 +2462,20 @@ $("saveThreshold").addEventListener("click", () =&gt; {
   writeControl({ threshold: value });
 });
 
-// CSV export: fetches the full log (not just the 50 rows on screen)
+// CSV export: fetches every reading (not just the 50 rows on screen)
 $("csvBtn").addEventListener("click", async () =&gt; {
-  const snap = await getDocs(query(collection(db, "logs"), orderBy("timestamp", "asc")));
+  const snap = await getDocs(query(collection(db, "readings"), orderBy("timestamp", "asc")));
   if (snap.empty) {
     alert("No data to export yet.");
     return;
   }
-  const header = "Timestamp,Temperature (C),Humidity (%),LDR,Bulb,Mode,Threshold";
+  const header = "Timestamp,Temperature (C),Humidity (%),LDR,Bulb,Mode";
   const lines = snap.docs.map((d) =&gt; {
     const r = d.data();
     return [
       r.timestamp.toDate().toISOString(),
       r.temperature, r.humidity, r.ldr,
-      r.bulbState ? "ON" : "OFF", r.mode, r.threshold
+      r.bulbState ? "ON" : "OFF", r.mode
     ].join(",");
   });
   const blob = new Blob([[header, ...lines].join("\n")], { type: "text/csv" });
@@ -2592,8 +2616,13 @@ $("logoutBtn").addEventListener("click", () =&gt; signOut(auth));</code></pre>
                 <div class="problem">
                     <p><b>Problem:</b> The Sensor History table showed "No historical data available".</p>
                     <p><b>Solution:</b> The firmware only overwrote <code>sensors/current</code>, so there was no
-                        history to show. I added an append-only <code>logs</code> collection that gets a new entry
-                        every 30 s, and the dashboard now reads that collection.</p>
+                        history to show. I added an append-only <code>readings</code> collection that gets a new entry
+                        every 3 minutes (<code>sep11_1745</code>, <code>sep11_1748</code>, …), and the dashboard reads
+                        that collection.</p>
+                    <div class="photo-grid wide" style="margin: 12px 0 0;">
+                        <figure class="photo"><img src="assets/iot/images/task5-history-csv.png" alt="Dashboard history section showing No historical data available before logging was added" loading="lazy"><figcaption>Before the fix: the history table was empty.</figcaption></figure>
+                        <figure class="photo"><img src="assets/iot/images/task5-firestore-readings.png" alt="Firestore readings collection filled with entries after the fix" loading="lazy"><figcaption>After the fix: readings logged every 3 minutes.</figcaption></figure>
+                    </div>
                 </div>
                 <div class="problem">
                     <p><b>Problem:</b> Analog readings stopped working on some pins once Wi-Fi connected.</p>
@@ -2625,14 +2654,14 @@ $("logoutBtn").addEventListener("click", () =&gt; signOut(auth));</code></pre>
                     <li>Store readings on the device (SPIFFS/LittleFS) during outages and upload them on reconnect.</li>
                     <li>Role-based rules (custom claims) and multi-device support under each user account.</li>
                     <li>Alerts (email/push) when temperature crosses a limit, plus scheduled lighting.</li>
-                    <li>A Cloud Function to delete logs older than 30 days, and a date-range picker for CSV export.</li>
+                    <li>A Cloud Function to delete readings older than 30 days, and a date-range picker for CSV export.</li>
                 </ul>
 
                 <h3 class="subhead">Final Learning Reflection</h3>
                 <p class="prose">
                     Task 5 brought everything together: sensing, local decisions, cloud state, history and a user
                     interface. My main lesson was to keep the <em>live state</em> (<code>sensors/current</code>)
-                    separate from the <em>history</em> (<code>logs</code>). They are read and written in completely
+                    separate from the <em>history</em> (<code>readings</code>). They are read and written in completely
                     different ways. I also learned that "automatic" control still needs a person to calibrate it,
                     and that small details like hysteresis, ADC pin choice and clock sync decide whether a prototype
                     is reliable.

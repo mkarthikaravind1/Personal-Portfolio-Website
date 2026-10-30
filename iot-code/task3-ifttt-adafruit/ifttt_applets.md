@@ -7,7 +7,7 @@ Two applets, one per command. Both write into the same Adafruit IO feed that the
 | Field | Value |
 |---|---|
 | **If This** (trigger service) | Google Assistant — *Activate scene* |
-| Scene name | `bulb on` (spoken as "Hey Google, bulb on") |
+| Scene name | `Bulb On` (spoken as "Okay Google, activate Bulb On") |
 | **Then That** (action service) | Adafruit — *Send data to Adafruit IO* |
 | Feed name | `bulb` |
 | Data to save | `ON` |
@@ -17,7 +17,7 @@ Two applets, one per command. Both write into the same Adafruit IO feed that the
 | Field | Value |
 |---|---|
 | **If This** | Google Assistant — *Activate scene* |
-| Scene name | `bulb off` |
+| Scene name | `Bulb Off` |
 | **Then That** | Adafruit — *Send data to Adafruit IO* |
 | Feed name | `bulb` |
 | Data to save | `OFF` |
@@ -33,7 +33,7 @@ Two applets, one per command. Both write into the same Adafruit IO feed that the
 ## Data path
 
 ```
-"Hey Google, bulb on"
+"Okay Google, activate Bulb On"
   → Google Assistant (scene trigger)
   → IFTTT applet
   → Adafruit IO REST API: POST /api/v2/<user>/feeds/bulb/data  {value: "ON"}

@@ -1,5 +1,5 @@
 // Task 5 dashboard: live readings, manual/automatic mode, LDR threshold,
-// history table + chart from the logs collection, and CSV export.
+// history table + chart from the readings collection, and CSV export.
 import { auth, db } from "./firebase-config.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {
@@ -10,7 +10,7 @@ import {
 const $ = (id) => document.getElementById(id);
 const controlRef = doc(db, "control", "device");
 const sensorRef = doc(db, "sensors", "current");
-const logsQuery = query(collection(db, "logs"), orderBy("timestamp", "desc"), limit(50));
+const readingsQuery = query(collection(db, "readings"), orderBy("timestamp", "desc"), limit(50));
 
 let control = { bulbState: false, mode: "manual", threshold: 500 };
 let chart;
@@ -41,7 +41,7 @@ function startListeners() {
     renderControl();
   });
 
-  onSnapshot(logsQuery, (snap) => {
+  onSnapshot(readingsQuery, (snap) => {
     // Newest first from Firestore; oldest first reads better on a chart
     const rows = snap.docs.map((d) => d.data()).filter((r) => r.timestamp).reverse();
     renderTable(rows);
@@ -134,20 +134,20 @@ $("saveThreshold").addEventListener("click", () => {
   writeControl({ threshold: value });
 });
 
-// CSV export: fetches the full log (not just the 50 rows on screen)
+// CSV export: fetches every reading (not just the 50 rows on screen)
 $("csvBtn").addEventListener("click", async () => {
-  const snap = await getDocs(query(collection(db, "logs"), orderBy("timestamp", "asc")));
+  const snap = await getDocs(query(collection(db, "readings"), orderBy("timestamp", "asc")));
   if (snap.empty) {
     alert("No data to export yet.");
     return;
   }
-  const header = "Timestamp,Temperature (C),Humidity (%),LDR,Bulb,Mode,Threshold";
+  const header = "Timestamp,Temperature (C),Humidity (%),LDR,Bulb,Mode";
   const lines = snap.docs.map((d) => {
     const r = d.data();
     return [
       r.timestamp.toDate().toISOString(),
       r.temperature, r.humidity, r.ldr,
-      r.bulbState ? "ON" : "OFF", r.mode, r.threshold
+      r.bulbState ? "ON" : "OFF", r.mode
     ].join(",");
   });
   const blob = new Blob([[header, ...lines].join("\n")], { type: "text/csv" });

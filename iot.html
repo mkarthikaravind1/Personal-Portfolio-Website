@@ -375,7 +375,134 @@
             letter-spacing: 0.02em;
         }
 
-        section[id^="task"] { border-bottom: 4px solid #111; }
+        section[id^="task"] {
+            border-bottom: 4px solid #111;
+            scroll-margin-top: 70px;
+        }
+
+        /* Keep long code words and file names from widening the page on phones */
+        p code,
+        li code,
+        td code,
+        figcaption code { overflow-wrap: anywhere; }
+
+        .terminal-bar { min-width: 0; }
+
+        .terminal-title {
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Floating task switcher on the right edge */
+        .task-rail {
+            position: fixed;
+            right: 18px;
+            top: 50%;
+            z-index: 150;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 12px 7px;
+            background: var(--white);
+            border: 1.5px solid var(--border);
+            border-radius: 999px;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            pointer-events: none;
+            transform: translate(12px, -50%);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+
+        .task-rail.visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translate(0, -50%);
+        }
+
+        .task-rail-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #000;
+            margin-bottom: 2px;
+        }
+
+        /* Each button keeps a fixed 40px slot in the rail; the pill inside it is
+           anchored to the right edge and grows leftwards on hover */
+        .task-rail a {
+            position: relative;
+            display: block;
+            width: 40px;
+            height: 40px;
+            text-decoration: none;
+        }
+
+        .rail-pill {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 40px;
+            max-width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;   /* number stays visible; the label is clipped on the left until hover */
+            border-radius: 999px;
+            overflow: hidden;
+            white-space: nowrap;
+            background: var(--accent-soft);
+            color: var(--accent);
+            font-weight: 800;
+            font-size: 0.95rem;
+            transition: max-width 0.3s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .rail-label {
+            flex-shrink: 0;
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding-left: 16px;
+            opacity: 0;
+            transition: opacity 0.15s ease;
+        }
+
+        .rail-num {
+            flex: 0 0 40px;
+            width: 40px;
+            text-align: center;
+        }
+
+        .task-rail a.active .rail-pill {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .task-rail a:hover .rail-pill,
+        .task-rail a:focus-visible .rail-pill {
+            max-width: 320px;
+            background: var(--accent);
+            color: #fff;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .task-rail a:hover .rail-label,
+        .task-rail a:focus-visible .rail-label {
+            opacity: 1;
+            transition-delay: 0.08s;
+        }
+
+        @media (max-width: 760px) {
+            .task-rail { right: 8px; padding: 8px 5px; gap: 4px; }
+            .task-rail a { width: 32px; height: 32px; }
+            .rail-pill { height: 32px; max-width: 32px; font-size: 0.8rem; }
+            .rail-num { flex-basis: 32px; width: 32px; }
+            .rail-label { font-size: 0.75rem; padding-left: 12px; }
+            .task-rail-title { display: none; }
+        }
 
         @media (max-width: 600px) {
             .photo img { height: 200px; }
@@ -733,7 +860,7 @@ void loop() {
             <div class="iot-project">
                 <div class="proto-badge">IoT Task 2</div>
                 <h2 class="edu-degree" style="margin: 8px 0 10px;">Adafruit IO Dashboard &amp; MQTT</h2>
-                <div class="flow-line">dashboard toggle → publish "bulb" → Adafruit IO broker → ESP32 subscriber → relay → bulb</div>
+                <div class="flow-line">dashboard toggle → publish "relay" → Adafruit IO broker → ESP32 subscriber → relay → bulb</div>
 
                 <h3 class="subhead">Purpose of Adafruit IO in an IoT System</h3>
                 <p class="prose">
@@ -931,7 +1058,7 @@ void loop() {
                     <li><code>Adafruit_MQTT_Client mqtt(&amp;client, AIO_SERVER, 1883, …)</code> creates an MQTT client over
                         a plain <code>WiFiClient</code> TCP socket, logging in with the Adafruit IO credentials.</li>
                     <li><code>Adafruit_MQTT_Subscribe relayFeed(…"/feeds/relay")</code> declares the subscription.
-                        <code>mqtt.subscribe(&amp;bulbFeed)</code> registers it before connecting.</li>
+                        <code>mqtt.subscribe(&amp;relayFeed)</code> registers it before connecting.</li>
                     <li><code>connectMQTT()</code> reconnects whenever the link drops and restarts the board after
                         5 failed attempts, so a lost connection recovers by itself.</li>
                     <li><code>mqtt.readSubscription(2000)</code> waits up to 2 s for new messages.
@@ -2916,6 +3043,16 @@ void loop() {
         </div>
     </section>
 
+    <!-- Floating task switcher -->
+    <div class="task-rail" id="taskRail" role="navigation" aria-label="Jump to a task">
+        <span class="task-rail-title">Task</span>
+        <a href="#task1" data-task="task1" aria-label="Task 1: ESP32 Web Server"><span class="rail-pill"><span class="rail-label">Task 1 - Web Server &amp; LED</span><span class="rail-num">1</span></span></a>
+        <a href="#task2" data-task="task2" aria-label="Task 2: Adafruit IO and MQTT"><span class="rail-pill"><span class="rail-label">Task 2 - Adafruit IO &amp; MQTT</span><span class="rail-num">2</span></span></a>
+        <a href="#task3" data-task="task3" aria-label="Task 3: IFTTT automation"><span class="rail-pill"><span class="rail-label">Task 3 - IFTTT Automation</span><span class="rail-num">3</span></span></a>
+        <a href="#task4" data-task="task4" aria-label="Task 4: Firebase dashboard"><span class="rail-pill"><span class="rail-label">Task 4 - Firebase Dashboard</span><span class="rail-num">4</span></span></a>
+        <a href="#task5" data-task="task5" aria-label="Task 5: Logging and export"><span class="rail-pill"><span class="rail-label">Task 5 - Logging &amp; Export</span><span class="rail-num">5</span></span></a>
+    </div>
+
     <button id="scroll-top" aria-label="Scroll to top">↑</button>
 
     <!-- Lightbox -->
@@ -2969,6 +3106,26 @@ void loop() {
             } else {
                 showAll();
             }
+
+            // Task switcher: show once past the intro, highlight the task in view
+            const taskRail = document.getElementById('taskRail');
+            const railLinks = [...taskRail.querySelectorAll('a')];
+            const taskSections = railLinks.map(a => document.getElementById(a.dataset.task));
+
+            function updateTaskRail() {
+                taskRail.classList.toggle('visible', window.scrollY > 300);
+                const probe = window.innerHeight * 0.35;
+                let current = null;
+                taskSections.forEach(sec => {
+                    if (sec && sec.getBoundingClientRect().top <= probe) current = sec.id;
+                });
+                // Past the end of Task 5 (comparison / learnings): no task is active
+                const last = taskSections[taskSections.length - 1];
+                if (last && last.getBoundingClientRect().bottom < probe) current = null;
+                railLinks.forEach(a => a.classList.toggle('active', a.dataset.task === current));
+            }
+            window.addEventListener('scroll', updateTaskRail, { passive: true });
+            updateTaskRail();
 
             // Only one video plays at a time
             const videos = document.querySelectorAll('video');

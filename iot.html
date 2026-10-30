@@ -648,6 +648,34 @@
                     <div class="hw-card"><div class="hw-name">Laptop + Wi-Fi Hotspot</div><div class="hw-role">Browser client on the same network</div></div>
                 </div>
 
+                <h3 class="subhead">Software &amp; Tools / Arduino IDE Setup</h3>
+                <div class="table-wrap">
+                    <table class="compare-table">
+                        <thead><tr><th>Item</th><th>Used in this task</th></tr></thead>
+                        <tbody>
+                            <tr><td>Arduino IDE</td><td>2.3.10</td></tr>
+                            <tr><td>ESP32 board support</td><td>Boards Manager → <code>esp32</code> by Espressif Systems (added through the Espressif board-manager URL in Preferences)</td></tr>
+                            <tr><td>Board / port</td><td>Tools → Board → <i>ESP32 Dev Module</i>; the COM port the board appears on</td></tr>
+                            <tr><td>Libraries</td><td><code>WiFi.h</code> and <code>WebServer.h</code>, both included with the ESP32 core (no extra install)</td></tr>
+                            <tr><td>Serial Monitor</td><td>115200 baud, used to read the IP address the router assigns</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h3 class="subhead">ESP32 Specifications</h3>
+                <div class="table-wrap">
+                    <table class="compare-table">
+                        <thead><tr><th>Specification</th><th>ESP32 DevKit V1 (ESP-WROOM-32)</th></tr></thead>
+                        <tbody>
+                            <tr><td>Processor</td><td>Dual-core Xtensa LX6, up to 240 MHz</td></tr>
+                            <tr><td>Memory</td><td>520 KB SRAM, 4 MB flash</td></tr>
+                            <tr><td>Wireless</td><td>Wi-Fi 802.11 b/g/n (2.4 GHz) + Bluetooth</td></tr>
+                            <tr><td>Logic level</td><td>3.3 V (GPIO pins are <b>not</b> 5 V tolerant)</td></tr>
+                            <tr><td>ADC</td><td>12-bit (0–4095); ADC1 usable with Wi-Fi on, ADC2 is not</td></tr>
+                            <tr><td>Power</td><td>5 V over micro-USB or VIN, on-board 3.3 V regulator</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
                 <h3 class="subhead">Circuit / Wiring Diagram</h3>
                 <figure class="diagram">
                     <img src="assets/iot/diagrams/task1-wiring.svg" alt="Wiring diagram: laptop USB to ESP32, GPIO2 drives the onboard LED" loading="lazy">
@@ -823,6 +851,24 @@ void loop() {
                     </video>
                 </div>
 
+                <h3 class="subhead">Testing Procedure &amp; Results</h3>
+                <p class="prose">
+                    How the web server was tested, step by step. <em>Evidence</em> shows which steps the photos and video prove.
+                </p>
+                <div class="table-wrap">
+                    <table class="compare-table">
+                        <thead><tr><th>Step</th><th>Action</th><th>Expected result</th><th>Evidence</th></tr></thead>
+                        <tbody>
+                            <tr><td>1</td><td>Upload the sketch and open Serial Monitor</td><td>"Connected. Open http://192.168.x.x" printed</td><td>Expected</td></tr>
+                            <tr><td>2</td><td>Open the printed IP in a browser on the same Wi-Fi</td><td>"ESP32 Light Control" page loads</td><td>Photos (page at <code>192.168.56.226</code>)</td></tr>
+                            <tr><td>3</td><td>Click <b>ON</b></td><td>Browser requests <code>/on</code>, onboard LED lights</td><td>Demo video, LED-on photo</td></tr>
+                            <tr><td>4</td><td>Click <b>OFF</b></td><td>Browser requests <code>/off</code>, LED turns off</td><td>Demo video, status bar shows <code>/off</code></td></tr>
+                            <tr><td>5</td><td>Open the same IP from a phone on the same Wi-Fi</td><td>Same page and control works from a second device</td><td>Expected</td></tr>
+                            <tr><td>6</td><td>Open the IP from a device on a different network</td><td>Page does not load: the server is local-network only</td><td>Expected</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
                 <h3 class="subhead">Problems Encountered &amp; Solutions</h3>
                 <div class="problem">
                     <p><b>Problem:</b> The page heading showed garbled characters ("ðŸ'¡") instead of the 💡 emoji.
@@ -837,6 +883,13 @@ void loop() {
                     <p><b>Solution:</b> The laptop and the ESP32 were on different networks. Connecting both to the
                         same hotspot, and reading the current IP from the Serial Monitor after each reset, fixed it.</p>
                 </div>
+
+                <h3 class="subhead">Real-World Applications</h3>
+                <ul class="project-highlights" style="margin-bottom: 20px;">
+                    <li>Router-style configuration pages built into smart plugs, cameras and printers</li>
+                    <li>Local control of lab equipment or lighting without needing cloud access</li>
+                    <li>Setup pages for new IoT devices before they are connected to the internet</li>
+                </ul>
 
                 <h3 class="subhead">Reflection</h3>
                 <p class="prose">
@@ -861,6 +914,15 @@ void loop() {
                 <div class="proto-badge">IoT Task 2</div>
                 <h2 class="edu-degree" style="margin: 8px 0 10px;">Adafruit IO Dashboard &amp; MQTT</h2>
                 <div class="flow-line">dashboard toggle → publish "relay" → Adafruit IO broker → ESP32 subscriber → relay → bulb</div>
+
+                <h3 class="subhead">Problem Being Addressed</h3>
+                <p class="prose">
+                    Task 1 only worked when the browser and the ESP32 were on the same Wi-Fi. To switch the bulb from anywhere, the device needs a cloud service that both the user and the ESP32 can reach, without opening ports on the router.
+                </p>
+                <h3 class="subhead">Project Summary</h3>
+                <p class="prose">
+                    A <strong>Bulb control</strong> dashboard on Adafruit IO publishes <code>ON</code>/<code>OFF</code> to the <code>relay</code> feed. The ESP32 subscribes to that feed over MQTT and drives a 5 V relay on GPIO23, which switches a 230 V bulb.
+                </p>
 
                 <h3 class="subhead">Purpose of Adafruit IO in an IoT System</h3>
                 <p class="prose">
@@ -899,6 +961,27 @@ void loop() {
                     <img src="assets/iot/diagrams/task2-mqtt.svg" alt="MQTT diagram: dashboard publishes to the relay feed on the Adafruit IO broker, which delivers to the subscribed ESP32" loading="lazy">
                     <figcaption>Communication flow between the dashboard, the Adafruit IO MQTT broker and the ESP32, with the feed structure used.</figcaption>
                 </figure>
+
+                <h3 class="subhead">MQTT Settings Used in this Project</h3>
+                <div class="table-wrap">
+                    <table class="compare-table">
+                        <thead><tr><th>Setting</th><th>Value</th><th>Meaning</th></tr></thead>
+                        <tbody>
+                            <tr><td>Broker</td><td><code>io.adafruit.com</code></td><td>Adafruit IO's public MQTT broker</td></tr>
+                            <tr><td>Port</td><td><code>1883</code></td><td>Plain MQTT over TCP. Port <code>8883</code> is the TLS-encrypted alternative</td></tr>
+                            <tr><td>Login</td><td>Adafruit IO username + AIO key</td><td>The broker refuses clients without valid credentials</td></tr>
+                            <tr><td>Topic</td><td><code>Karthik_Aravind_M/feeds/relay</code></td><td>The feed the dashboard publishes to</td></tr>
+                            <tr><td>QoS</td><td>0 (library default)</td><td>"At most once": fast, no acknowledgement</td></tr>
+                            <tr><td>Keep-alive</td><td><code>mqtt.ping()</code> every loop</td><td>Stops the broker from closing an idle connection</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h3 class="subhead">MQTT Quality of Service (QoS) Levels</h3>
+                <div class="concept-grid">
+                    <div class="concept"><h4>QoS 0: At most once</h4><p>Sent once with no acknowledgement. Lowest overhead. A message can be lost if the connection drops. Used here, because the next toggle simply resends the state.</p></div>
+                    <div class="concept"><h4>QoS 1: At least once</h4><p>The receiver acknowledges each message (PUBACK) and the sender retries until it does. Delivery is guaranteed, but a message may arrive twice.</p></div>
+                    <div class="concept"><h4>QoS 2: Exactly once</h4><p>A four-step handshake makes sure each message arrives once and only once. Most reliable, with the most overhead, e.g. for billing or metering data.</p></div>
+                </div>
 
                 <h3 class="subhead">Hardware &amp; Software Used</h3>
                 <div class="hw-grid">
@@ -944,6 +1027,33 @@ void loop() {
                     <img src="assets/iot/diagrams/relay-wiring.svg" alt="Relay wiring: ESP32 VIN, GND and GPIO23 to the relay; live wire through COM and NO to the bulb" loading="lazy">
                     <figcaption>Relay wiring, also used in Tasks 3 and 4. The relay is active HIGH on GPIO23.</figcaption>
                 </figure>
+
+                <h3 class="subhead">Pin Connection Table</h3>
+                <div class="table-wrap">
+                    <table class="compare-table">
+                        <thead><tr><th>From</th><th>To</th><th>Purpose</th></tr></thead>
+                        <tbody>
+                            <tr><td>ESP32 VIN (5 V)</td><td>Relay VCC</td><td>Powers the relay coil</td></tr>
+                            <tr><td>ESP32 GND</td><td>Relay GND</td><td>Common ground</td></tr>
+                            <tr><td>ESP32 GPIO23</td><td>Relay IN</td><td>Control signal (HIGH = relay ON)</td></tr>
+                            <tr><td>Mains live</td><td>Relay COM</td><td>Live wire enters the relay contact</td></tr>
+                            <tr><td>Relay NO</td><td>Bulb holder (live)</td><td>Bulb gets power only when the relay closes</td></tr>
+                            <tr><td>Mains neutral</td><td>Bulb holder (neutral)</td><td>Neutral goes straight to the bulb</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h3 class="subhead">Relay Module &amp; Libraries</h3>
+                <div class="table-wrap">
+                    <table class="compare-table">
+                        <thead><tr><th>Item</th><th>Details</th></tr></thead>
+                        <tbody>
+                            <tr><td>Relay module</td><td>1-channel 5 V relay module (blue Songle-type). Coil 5 V; contacts typically rated 10 A at 250 VAC; COM / NO / NC terminals</td></tr>
+                            <tr><td>Why a relay</td><td>Lets the 3.3 V ESP32 signal switch a 230 V load while keeping the mains side electrically separate</td></tr>
+                            <tr><td>Arduino library</td><td><b>Adafruit MQTT Library</b> (Library Manager), which provides <code>Adafruit_MQTT_Client</code>, subscribe and ping</td></tr>
+                            <tr><td>Board package</td><td>ESP32 by Espressif Systems (Arduino IDE 2.3.10)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
 
                 <h3 class="subhead">Complete ESP32 Source Code</h3>
                 <details class="code-details">
@@ -1098,6 +1208,20 @@ void loop() {
                     </video>
                 </div>
 
+                <h3 class="subhead">Testing Procedure &amp; Results</h3>
+                <div class="table-wrap">
+                    <table class="compare-table">
+                        <thead><tr><th>Step</th><th>Action</th><th>Expected result</th><th>Evidence</th></tr></thead>
+                        <tbody>
+                            <tr><td>1</td><td>Power the ESP32 and open Serial Monitor</td><td>"Wi-Fi connected" then "Connected!" to Adafruit IO</td><td>Expected</td></tr>
+                            <tr><td>2</td><td>Switch the dashboard toggle <b>ON</b></td><td><code>relay</code> feed = <code>ON</code>, relay clicks, bulb lights</td><td>Dashboard ON screenshot, Feeds page, video</td></tr>
+                            <tr><td>3</td><td>Switch the toggle <b>OFF</b></td><td>Feed = <code>OFF</code>, bulb turns off</td><td>Dashboard OFF screenshot, video</td></tr>
+                            <tr><td>4</td><td>Use the dashboard from a phone on mobile data</td><td>Bulb still switches, because the command goes through the cloud</td><td>Expected</td></tr>
+                            <tr><td>5</td><td>Leave the system idle for several minutes, then toggle</td><td>Still responds: keep-alive pings hold the connection open</td><td>Expected</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
                 <h3 class="subhead">Problems Encountered during MQTT / Cloud Setup &amp; Solutions</h3>
                 <div class="problem">
                     <p><b>Problem:</b> The ESP32 connected once, then stopped reacting to the dashboard after a while.</p>
@@ -1115,6 +1239,13 @@ void loop() {
                     <p><b>Solution:</b> The credentials are blurred in every photo here, the published code uses
                         placeholders, and the AIO key should be regenerated. Real keys should never be committed.</p>
                 </div>
+
+                <h3 class="subhead">Real-World Applications</h3>
+                <ul class="project-highlights" style="margin-bottom: 20px;">
+                    <li>Smart plugs and smart switches controlled from a phone app</li>
+                    <li>Remote on/off of pumps, fans or lights in farms and warehouses</li>
+                    <li>Telemetry dashboards for sensors spread across a building or campus</li>
+                </ul>
 
                 <h3 class="subhead">Learning Reflection</h3>
                 <p class="prose">
@@ -1146,6 +1277,15 @@ void loop() {
                     Switch the bulb with a <strong>voice command from a phone</strong>, without writing any server
                     code. IFTTT connects Google Assistant to Adafruit IO, and the ESP32 from Task 2 receives the
                     result over MQTT.
+                </p>
+
+                <h3 class="subhead">Problem Being Addressed</h3>
+                <p class="prose">
+                    Switching the bulb still needed someone to open a dashboard. The goal was hands-free control by voice, using the existing ESP32 and relay, without writing a backend or exposing the ESP32 to the internet.
+                </p>
+                <h3 class="subhead">Project Summary</h3>
+                <p class="prose">
+                    Saying <em>"Okay Google, activate Bulb On"</em> triggers an IFTTT applet that writes <code>1</code> to the Adafruit IO <code>bulb</code> feed. The ESP32, subscribed to that feed over MQTT, switches the relay on GPIO23. It also still follows the Task 2 <code>relay</code> feed.
                 </p>
 
                 <h3 class="subhead">Basic Concept of IoT Automation</h3>
@@ -1210,6 +1350,11 @@ void loop() {
                     publishes that new value to every subscriber, which includes the ESP32. The ESP32 then switches
                     the relay. The device is never contacted directly, so <strong>no port forwarding is
                     needed</strong>.
+                </p>
+
+                <h3 class="subhead">Pin Connections &amp; Libraries</h3>
+                <p class="prose">
+                    The hardware is unchanged from Task 2: relay IN on <b>GPIO23</b>, VCC on <b>VIN (5 V)</b>, GND on <b>GND</b>, bulb wired through <b>COM/NO</b>. The sketch uses the same <b>Adafruit MQTT Library</b>, now subscribed to two feeds: <code>bulb</code> (IFTTT) and <code>relay</code> (dashboard).
                 </p>
 
                 <h3 class="subhead">ESP32 Source Code</h3>
@@ -1400,6 +1545,13 @@ void loop() {
                         accepts <code>ON/1/TRUE</code> and <code>OFF/0/FALSE</code>.</p>
                 </div>
 
+                <h3 class="subhead">Real-World Applications</h3>
+                <ul class="project-highlights" style="margin-bottom: 20px;">
+                    <li>Voice-controlled lights and appliances in smart homes</li>
+                    <li>Routines such as "turn the porch light on at sunset" or "when I leave home"</li>
+                    <li>Hands-free control for elderly or mobility-impaired users</li>
+                </ul>
+
                 <h3 class="subhead">What I Learned about Cloud-Based Automation</h3>
                 <p class="prose">
                     Cloud automation is mostly about <strong>connecting services</strong>, not writing code. The
@@ -1436,6 +1588,15 @@ void loop() {
                     Build my own <strong>cloud dashboard with a login</strong>, hosted at
                     <code>iot-dashboard-karthik.web.app</code>. Only signed-in users can see readings or switch the
                     bulb. Commands and readings go through a Firebase database instead of a third-party dashboard.
+                </p>
+
+                <h3 class="subhead">Problem Being Addressed</h3>
+                <p class="prose">
+                    Third-party dashboards are quick to set up, but the data and the access control belong to someone else. A self-built dashboard needs a database, a login system and hosting, and running servers for those is a lot of work for one prototype.
+                </p>
+                <h3 class="subhead">Project Summary</h3>
+                <p class="prose">
+                    A Firebase project provides <strong>Hosting</strong> (the website), <strong>Authentication</strong> (email/password and Google sign-in) and <strong>Cloud Firestore</strong> (the data). The dashboard writes commands to <code>control/device</code>. The ESP32 reads them, switches the relay on GPIO23 and reports its state to <code>sensors/current</code>.
                 </p>
 
                 <div class="part-head">Concepts</div>
@@ -1560,6 +1721,24 @@ void loop() {
                     <img src="assets/iot/diagrams/task4-architecture.svg" alt="Architecture: browser loads pages from Firebase Hosting, signs in with Firebase Auth, writes control/device and listens to sensors/current; ESP32 reads control and writes sensors" loading="lazy">
                     <figcaption>The dashboard and the ESP32 never talk directly. Firestore sits between them.</figcaption>
                 </figure>
+
+                <h3 class="subhead">Software, Libraries &amp; Tools</h3>
+                <div class="table-wrap">
+                    <table class="compare-table">
+                        <thead><tr><th>Item</th><th>Role</th></tr></thead>
+                        <tbody>
+                            <tr><td>Firebase JavaScript SDK (modular API)</td><td><code>firebase-app</code>, <code>firebase-auth</code> and <code>firebase-firestore</code> loaded in the browser</td></tr>
+                            <tr><td>Firebase CLI (<code>firebase-tools</code>)</td><td><code>firebase init</code> and <code>firebase deploy</code> for Hosting and Firestore rules</td></tr>
+                            <tr><td>Node.js + npm</td><td>Needed to install the Firebase CLI</td></tr>
+                            <tr><td>HTML, CSS, JavaScript</td><td>Login and dashboard pages (no framework)</td></tr>
+                            <tr><td>Firebase ESP Client library (Arduino)</td><td>Lets the ESP32 sign in and read/write Firestore documents</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h3 class="subhead">Pin Connections</h3>
+                <p class="prose">
+                    Same relay circuit as Task 2: relay IN on <b>GPIO23</b>, VCC on <b>VIN (5 V)</b>, GND on <b>GND</b>, bulb through <b>COM/NO</b>.
+                </p>
 
                 <h3 class="subhead">Complete Dashboard Source Code</h3>
                 <details class="code-details">
@@ -2020,6 +2199,13 @@ void loop() {
                     <p><b>Solution:</b> Added the hosting domain under Authentication → Settings → Authorized domains.</p>
                 </div>
 
+                <h3 class="subhead">Real-World Applications</h3>
+                <ul class="project-highlights" style="margin-bottom: 20px;">
+                    <li>Login-protected control panels for smart homes and offices</li>
+                    <li>Facility dashboards where only authorised staff can switch equipment</li>
+                    <li>A template for any device that needs secure remote control plus live status</li>
+                </ul>
+
                 <h3 class="subhead">Reflection</h3>
                 <p class="prose">
                     This was the first task where I built the whole stack myself: front end, authentication, database
@@ -2054,6 +2240,15 @@ void loop() {
                     It builds on the Task 4 dashboard and login.
                 </p>
 
+                <h3 class="subhead">Problem Being Addressed</h3>
+                <p class="prose">
+                    Live readings alone show what is happening now, but not what happened earlier. Lights left on in a bright room also waste energy. The system needed to sense the room, light it automatically, and keep a history that can be reviewed and exported.
+                </p>
+                <h3 class="subhead">Project Summary</h3>
+                <p class="prose">
+                    An ESP32 reads a DHT11 and an LDR, controls the bulb manually or automatically, updates <code>sensors/current</code> and appends timestamped readings to the <code>readings</code> collection. The dashboard shows the history as a table and three charts, and exports it as CSV.
+                </p>
+
                 <h3 class="subhead">Final System Architecture</h3>
                 <figure class="diagram">
                     <img src="assets/iot/diagrams/task5-architecture.svg" alt="Three-layer architecture: ESP32 device layer, Firestore cloud layer with control, sensors and readings, and dashboard application layer" loading="lazy">
@@ -2071,6 +2266,35 @@ void loop() {
                     <img src="assets/iot/diagrams/task5-wiring.svg" alt="Wiring: DHT11 data to GPIO4 with pull-up, LDR analog out to GPIO34, relay IN to GPIO23" loading="lazy">
                     <figcaption>DHT11 → GPIO4, LDR AO → GPIO34, relay IN → GPIO23.</figcaption>
                 </figure>
+
+                <h3 class="subhead">Pin Connection Table</h3>
+                <div class="table-wrap">
+                    <table class="compare-table">
+                        <thead><tr><th>Component</th><th>Component pin</th><th>ESP32 pin</th><th>Notes</th></tr></thead>
+                        <tbody>
+                            <tr><td>DHT11</td><td>VCC</td><td>3V3</td><td>3.3 V supply</td></tr>
+                            <tr><td>DHT11</td><td>DATA</td><td>GPIO4</td><td>10 kΩ pull-up to 3.3 V</td></tr>
+                            <tr><td>DHT11</td><td>GND</td><td>GND</td><td></td></tr>
+                            <tr><td>LDR module</td><td>VCC</td><td>3V3</td><td></td></tr>
+                            <tr><td>LDR module</td><td>AO (analog out)</td><td>GPIO34</td><td>ADC1, input-only pin</td></tr>
+                            <tr><td>LDR module</td><td>GND</td><td>GND</td><td></td></tr>
+                            <tr><td>Relay module</td><td>VCC / GND / IN</td><td>VIN (5 V) / GND / GPIO23</td><td>Bulb through COM/NO, as in Task 2</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h3 class="subhead">Component Specifications &amp; Libraries</h3>
+                <div class="table-wrap">
+                    <table class="compare-table">
+                        <thead><tr><th>Item</th><th>Specification</th></tr></thead>
+                        <tbody>
+                            <tr><td>DHT11</td><td>Temperature 0–50 °C (±2 °C), humidity 20–90 % RH (±5 %), 1 reading per second at most, single-wire digital output</td></tr>
+                            <tr><td>LDR module</td><td>Light-dependent resistor in a voltage divider; analog output read as 0–4095 by the 12-bit ADC (lower = darker with this module)</td></tr>
+                            <tr><td>Relay module</td><td>5 V coil, contacts typically rated 10 A at 250 VAC</td></tr>
+                            <tr><td>Arduino libraries</td><td><b>DHT sensor library</b> + <b>Adafruit Unified Sensor</b>; <b>Firebase ESP Client</b></td></tr>
+                            <tr><td>Time source</td><td>NTP (<code>pool.ntp.org</code>) for timestamps</td></tr>
+                        </tbody>
+                    </table>
+                </div>
 
                 <h3 class="subhead">DHT11 Temperature &amp; Humidity Monitoring</h3>
                 <p class="prose">
@@ -2863,6 +3087,42 @@ $("logoutBtn").addEventListener("click", () =&gt; signOut(auth));</code></pre>
                     <li>Alerts (email/push) when temperature crosses a limit, plus scheduled lighting.</li>
                     <li>A Cloud Function to delete readings older than 30 days, and a date-range picker for CSV export.</li>
                 </ul>
+
+                <h3 class="subhead">Real-World Applications</h3>
+                <ul class="project-highlights" style="margin-bottom: 20px;">
+                    <li>Automatic corridor, street or parking lighting that turns on only when it is dark</li>
+                    <li>Indoor climate logging for server rooms, greenhouses and storage areas</li>
+                    <li>Energy audits: comparing light usage and room conditions over days or weeks</li>
+                </ul>
+                <h3 class="subhead">Repository Structure</h3>
+                <p class="prose">
+                    All source code is in the <code>iot-code</code> folder of this portfolio's GitHub repository:
+                </p>
+                <div class="code-frame">
+                    <div class="terminal-bar">
+                        <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+                        <div class="terminal-title">iot-code/</div>
+                    </div>
+                    <pre class="code-block"><code>iot-code/
+├── README.md
+├── task1-web-server-led/
+│   └── task1_web_server_led.ino
+├── task2-adafruit-mqtt/
+│   └── task2_adafruit_mqtt.ino
+├── task3-ifttt-adafruit/
+│   ├── task3_ifttt_adafruit.ino
+│   └── ifttt_applets.md
+├── task4-firebase-dashboard/
+│   ├── firebase.json
+│   ├── firestore.rules
+│   ├── firmware/task4_firebase_dashboard.ino
+│   └── web/  (login.html, dashboard.html, css/, js/)
+└── task5-logging-automation/
+    ├── firmware/task5_logging_automation.ino
+    ├── calibration/ldr_calibration.ino
+    ├── data/firebase-readings-2026-09-11.xlsx
+    └── web/  (dashboard.html, js/dashboard.js)</code></pre>
+                </div>
 
                 <h3 class="subhead">Final Learning Reflection</h3>
                 <p class="prose">

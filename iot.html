@@ -1401,10 +1401,14 @@ void loop() {
                 <h3 class="subhead">Firebase Authentication Configuration</h3>
                 <ol class="steps">
                     <li><strong>Enable providers.</strong> In Authentication → Sign-in method, turn on <em>Email/Password</em> and <em>Google</em>.</li>
-                    <li><strong>Add users.</strong> Dashboard users sign up from the login page ("Create Account"). One extra <strong>device user</strong> is added by hand for the ESP32.</li>
+                    <li><strong>Add users.</strong> Users sign up from the login page ("Create Account" or "Continue with Google"), or are added in the console with <em>Add user</em>.</li>
                     <li><strong>Authorized domains.</strong> Add <code>iot-dashboard-karthik.web.app</code> so Google sign-in pop-ups work.</li>
                     <li><strong>Protect pages.</strong> <code>onAuthStateChanged</code> sends signed-out visitors from <code>dashboard.html</code> back to <code>login.html</code>.</li>
                 </ol>
+                <div class="photo-grid wide">
+                    <figure class="photo"><img src="assets/iot/images/task4-auth-signin-method.png" alt="Firebase Authentication Sign-in method tab with Email/Password and Google both Enabled" loading="lazy"><figcaption><b>Sign-in method</b>: Email/Password and Google providers both <b>Enabled</b>.</figcaption></figure>
+                    <figure class="photo"><img src="assets/iot/images/task4-auth-users.png" alt="Firebase Authentication Users tab listing three users: one Google account and two email/password accounts with created and signed-in dates" loading="lazy"><figcaption><b>Users</b>: 3 registered accounts, one signed in with Google and two with email/password, with their created and last-signed-in dates.</figcaption></figure>
+                </div>
 
                 <h3 class="subhead">Database Structure</h3>
                 <figure class="diagram">

@@ -367,6 +367,16 @@
 
         .repo-links { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 8px; }
 
+        /* Make the start of each task easy to spot, and close each one with a divider */
+        section[id^="task"] .proto-badge {
+            font-size: 1rem;
+            font-weight: 800;
+            padding: 6px 14px;
+            letter-spacing: 0.02em;
+        }
+
+        section[id^="task"] { border-bottom: 4px solid #111; }
+
         @media (max-width: 600px) {
             .photo img { height: 200px; }
             .photo-grid.wide { grid-template-columns: 1fr; }

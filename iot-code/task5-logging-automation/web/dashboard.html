@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IoT Dashboard</title>
+  <!-- login.html, css/style.css, js/firebase-config.js and js/auth.js are
+       the same files as Task 4 (task4-firebase-dashboard/web). -->
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>IoT Dashboard</h1>
+      <p>Smart Environment Monitoring &amp; Control</p>
+    </div>
+    <div class="user">
+      <span id="userEmail"></span>
+      <button class="btn-danger" id="logoutBtn">Logout</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2>Environmental Monitoring</h2>
+    <section class="cards">
+      <div class="card stat"><span class="icon">🌡️</span><div><small>Temperature</small><strong id="temp">-- °C</strong></div></div>
+      <div class="card stat"><span class="icon">💧</span><div><small>Humidity</small><strong id="hum">-- %</strong></div></div>
+      <div class="card stat"><span class="icon">💡</span><div><small>Ambient Light</small><strong id="ldr">--</strong></div></div>
+      <div class="card stat"><span class="icon">⚡</span><div><small>Bulb Status</small><strong id="bulbStatus">--</strong></div></div>
+    </section>
+
+    <h2>Appliance Control</h2>
+    <section class="card row">
+      <div>
+        <h3>Bulb</h3>
+        <p class="muted" id="bulbHint">Control the connected appliance.</p>
+      </div>
+      <button class="btn-primary" id="bulbBtn">Turn ON</button>
+    </section>
+
+    <h2>Operating Mode</h2>
+    <section class="card row">
+      <div>
+        <h3>Current Mode</h3>
+        <strong id="modeLabel" style="color:#2563eb">Manual</strong>
+      </div>
+      <div class="mode-group">
+        <button class="mode-btn" data-mode="manual">Manual</button>
+        <button class="mode-btn" data-mode="automatic">Automatic</button>
+      </div>
+    </section>
+
+    <h2>Automatic Lighting</h2>
+    <section class="card">
+      <h3>LDR Threshold</h3>
+      <div class="threshold">
+        <input type="number" id="thresholdInput" min="0" max="4095" step="10" value="500">
+        <button class="btn-primary" id="saveThreshold">Save Threshold</button>
+      </div>
+      <p class="muted">When automatic mode is enabled, the bulb will respond to the LDR value.</p>
+    </section>
+
+    <h2>Historical Data</h2>
+    <section class="card chart-box"><canvas id="historyChart"></canvas></section>
+
+    <h2>Sensor History</h2>
+    <section class="card table-wrap">
+      <table>
+        <thead>
+          <tr><th>Timestamp</th><th>Temperature</th><th>Humidity</th><th>LDR</th><th>Bulb</th><th>Mode</th></tr>
+        </thead>
+        <tbody id="historyBody">
+          <tr><td colspan="6">No historical data available</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="actions"><button class="btn-primary" id="csvBtn">Download CSV</button></div>
+  </main>
+
+  <footer>By: Karthik Aravind M</footer>
+  <script type="module" src="js/dashboard.js"></script>
+</body>
+</html>

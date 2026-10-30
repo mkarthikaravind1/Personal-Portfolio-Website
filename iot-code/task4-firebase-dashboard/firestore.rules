@@ -1,0 +1,25 @@
+rules_version = '2';
+
+// Authentication decides WHO the request comes from.
+// These rules decide WHAT that signed-in user is allowed to do (authorization).
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Live readings: any signed-in user (dashboard or ESP32 device user)
+    match /sensors/{docId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Commands from the dashboard to the ESP32
+    match /control/{docId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Historical log (Task 5): append-only — entries can be added and read,
+    // never edited or deleted from the client
+    match /logs/{logId} {
+      allow read, create: if request.auth != null;
+      allow update, delete: if false;
+    }
+  }
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IoT Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>IoT Dashboard</h1>
+      <p>Smart Environment Monitoring &amp; Control</p>
+    </div>
+    <div class="user">
+      <span id="userEmail"></span>
+      <button class="btn-danger" id="logoutBtn">Logout</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2>Environmental Monitoring</h2>
+    <section class="cards">
+      <div class="card stat"><span class="icon">🌡️</span><div><small>Temperature</small><strong id="temp">-- °C</strong></div></div>
+      <div class="card stat"><span class="icon">💧</span><div><small>Humidity</small><strong id="hum">-- %</strong></div></div>
+      <div class="card stat"><span class="icon">💡</span><div><small>Ambient Light</small><strong id="ldr">--</strong></div></div>
+      <div class="card stat"><span class="icon">⚡</span><div><small>Bulb Status</small><strong id="bulbStatus">--</strong></div></div>
+    </section>
+
+    <h2>Appliance Control</h2>
+    <section class="card row">
+      <div>
+        <h3>Bulb</h3>
+        <p class="muted">Control the connected appliance.</p>
+      </div>
+      <button class="btn-primary" id="bulbBtn">Turn ON</button>
+    </section>
+
+    <p class="muted" id="lastUpdate">Waiting for device data…</p>
+  </main>
+
+  <footer>By: Karthik Aravind M</footer>
+  <script type="module" src="js/dashboard.js"></script>
+</body>
+</html>

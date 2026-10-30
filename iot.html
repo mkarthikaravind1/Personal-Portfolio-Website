@@ -2069,17 +2069,31 @@ void loop() {
                     <figure class="photo"><img src="assets/iot/images/task5-firestore-auto.png" alt="Firestore control/device in automatic mode with bulbState true" loading="lazy"><figcaption><code>control/device</code> switched to <code>automatic</code>, bulb ON.</figcaption></figure>
                 </div>
 
-                <h3 class="subhead">Historical Data on the Dashboard, Chart &amp; CSV Download</h3>
+                <h3 class="subhead">Historical Data Displayed on the Dashboard</h3>
                 <p class="prose">
-                    The dashboard listens to the newest 50 <code>readings</code> entries (<code>orderBy("timestamp", "desc"),
-                    limit(50)</code>). It draws them as a <strong>Chart.js line graph</strong> (temperature and humidity
-                    on the left axis, LDR on the right) and as the <em>Sensor History</em> table. <strong>Download
-                    CSV</strong> fetches the <em>full</em> log in time order, builds a CSV file in the browser, and
-                    downloads it as <code>iot-sensor-log-YYYY-MM-DD.csv</code>.
+                    The live dashboard at <code>iot-dashboard-karthik.web.app</code> loads the <code>readings</code>
+                    collection from Firestore (<code>orderBy("timestamp", "asc"), limit(50)</code>) after login and
+                    lists every entry in its <strong>Historical Data</strong> table: timestamp, temperature, humidity,
+                    LDR, bulb state and mode.
                 </p>
+                <div class="photo-grid wide">
+                    <figure class="photo"><img src="assets/iot/images/task5-dashboard-history-table.png" alt="Live dashboard Historical Data table with 10 rows from 11/09/2026 05:45:05 pm to 06:12:53 pm, all automatic mode with bulb ON" loading="lazy"><figcaption>Live dashboard: <b>Historical Data</b> table with all 10 readings from 11 Sep 2026 (5:45:05 PM to 6:12:53 PM).</figcaption></figure>
+                </div>
+
+                <h3 class="subhead">Graph / Chart for Recorded Sensor Data</h3>
                 <p class="prose">
-                    All 10 recorded readings from the Firestore <code>readings</code> collection on 11 Sep 2026, in
-                    the same columns as the dashboard's <em>Sensor History</em> table:
+                    The same readings are plotted with <strong>Chart.js</strong> as three line charts in the
+                    dashboard's <strong>Sensor History</strong> section, one each for temperature, humidity and LDR,
+                    with time on the x-axis.
+                </p>
+                <div class="photo-grid wide">
+                    <figure class="photo"><img src="assets/iot/images/task5-chart-temperature.png" alt="Temperature History line chart between 23 and 25 degrees Celsius from 5:45 pm to 6:12 pm" loading="lazy"><figcaption><b>Temperature History</b>: steady between 23 and 25 °C.</figcaption></figure>
+                    <figure class="photo"><img src="assets/iot/images/task5-chart-humidity.png" alt="Humidity History line chart dipping from about 65 percent to 32 percent around 6:00 pm and recovering" loading="lazy"><figcaption><b>Humidity History</b>: dips to 32 % around 6:00 PM, then recovers to 65 %.</figcaption></figure>
+                    <figure class="photo"><img src="assets/iot/images/task5-chart-ldr.png" alt="LDR History line chart flat around 420" loading="lazy"><figcaption><b>LDR History</b>: flat at about 420, below the dark limit of 450, so the bulb stays ON.</figcaption></figure>
+                </div>
+
+                <p class="prose">
+                    All 10 recorded readings from the Firestore <code>readings</code> collection on 11 Sep 2026:
                 </p>
                 <div class="table-wrap">
                     <table class="compare-table">
@@ -2104,15 +2118,28 @@ void loop() {
                     of 450, so in automatic mode the bulb stayed ON throughout, as the automatic lighting logic expects.
                 </p>
                 <div class="repo-links" style="margin-bottom: 20px;">
-                    <a href="iot-code/task5-logging-automation/data/firebase-readings-2026-09-11.xlsx" download class="assign-link">Download readings (Excel) ↓</a>
+                    <a href="iot-code/task5-logging-automation/data/firebase-readings-2026-09-11.xlsx" download class="assign-link">Readings summary with averages (Excel) ↓</a>
                 </div>
+
+                <h3 class="subhead">CSV Data Download</h3>
+                <p class="prose">
+                    The <strong>Download CSV</strong> button queries every document in <code>readings</code>
+                    (newest first), builds a CSV file in the browser and downloads it as
+                    <code>iot-sensor-history.csv</code>. No server is involved.
+                </p>
                 <div class="code-frame">
                     <div class="terminal-bar">
                         <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
-                        <div class="terminal-title">iot-sensor-log-YYYY-MM-DD.csv (column layout)</div>
+                        <div class="terminal-title">iot-sensor-history.csv (column layout)</div>
                     </div>
-                    <pre class="code-block"><code>Timestamp,Temperature (C),Humidity (%),LDR,Bulb,Mode
-&lt;ISO time&gt;,&lt;°C&gt;,&lt;%&gt;,&lt;0-4095&gt;,ON|OFF,manual|automatic</code></pre>
+                    <pre class="code-block"><code>Timestamp,Temperature,Humidity,LDR,Bulb State,Mode
+"11/09/2026, 06:12:53 pm",25,65,420,ON,automatic</code></pre>
+                </div>
+
+                <h3 class="subhead">Downloaded File Contains the Recorded Data</h3>
+                <div class="photo-grid wide">
+                    <figure class="photo"><img src="assets/iot/images/task5-csv-download.png" alt="Browser download panel showing iot-sensor-history.csv, 541 bytes, done, downloaded from the live dashboard" loading="lazy"><figcaption>Clicking <b>Download CSV</b> on the live dashboard: <code>iot-sensor-history.csv</code> (541 B) downloaded.</figcaption></figure>
+                    <figure class="photo"><img src="assets/iot/images/task5-csv-excel.png" alt="The downloaded CSV opened in Excel with columns Timestamp, Temperature, Humidity, LDR, Bulb State, Mode and 10 data rows" loading="lazy"><figcaption>The downloaded file opened in Excel: the same 10 readings (newest first) with all six columns.</figcaption></figure>
                 </div>
 
                 <h3 class="subhead">Complete Source Code</h3>
@@ -2659,6 +2686,15 @@ $("logoutBtn").addEventListener("click", () =&gt; signOut(auth));</code></pre>
                         <figure class="photo"><img src="assets/iot/images/task5-history-csv.png" alt="Dashboard history section showing No historical data available before logging was added" loading="lazy"><figcaption>Before the fix: the history table was empty.</figcaption></figure>
                         <figure class="photo"><img src="assets/iot/images/task5-firestore-readings.png" alt="Firestore readings collection filled with entries after the fix" loading="lazy"><figcaption>After the fix: readings logged every 3 minutes.</figcaption></figure>
                     </div>
+                </div>
+                <div class="problem">
+                    <p><b>Problem:</b> Weeks later the dashboard could no longer load anything: no live cards, no
+                        history, and the CSV export failed.</p>
+                    <p><b>Solution:</b> Firestore had been created in <em>test mode</em>, whose rule
+                        (<code>allow read, write: if request.time &lt; timestamp.date(2026, 10, 11)</code>) expired on
+                        11 Oct 2026 and then denied every request. I replaced it with permanent rules that require a
+                        signed-in user for <code>sensors</code>, <code>control</code> and <code>readings</code> (and make
+                        <code>readings</code> append-only), then ran <code>firebase deploy --only firestore:rules</code>.</p>
                 </div>
                 <div class="problem">
                     <p><b>Problem:</b> Analog readings stopped working on some pins once Wi-Fi connected.</p>

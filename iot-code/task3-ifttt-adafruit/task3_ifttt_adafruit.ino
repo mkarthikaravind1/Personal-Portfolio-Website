@@ -1,12 +1,13 @@
 // Task 3 — IFTTT + Adafruit IO IoT Automation
-// IFTTT applets write "ON" / "OFF" into the Adafruit IO feed "bulb" when a
-// trigger fires (Google Assistant voice command from the phone). The ESP32
+// An IFTTT applet writes "1" into the Adafruit IO feed "bulb" when the
+// Google Assistant trigger fires ("Okay Google, activate Bulb On"). The ESP32
 // is subscribed to that feed over MQTT, so the command reaches the relay
 // without the ESP32 ever being exposed to the internet.
 //
-// The firmware side is the Task 2 subscriber plus: tolerant command parsing
-// (IFTTT sends free text), a source log, and an automatic Wi-Fi/MQTT recovery
-// path that was needed while testing under different conditions.
+// It also keeps listening to the Task 2 dashboard feed "relay", so voice and
+// dashboard control work side by side. Added on top of Task 2: tolerant
+// command parsing (IFTTT sends free text), duplicate filtering, and automatic
+// Wi-Fi/MQTT recovery for testing under different conditions.
 //
 // Library: "Adafruit MQTT Library" (Library Manager)
 
@@ -29,8 +30,8 @@
 WiFiClient client;
 Adafruit_MQTT_Client mqtt(&client, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME, AIO_KEY);
 
-Adafruit_MQTT_Subscribe bulbFeed   = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAME "/feeds/bulb");
-Adafruit_MQTT_Publish   statusFeed = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/feeds/bulb-status");
+Adafruit_MQTT_Subscribe bulbFeed  = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAME "/feeds/bulb");   // IFTTT
+Adafruit_MQTT_Subscribe relayFeed = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAME "/feeds/relay");  // dashboard
 
 bool bulbOn = false;
 
@@ -58,7 +59,7 @@ void connectMQTT() {
 }
 
 // IFTTT passes whatever text the applet was configured with, so accept a
-// few spellings instead of only an exact "ON" / "OFF".
+// few spellings instead of only an exact "1" / "0".
 int parseCommand(String v) {
   v.trim();
   v.toUpperCase();
@@ -67,15 +68,22 @@ int parseCommand(String v) {
   return -1;
 }
 
-void setBulb(bool on) {
+void setBulb(bool on, const char* source) {
   if (on == bulbOn) {
     Serial.println("Bulb already " + String(on ? "ON" : "OFF") + " - ignoring");
     return;
   }
   bulbOn = on;
   digitalWrite(RELAY_PIN, on ? RELAY_ON : RELAY_OFF);
-  statusFeed.publish(on ? "ON" : "OFF");
-  Serial.println(on ? "IFTTT trigger -> Bulb ON" : "IFTTT trigger -> Bulb OFF");
+  Serial.printf("%s -> Bulb %s\n", source, on ? "ON" : "OFF");
+}
+
+void handle(Adafruit_MQTT_Subscribe* feed, const char* source) {
+  String value = (char*)feed->lastread;
+  Serial.printf("Feed '%s' received: %s\n", source, value.c_str());
+  int cmd = parseCommand(value);
+  if (cmd == -1) Serial.println("Unknown command - ignored");
+  else setBulb(cmd == 1, source);
 }
 
 void setup() {
@@ -85,6 +93,7 @@ void setup() {
 
   connectWiFi();
   mqtt.subscribe(&bulbFeed);
+  mqtt.subscribe(&relayFeed);
 }
 
 void loop() {
@@ -93,13 +102,8 @@ void loop() {
 
   Adafruit_MQTT_Subscribe* sub;
   while ((sub = mqtt.readSubscription(2000))) {
-    if (sub == &bulbFeed) {
-      String value = (char*)bulbFeed.lastread;
-      Serial.println("Feed 'bulb' received: " + value);
-      int cmd = parseCommand(value);
-      if (cmd == -1) Serial.println("Unknown command - ignored");
-      else setBulb(cmd == 1);
-    }
+    if (sub == &bulbFeed)  handle(&bulbFeed, "bulb");
+    if (sub == &relayFeed) handle(&relayFeed, "relay");
   }
 
   if (!mqtt.ping()) mqtt.disconnect();

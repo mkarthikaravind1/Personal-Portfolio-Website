@@ -756,9 +756,9 @@ void loop() {
 
                 <h3 class="subhead">Publisher, Subscriber &amp; Broker in this Project</h3>
                 <div class="concept-grid">
-                    <div class="concept"><h4>Publisher</h4><p>The <b>Adafruit IO dashboard toggle</b> publishes <code>ON</code>/<code>OFF</code> to the <code>bulb</code> feed. The ESP32 also publishes the confirmed state to <code>bulb-status</code>.</p></div>
+                    <div class="concept"><h4>Publisher</h4><p>The <b>Adafruit IO dashboard toggle</b> publishes <code>ON</code>/<code>OFF</code> to the <code>relay</code> feed.</p></div>
                     <div class="concept"><h4>Broker</h4><p><b>io.adafruit.com:1883</b>. It authenticates clients with the username and AIO key, then forwards each message to the subscribers of that topic.</p></div>
-                    <div class="concept"><h4>Subscriber</h4><p>The <b>ESP32</b> subscribes to <code>bulb</code> and switches the relay on every message. The dashboard subscribes to <code>bulb-status</code> to show the real state.</p></div>
+                    <div class="concept"><h4>Subscriber</h4><p>The <b>ESP32</b> subscribes to <code>relay</code> and switches the relay on every message. The dashboard toggle also subscribes, so it always shows the feed's latest value.</p></div>
                 </div>
 
                 <h3 class="subhead">Role of an MQTT Topic / Feed</h3>
@@ -769,7 +769,7 @@ void loop() {
                     only need to agree on the feed name. Neither needs the other's address.
                 </p>
                 <figure class="diagram">
-                    <img src="assets/iot/diagrams/task2-mqtt.svg" alt="MQTT diagram: dashboard publishes to the Adafruit IO broker, which delivers to the subscribed ESP32; ESP32 publishes status back" loading="lazy">
+                    <img src="assets/iot/diagrams/task2-mqtt.svg" alt="MQTT diagram: dashboard publishes to the relay feed on the Adafruit IO broker, which delivers to the subscribed ESP32" loading="lazy">
                     <figcaption>Communication flow between the dashboard, the Adafruit IO MQTT broker and the ESP32, with the feed structure used.</figcaption>
                 </figure>
 
@@ -787,26 +787,29 @@ void loop() {
                     <li><strong>Create the account.</strong> Sign up at io.adafruit.com with the username
                         <code>Karthik_Aravind_M</code>. The <em>key</em> icon shows the username and the
                         <strong>AIO Key</strong> the ESP32 needs.</li>
-                    <li><strong>Create the feeds.</strong> Feeds → New Feed → <code>bulb</code> (commands), and a
-                        second feed <code>bulb-status</code> (confirmed state).</li>
+                    <li><strong>Create the feeds.</strong> Feeds → New Feed → <code>relay</code> for the dashboard's ON/OFF commands.
+                        (A second feed, <code>bulb</code>, is used by IFTTT in Task 3.)</li>
                     <li><strong>Build the dashboard.</strong> Dashboards → New Dashboard → add a <strong>Toggle</strong>
-                        block linked to <code>bulb</code> with ON text <code>ON</code> and OFF text <code>OFF</code>.
-                        Add an <strong>Indicator</strong> block on <code>bulb-status</code>.</li>
+                        block linked to <code>relay</code> with ON text <code>ON</code> and OFF text <code>OFF</code>,
+                        on a dashboard named <strong>Bulb control</strong>.</li>
                     <li><strong>Configure the sketch.</strong> Enter the Wi-Fi details, <code>AIO_USERNAME</code> and
                         <code>AIO_KEY</code>, then upload to the ESP32.</li>
                 </ol>
+                <div class="photo-grid wide">
+                    <figure class="photo"><img src="assets/iot/images/task2-adafruit-feeds.png" alt="Adafruit IO Feeds page for Karthik_Aravind_M listing the bulb feed (last value 1) and the relay feed (last value ON)" loading="lazy"><figcaption>My Adafruit IO account (<code>Karthik_Aravind_M</code>) → <b>Feeds</b>: <code>relay</code> (dashboard, last value <code>ON</code>) and <code>bulb</code> (IFTTT, last value <code>1</code>).</figcaption></figure>
+                </div>
 
                 <h3 class="subhead">Communication Flow between ESP32, MQTT &amp; Adafruit IO</h3>
                 <ol class="steps">
                     <li><strong>Connect.</strong> The ESP32 joins Wi-Fi, opens a TCP connection to the broker on port
                         1883 and logs in with the username and AIO key.</li>
-                    <li><strong>Subscribe.</strong> It subscribes to <code>Karthik_Aravind_M/feeds/bulb</code>.</li>
+                    <li><strong>Subscribe.</strong> It subscribes to <code>Karthik_Aravind_M/feeds/relay</code>.</li>
                     <li><strong>Publish.</strong> Clicking the toggle makes Adafruit IO publish <code>ON</code> to that
                         topic.</li>
                     <li><strong>Deliver + act.</strong> The broker pushes the message to the ESP32. It drives GPIO23
                         HIGH, and the relay closes and lights the bulb.</li>
-                    <li><strong>Confirm.</strong> The ESP32 publishes <code>ON</code> to <code>bulb-status</code>, and
-                        the dashboard indicator updates.</li>
+                    <li><strong>Stay in sync.</strong> The feed keeps the latest value (<code>ON</code>), so the
+                        toggle shows the same state when the dashboard is reopened.</li>
                 </ol>
 
                 <h3 class="subhead">Wiring &amp; Pin Connections</h3>
@@ -817,16 +820,16 @@ void loop() {
 
                 <h3 class="subhead">Complete ESP32 Source Code</h3>
                 <details class="code-details">
-                    <summary>task2_adafruit_mqtt.ino (99 lines): click to expand</summary>
+                    <summary>task2_adafruit_mqtt.ino (97 lines): click to expand</summary>
                     <div class="code-frame">
                         <div class="terminal-bar">
                             <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
                             <div class="terminal-title">task2-adafruit-mqtt/task2_adafruit_mqtt.ino</div>
                         </div>
                         <pre class="code-block"><code>// Task 2 — Adafruit IO Dashboard &amp; MQTT
-// The ESP32 subscribes to the Adafruit IO feed "bulb" over MQTT. When the
-// dashboard toggle publishes ON / OFF, the broker forwards it here and the
-// relay switches the bulb. The new state is published back to "bulb-status".
+// The ESP32 subscribes to the Adafruit IO feed "relay" over MQTT. When the
+// "Bulb control" dashboard toggle publishes ON / OFF to that feed, the broker
+// forwards it here and the relay switches the bulb.
 //
 // Library: "Adafruit MQTT Library" (Library Manager)
 
@@ -861,8 +864,7 @@ WiFiClient client;
 Adafruit_MQTT_Client mqtt(&amp;client, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME, AIO_KEY);
 
 // Feed topics follow the Adafruit IO format: &lt;username&gt;/feeds/&lt;feed-key&gt;
-Adafruit_MQTT_Subscribe bulbFeed   = Adafruit_MQTT_Subscribe(&amp;mqtt, AIO_USERNAME "/feeds/bulb");
-Adafruit_MQTT_Publish   statusFeed = Adafruit_MQTT_Publish(&amp;mqtt, AIO_USERNAME "/feeds/bulb-status");
+Adafruit_MQTT_Subscribe relayFeed = Adafruit_MQTT_Subscribe(&amp;mqtt, AIO_USERNAME "/feeds/relay");
 
 // Connects (or reconnects) to the Adafruit IO broker
 void connectMQTT() {
@@ -883,7 +885,6 @@ void connectMQTT() {
 
 void setBulb(bool on) {
   digitalWrite(RELAY_PIN, on ? RELAY_ON : RELAY_OFF);
-  statusFeed.publish(on ? "ON" : "OFF");
   Serial.println(on ? "Bulb -&gt; ON" : "Bulb -&gt; OFF");
 }
 
@@ -900,7 +901,7 @@ void setup() {
   }
   Serial.println("\nWi-Fi connected: " + WiFi.localIP().toString());
 
-  mqtt.subscribe(&amp;bulbFeed);
+  mqtt.subscribe(&amp;relayFeed);
 }
 
 void loop() {
@@ -909,10 +910,10 @@ void loop() {
   // Wait up to 2 s for a message on any subscribed feed
   Adafruit_MQTT_Subscribe* sub;
   while ((sub = mqtt.readSubscription(2000))) {
-    if (sub == &amp;bulbFeed) {
-      String value = (char*)bulbFeed.lastread;
+    if (sub == &amp;relayFeed) {
+      String value = (char*)relayFeed.lastread;
       value.trim();
-      Serial.println("Received from feed 'bulb': " + value);
+      Serial.println("Received from feed 'relay': " + value);
 
       if (value == "ON" || value == "1")       setBulb(true);
       else if (value == "OFF" || value == "0") setBulb(false);
@@ -929,20 +930,22 @@ void loop() {
                 <ul class="project-highlights" style="margin-bottom: 20px;">
                     <li><code>Adafruit_MQTT_Client mqtt(&amp;client, AIO_SERVER, 1883, …)</code> creates an MQTT client over
                         a plain <code>WiFiClient</code> TCP socket, logging in with the Adafruit IO credentials.</li>
-                    <li><code>Adafruit_MQTT_Subscribe bulbFeed(…"/feeds/bulb")</code> declares the subscription.
+                    <li><code>Adafruit_MQTT_Subscribe relayFeed(…"/feeds/relay")</code> declares the subscription.
                         <code>mqtt.subscribe(&amp;bulbFeed)</code> registers it before connecting.</li>
                     <li><code>connectMQTT()</code> reconnects whenever the link drops and restarts the board after
                         5 failed attempts, so a lost connection recovers by itself.</li>
                     <li><code>mqtt.readSubscription(2000)</code> waits up to 2 s for new messages.
                         <code>lastread</code> holds the payload (<code>"ON"</code> / <code>"OFF"</code>).</li>
-                    <li><code>setBulb()</code> drives GPIO23 and publishes the new state to <code>bulb-status</code>,
-                        so the dashboard shows what actually happened, not just what was asked.</li>
+                    <li><code>setBulb()</code> drives GPIO23 (HIGH = relay closed = bulb ON) and logs the change over
+                        Serial, so every command can be traced in the Serial Monitor.</li>
                     <li><code>mqtt.ping()</code> keeps the connection alive. Adafruit IO drops clients that stay
                         silent too long.</li>
                 </ul>
 
                 <h3 class="subhead">Photographs of the Hardware Setup</h3>
                 <div class="photo-grid">
+                    <figure class="photo"><img src="assets/iot/images/task2-hardware-wiring.png" alt="ESP32 wired to a blue relay module, with the relay switching the bulb holder" loading="lazy"><figcaption>Hardware: ESP32 → relay module (GPIO23, 5V, GND) → bulb holder. Bulb OFF.</figcaption></figure>
+                    <figure class="photo"><img src="assets/iot/images/task2-bulb-on.png" alt="Bulb lit after the dashboard toggle was switched ON" loading="lazy"><figcaption>Bulb ON after switching the dashboard toggle.</figcaption></figure>
                     <figure class="photo"><img src="assets/iot/images/task2-setup.jpg" alt="Working on the Adafruit IO setup at the bench" loading="lazy"><figcaption>Setting up the Adafruit IO connection.</figcaption></figure>
                     <figure class="photo"><img src="assets/iot/images/task2-code-credentials.jpg" alt="Arduino IDE with the Adafruit IO sketch" loading="lazy"><figcaption>Sketch with Adafruit IO credentials (key and Wi-Fi password blurred).</figcaption></figure>
                     <figure class="photo"><img src="assets/iot/images/task2-code-mqtt.jpg" alt="Arduino IDE compiling the MQTT sketch with relay settings" loading="lazy"><figcaption>MQTT server, port 1883 and relay pin 23 being compiled.</figcaption></figure>
@@ -977,7 +980,7 @@ void loop() {
                 <div class="problem">
                     <p><b>Problem:</b> The broker returned a connection refused error.</p>
                     <p><b>Solution:</b> The feed path is case-sensitive and must use the exact username
-                        (<code>Karthik_Aravind_M/feeds/bulb</code>). Fixing the username and copying the AIO key again
+                        (<code>Karthik_Aravind_M/feeds/relay</code>). Fixing the username and copying the AIO key again
                         from the key page solved it.</p>
                 </div>
                 <div class="problem">
@@ -990,8 +993,8 @@ void loop() {
                 <p class="prose">
                     MQTT changed how I think about device communication. In Task 1 the browser had to know the
                     ESP32's IP. Here both sides only know a topic name, and the broker does the routing. The device
-                    is also the one that connects out, so it works behind any router. I also saw that the device
-                    should report its real state back, because a command being sent doesn't mean it was carried out.
+                    is also the one that connects out, so it works behind any router. Because the feed keeps its last
+                    value, the dashboard toggle always reopens showing the bulb's current command.
                 </p>
 
                 <div class="repo-links">
@@ -1036,7 +1039,7 @@ void loop() {
                 <h3 class="subhead">Trigger → Action Concept</h3>
                 <div class="concept-grid">
                     <div class="concept"><h4>Trigger ("If This")</h4><p>The event IFTTT watches for. Here: <b>Google Assistant: activate scene "Bulb On"</b>, said on the phone.</p></div>
-                    <div class="concept"><h4>Action ("Then That")</h4><p>What IFTTT does when the trigger fires. Here: <b>Adafruit: send data to Adafruit IO</b>, which writes <code>ON</code> into the <code>bulb</code> feed.</p></div>
+                    <div class="concept"><h4>Action ("Then That")</h4><p>What IFTTT does when the trigger fires. Here: <b>Adafruit: send data to Adafruit IO</b>, which writes <code>1</code> into the <code>bulb</code> feed.</p></div>
                     <div class="concept"><h4>Role of Adafruit IO</h4><p>The bridge between IFTTT and the device. IFTTT can't reach an ESP32 on a hotspot, but it can write to a feed. Adafruit IO then pushes that value to the ESP32 over MQTT.</p></div>
                 </div>
 
@@ -1053,19 +1056,20 @@ void loop() {
                     <table class="compare-table">
                         <thead><tr><th>Applet</th><th>Trigger (If This)</th><th>Action (Then That)</th><th>Feed → Value</th></tr></thead>
                         <tbody>
-                            <tr><td>Bulb ON</td><td>Google Assistant: "Okay Google, activate Bulb On"</td><td>Adafruit: send data to Adafruit IO</td><td><code>bulb</code> → <code>ON</code></td></tr>
-                            <tr><td>Bulb OFF</td><td>Google Assistant: "Okay Google, activate Bulb Off"</td><td>Adafruit: send data to Adafruit IO</td><td><code>bulb</code> → <code>OFF</code></td></tr>
+                            <tr><td>Bulb ON</td><td>Google Assistant: "Okay Google, activate Bulb On"</td><td>Adafruit: send data to Adafruit IO</td><td><code>bulb</code> → <code>1</code></td></tr>
+                            <tr><td>Bulb OFF</td><td>Google Assistant: "Okay Google, activate Bulb Off"</td><td>Adafruit: send data to Adafruit IO</td><td><code>bulb</code> → <code>0</code></td></tr>
                         </tbody>
                     </table>
                 </div>
                 <ol class="steps">
                     <li><strong>Create the applet.</strong> In IFTTT, Create → If This → Google Assistant → "Activate scene" → scene name <code>Bulb On</code>.</li>
                     <li><strong>Connect Adafruit.</strong> Then That → Adafruit → "Send data to Adafruit IO". Authorize IFTTT to access the Adafruit IO account.</li>
-                    <li><strong>Pick the feed and value.</strong> Feed <code>bulb</code>, data <code>ON</code>. Save the applet.</li>
-                    <li><strong>Repeat for OFF</strong> with the scene <code>Bulb Off</code> and the value <code>OFF</code>.</li>
+                    <li><strong>Pick the feed and value.</strong> Feed <code>bulb</code>, data <code>1</code>. Save the applet.</li>
+                    <li><strong>Repeat for OFF</strong> with the scene <code>Bulb Off</code> and the value <code>0</code>.</li>
                 </ol>
                 <div class="photo-grid wide">
                     <figure class="photo"><img src="assets/iot/images/task3-ifttt-applet.png" alt="IFTTT applet: If you say Okay Google, activate Bulb On, then Send data to bulb feed, by karthik24bcs124, Connected" loading="lazy"><figcaption>My IFTTT applet (by karthik24bcs124), <b>Connected</b>: trigger "Okay Google, activate Bulb On", action "Send data to bulb feed".</figcaption></figure>
+                    <figure class="photo"><img src="assets/iot/images/task3-ifttt-trigger-action.png" alt="IFTTT applet editor: If Google Assistant Activate scene, Then Send data to Adafruit IO, Karthik Aravind M" loading="lazy"><figcaption>Applet configuration. <b>If</b>: Google Assistant → <em>Activate scene</em>. <b>Then</b>: Adafruit → <em>Send data to Adafruit IO</em> (account Karthik Aravind M).</figcaption></figure>
                 </div>
 
                 <h3 class="subhead">How the Trigger Reaches the IoT System</h3>
@@ -1075,7 +1079,7 @@ void loop() {
                 </figure>
                 <p class="prose">
                     Google Assistant recognises the phrase and fires the IFTTT trigger. IFTTT calls the Adafruit IO
-                    API over HTTPS and stores <code>ON</code> in the <code>bulb</code> feed. Adafruit IO's MQTT broker
+                    API over HTTPS and stores <code>1</code> in the <code>bulb</code> feed. Adafruit IO's MQTT broker
                     publishes that new value to every subscriber, which includes the ESP32. The ESP32 then switches
                     the relay. The device is never contacted directly, so <strong>no port forwarding is
                     needed</strong>.
@@ -1083,21 +1087,22 @@ void loop() {
 
                 <h3 class="subhead">ESP32 Source Code</h3>
                 <details class="code-details">
-                    <summary>task3_ifttt_adafruit.ino (106 lines): click to expand</summary>
+                    <summary>task3_ifttt_adafruit.ino (110 lines): click to expand</summary>
                     <div class="code-frame">
                         <div class="terminal-bar">
                             <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
                             <div class="terminal-title">task3-ifttt-adafruit/task3_ifttt_adafruit.ino</div>
                         </div>
                         <pre class="code-block"><code>// Task 3 — IFTTT + Adafruit IO IoT Automation
-// IFTTT applets write "ON" / "OFF" into the Adafruit IO feed "bulb" when a
-// trigger fires (Google Assistant voice command from the phone). The ESP32
+// An IFTTT applet writes "1" into the Adafruit IO feed "bulb" when the
+// Google Assistant trigger fires ("Okay Google, activate Bulb On"). The ESP32
 // is subscribed to that feed over MQTT, so the command reaches the relay
 // without the ESP32 ever being exposed to the internet.
 //
-// The firmware side is the Task 2 subscriber plus: tolerant command parsing
-// (IFTTT sends free text), a source log, and an automatic Wi-Fi/MQTT recovery
-// path that was needed while testing under different conditions.
+// It also keeps listening to the Task 2 dashboard feed "relay", so voice and
+// dashboard control work side by side. Added on top of Task 2: tolerant
+// command parsing (IFTTT sends free text), duplicate filtering, and automatic
+// Wi-Fi/MQTT recovery for testing under different conditions.
 //
 // Library: "Adafruit MQTT Library" (Library Manager)
 
@@ -1120,8 +1125,8 @@ void loop() {
 WiFiClient client;
 Adafruit_MQTT_Client mqtt(&amp;client, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME, AIO_KEY);
 
-Adafruit_MQTT_Subscribe bulbFeed   = Adafruit_MQTT_Subscribe(&amp;mqtt, AIO_USERNAME "/feeds/bulb");
-Adafruit_MQTT_Publish   statusFeed = Adafruit_MQTT_Publish(&amp;mqtt, AIO_USERNAME "/feeds/bulb-status");
+Adafruit_MQTT_Subscribe bulbFeed  = Adafruit_MQTT_Subscribe(&amp;mqtt, AIO_USERNAME "/feeds/bulb");   // IFTTT
+Adafruit_MQTT_Subscribe relayFeed = Adafruit_MQTT_Subscribe(&amp;mqtt, AIO_USERNAME "/feeds/relay");  // dashboard
 
 bool bulbOn = false;
 
@@ -1149,7 +1154,7 @@ void connectMQTT() {
 }
 
 // IFTTT passes whatever text the applet was configured with, so accept a
-// few spellings instead of only an exact "ON" / "OFF".
+// few spellings instead of only an exact "1" / "0".
 int parseCommand(String v) {
   v.trim();
   v.toUpperCase();
@@ -1158,15 +1163,22 @@ int parseCommand(String v) {
   return -1;
 }
 
-void setBulb(bool on) {
+void setBulb(bool on, const char* source) {
   if (on == bulbOn) {
     Serial.println("Bulb already " + String(on ? "ON" : "OFF") + " - ignoring");
     return;
   }
   bulbOn = on;
   digitalWrite(RELAY_PIN, on ? RELAY_ON : RELAY_OFF);
-  statusFeed.publish(on ? "ON" : "OFF");
-  Serial.println(on ? "IFTTT trigger -&gt; Bulb ON" : "IFTTT trigger -&gt; Bulb OFF");
+  Serial.printf("%s -&gt; Bulb %s\n", source, on ? "ON" : "OFF");
+}
+
+void handle(Adafruit_MQTT_Subscribe* feed, const char* source) {
+  String value = (char*)feed-&gt;lastread;
+  Serial.printf("Feed '%s' received: %s\n", source, value.c_str());
+  int cmd = parseCommand(value);
+  if (cmd == -1) Serial.println("Unknown command - ignored");
+  else setBulb(cmd == 1, source);
 }
 
 void setup() {
@@ -1176,6 +1188,7 @@ void setup() {
 
   connectWiFi();
   mqtt.subscribe(&amp;bulbFeed);
+  mqtt.subscribe(&amp;relayFeed);
 }
 
 void loop() {
@@ -1184,13 +1197,8 @@ void loop() {
 
   Adafruit_MQTT_Subscribe* sub;
   while ((sub = mqtt.readSubscription(2000))) {
-    if (sub == &amp;bulbFeed) {
-      String value = (char*)bulbFeed.lastread;
-      Serial.println("Feed 'bulb' received: " + value);
-      int cmd = parseCommand(value);
-      if (cmd == -1) Serial.println("Unknown command - ignored");
-      else setBulb(cmd == 1);
-    }
+    if (sub == &amp;bulbFeed)  handle(&amp;bulbFeed, "bulb");
+    if (sub == &amp;relayFeed) handle(&amp;relayFeed, "relay");
   }
 
   if (!mqtt.ping()) mqtt.disconnect();

@@ -1,7 +1,7 @@
 // Task 2 — Adafruit IO Dashboard & MQTT
-// The ESP32 subscribes to the Adafruit IO feed "bulb" over MQTT. When the
-// dashboard toggle publishes ON / OFF, the broker forwards it here and the
-// relay switches the bulb. The new state is published back to "bulb-status".
+// The ESP32 subscribes to the Adafruit IO feed "relay" over MQTT. When the
+// "Bulb control" dashboard toggle publishes ON / OFF to that feed, the broker
+// forwards it here and the relay switches the bulb.
 //
 // Library: "Adafruit MQTT Library" (Library Manager)
 
@@ -36,8 +36,7 @@ WiFiClient client;
 Adafruit_MQTT_Client mqtt(&client, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME, AIO_KEY);
 
 // Feed topics follow the Adafruit IO format: <username>/feeds/<feed-key>
-Adafruit_MQTT_Subscribe bulbFeed   = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAME "/feeds/bulb");
-Adafruit_MQTT_Publish   statusFeed = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/feeds/bulb-status");
+Adafruit_MQTT_Subscribe relayFeed = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAME "/feeds/relay");
 
 // Connects (or reconnects) to the Adafruit IO broker
 void connectMQTT() {
@@ -58,7 +57,6 @@ void connectMQTT() {
 
 void setBulb(bool on) {
   digitalWrite(RELAY_PIN, on ? RELAY_ON : RELAY_OFF);
-  statusFeed.publish(on ? "ON" : "OFF");
   Serial.println(on ? "Bulb -> ON" : "Bulb -> OFF");
 }
 
@@ -75,7 +73,7 @@ void setup() {
   }
   Serial.println("\nWi-Fi connected: " + WiFi.localIP().toString());
 
-  mqtt.subscribe(&bulbFeed);
+  mqtt.subscribe(&relayFeed);
 }
 
 void loop() {
@@ -84,10 +82,10 @@ void loop() {
   // Wait up to 2 s for a message on any subscribed feed
   Adafruit_MQTT_Subscribe* sub;
   while ((sub = mqtt.readSubscription(2000))) {
-    if (sub == &bulbFeed) {
-      String value = (char*)bulbFeed.lastread;
+    if (sub == &relayFeed) {
+      String value = (char*)relayFeed.lastread;
       value.trim();
-      Serial.println("Received from feed 'bulb': " + value);
+      Serial.println("Received from feed 'relay': " + value);
 
       if (value == "ON" || value == "1")       setBulb(true);
       else if (value == "OFF" || value == "0") setBulb(false);

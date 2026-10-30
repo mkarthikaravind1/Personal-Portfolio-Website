@@ -10,7 +10,7 @@ Two applets, one per command. Both write into the same Adafruit IO feed that the
 | Scene name | `Bulb On` (spoken as "Okay Google, activate Bulb On") |
 | **Then That** (action service) | Adafruit — *Send data to Adafruit IO* |
 | Feed name | `bulb` |
-| Data to save | `ON` |
+| Data to save | `1` |
 
 ## Applet 2 — Bulb OFF
 
@@ -20,7 +20,7 @@ Two applets, one per command. Both write into the same Adafruit IO feed that the
 | Scene name | `Bulb Off` |
 | **Then That** | Adafruit — *Send data to Adafruit IO* |
 | Feed name | `bulb` |
-| Data to save | `OFF` |
+| Data to save | `0` |
 
 ## Connecting the services
 
@@ -36,7 +36,7 @@ Two applets, one per command. Both write into the same Adafruit IO feed that the
 "Okay Google, activate Bulb On"
   → Google Assistant (scene trigger)
   → IFTTT applet
-  → Adafruit IO REST API: POST /api/v2/<user>/feeds/bulb/data  {value: "ON"}
+  → Adafruit IO REST API: POST /api/v2/<user>/feeds/bulb/data  {value: "1"}
   → Adafruit IO MQTT broker publishes on <user>/feeds/bulb
-  → ESP32 (subscribed) → GPIO23 → relay → bulb
+  → ESP32 (subscribed to bulb + relay) → GPIO23 → relay → bulb
 ```

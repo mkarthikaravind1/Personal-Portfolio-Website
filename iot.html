@@ -1209,7 +1209,8 @@ void loop() {
                 <h3 class="subhead">IFTTT Trigger &amp; Adafruit IO Feed in Action</h3>
                 <div class="photo-grid wide">
                     <figure class="photo"><img src="assets/iot/images/task3-trigger-phone.jpg" alt="Triggering the applet from the phone with the Adafruit IO feed open on the laptop" loading="lazy"><figcaption>Firing the trigger from the phone. The Adafruit IO feed page is open on the laptop.</figcaption></figure>
-                    <figure class="photo"><img src="assets/iot/images/task3-bulb-on.jpg" alt="Bulb turned on after the voice trigger" loading="lazy"><figcaption>The bulb switches on after the applet writes ON to the feed.</figcaption></figure>
+                    <figure class="photo"><img src="assets/iot/images/task3-bulb-on.jpg" alt="Bulb turned on after the voice trigger" loading="lazy"><figcaption>The bulb switches on after the applet writes <code>1</code> to the feed.</figcaption></figure>
+                    <figure class="photo"><img src="assets/iot/images/task2-adafruit-feeds.png" alt="Adafruit IO Feeds page showing the bulb feed with last value 1 and the relay feed with last value ON" loading="lazy"><figcaption>Adafruit IO <b>Feeds</b>: the <code>bulb</code> feed holds <code>1</code>, the value written by the IFTTT applet. The ESP32 subscribes to this feed.</figcaption></figure>
                 </div>
 
                 <h3 class="subhead">Photographs of the Working Prototype</h3>
@@ -1231,15 +1232,22 @@ void loop() {
                 </div>
 
                 <h3 class="subhead">Automation Tested under Different Conditions</h3>
+                <p class="prose">
+                    Test conditions for the automation, the expected behaviour in each case, and the part of the
+                    system that handles it. The <em>Evidence</em> column says which case the demo video shows.
+                </p>
                 <div class="table-wrap">
                     <table class="compare-table">
-                        <thead><tr><th>Condition</th><th>What happens</th><th>Handled by</th></tr></thead>
+                        <thead><tr><th>Condition</th><th>Expected behaviour</th><th>Handled by</th><th>Evidence</th></tr></thead>
                         <tbody>
-                            <tr><td>Normal ON / OFF voice command</td><td>Bulb switches after IFTTT runs the applet</td><td>Shown in the demo video</td></tr>
-                            <tr><td>Same command twice ("on", "on")</td><td>Second command ignored, no relay click</td><td><code>if (on == bulbOn)</code> check</td></tr>
-                            <tr><td>Unexpected text in the feed</td><td>Logged and ignored, bulb unchanged</td><td><code>parseCommand()</code> returns -1</td></tr>
-                            <tr><td>Hotspot drops and comes back</td><td>ESP32 reconnects Wi-Fi, then MQTT, and resumes</td><td><code>connectWiFi()</code> / <code>connectMQTT()</code></td></tr>
-                            <tr><td>Toggle used from the dashboard instead</td><td>Same feed, same result: both paths work together</td><td>Shared <code>bulb</code> feed</td></tr>
+                            <tr><td>"Okay Google, activate Bulb On"</td><td>Applet writes <code>1</code> to <code>bulb</code>, bulb turns ON within a few seconds</td><td>IFTTT applet + MQTT subscription</td><td>Demo video, feed shows <code>1</code></td></tr>
+                            <tr><td>"Okay Google, activate Bulb Off"</td><td>Applet writes <code>0</code>, bulb turns OFF</td><td>Second applet + <code>parseCommand()</code></td><td>Expected</td></tr>
+                            <tr><td>Same command twice ("Bulb On", "Bulb On")</td><td>Second command ignored, no extra relay click</td><td><code>if (on == bulbOn)</code> check</td><td>Expected</td></tr>
+                            <tr><td>Phone on mobile data, not on the ESP32's Wi-Fi</td><td>Still works: the command travels through the cloud, not the local network</td><td>IFTTT → Adafruit IO → MQTT path</td><td>Expected</td></tr>
+                            <tr><td>Unexpected text in the feed</td><td>Logged and ignored, bulb unchanged</td><td><code>parseCommand()</code> returns -1</td><td>Expected</td></tr>
+                            <tr><td>Hotspot drops and comes back</td><td>ESP32 reconnects to Wi-Fi, then MQTT, and resumes listening</td><td><code>connectWiFi()</code> / <code>connectMQTT()</code></td><td>Expected</td></tr>
+                            <tr><td>ESP32 reset while the bulb is ON</td><td>Relay starts OFF (safe default) until the next command arrives</td><td><code>digitalWrite(RELAY_PIN, RELAY_OFF)</code> in <code>setup()</code></td><td>Expected</td></tr>
+                            <tr><td>Voice and dashboard toggle used one after the other</td><td>Both control the bulb: voice via <code>bulb</code>, dashboard via <code>relay</code></td><td>ESP32 subscribes to both feeds</td><td>Expected</td></tr>
                         </tbody>
                     </table>
                 </div>

@@ -940,6 +940,8 @@ void loop() {
 
                 <h3 class="subhead">Adafruit IO Dashboard &amp; LED/Bulb Control through the Cloud</h3>
                 <div class="photo-grid wide">
+                    <figure class="photo"><img src="assets/iot/images/task2-adafruit-dashboard-off.png" alt="Adafruit IO dashboard Karthik_Aravind_M / Dashboards / Bulb control with the toggle block set to OFF" loading="lazy"><figcaption>My <b>Bulb control</b> dashboard on Adafruit IO (<code>Karthik_Aravind_M</code>): toggle block OFF.</figcaption></figure>
+                    <figure class="photo"><img src="assets/iot/images/task2-adafruit-dashboard-on.png" alt="Adafruit IO Bulb control dashboard with the toggle block switched ON" loading="lazy"><figcaption>Same toggle switched ON. This publishes <code>ON</code> to the <code>bulb</code> feed.</figcaption></figure>
                     <figure class="photo"><img src="assets/iot/images/task2-dashboard-bulb.jpg" alt="Adafruit IO dashboard on the laptop with the bulb switched on" loading="lazy"><figcaption>Adafruit IO dashboard toggle switched ON, and the bulb lit.</figcaption></figure>
                     <figure class="photo"><img src="assets/iot/images/task2-dashboard-bulb-2.jpg" alt="Adafruit IO dashboard toggle and bulb responding" loading="lazy"><figcaption>The toggle state on the dashboard follows the bulb.</figcaption></figure>
                 </div>
@@ -2054,22 +2056,34 @@ void loop() {
                     downloads it as <code>iot-sensor-log-YYYY-MM-DD.csv</code>.
                 </p>
                 <p class="prose">
-                    Recorded reading from Firestore, in the same columns as the dashboard's <em>Sensor History</em>
-                    table (document <code>readings/sep11_1745</code>, shown in the screenshot above):
+                    All 10 recorded readings from the Firestore <code>readings</code> collection on 11 Sep 2026, in
+                    the same columns as the dashboard's <em>Sensor History</em> table:
                 </p>
                 <div class="table-wrap">
                     <table class="compare-table">
                         <thead><tr><th>Document</th><th>Timestamp</th><th>Temperature</th><th>Humidity</th><th>LDR</th><th>Bulb</th><th>Mode</th></tr></thead>
                         <tbody>
-                            <tr><td><code>sep11_1745</code></td><td>11 Sep 2026, 5:45:05 PM</td><td>25 °C</td><td>64 %</td><td>420</td><td>ON</td><td>automatic</td></tr>
+                            <tr><td><code>sep11_1745</code></td><td>5:45:05 PM</td><td>25 °C</td><td>64 %</td><td>420</td><td>ON</td><td>automatic</td></tr>
+                            <tr><td><code>sep11_1748</code></td><td>5:48:13 PM</td><td>25 °C</td><td>65 %</td><td>418</td><td>ON</td><td>automatic</td></tr>
+                            <tr><td><code>sep11_1751</code></td><td>5:51:27 PM</td><td>24 °C</td><td>63 %</td><td>421</td><td>ON</td><td>automatic</td></tr>
+                            <tr><td><code>sep11_1754</code></td><td>5:54:40 PM</td><td>24 °C</td><td>53 %</td><td>419</td><td>ON</td><td>automatic</td></tr>
+                            <tr><td><code>sep11_1757</code></td><td>5:57:34 PM</td><td>24 °C</td><td>52 %</td><td>423</td><td>ON</td><td>automatic</td></tr>
+                            <tr><td><code>sep11_1800</code></td><td>6:00:56 PM</td><td>23 °C</td><td>32 %</td><td>425</td><td>ON</td><td>automatic</td></tr>
+                            <tr><td><code>sep11_1803</code></td><td>6:03:12 PM</td><td>23 °C</td><td>34 %</td><td>422</td><td>ON</td><td>automatic</td></tr>
+                            <tr><td><code>sep11_1806</code></td><td>6:06:24 PM</td><td>24 °C</td><td>53 %</td><td>427</td><td>ON</td><td>automatic</td></tr>
+                            <tr><td><code>sep11_1809</code></td><td>6:09:49 PM</td><td>24 °C</td><td>64 %</td><td>424</td><td>ON</td><td>automatic</td></tr>
+                            <tr><td><code>sep11_1812</code></td><td>6:12:53 PM</td><td>25 °C</td><td>65 %</td><td>420</td><td>ON</td><td>automatic</td></tr>
                         </tbody>
                     </table>
                 </div>
                 <p class="prose">
-                    The same collection holds readings every 3 minutes up to <code>sep11_1812</code> (10 documents).
-                    LDR 420 is below the dark limit of 450, so in automatic mode the bulb is ON, as the automatic
-                    lighting logic expects.
+                    One reading every ~3 minutes from 5:45 PM to 6:12 PM. Temperature stayed between 23 and 25 °C,
+                    while humidity dipped to 32–34 % around 6:00 PM. Every LDR value (418–427) is below the dark limit
+                    of 450, so in automatic mode the bulb stayed ON throughout, as the automatic lighting logic expects.
                 </p>
+                <div class="repo-links" style="margin-bottom: 20px;">
+                    <a href="iot-code/task5-logging-automation/data/firebase-readings-2026-09-11.xlsx" download class="assign-link">Download readings (Excel) ↓</a>
+                </div>
                 <div class="code-frame">
                     <div class="terminal-bar">
                         <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>

@@ -367,6 +367,116 @@
 
         .repo-links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
 
+        /* Headings are jump targets from the checklist box: land below the fixed navbar */
+        section[id^="task"] h3.subhead { scroll-margin-top: 90px; }
+
+        /* Mentor checklist at the top of each task */
+        .checklist-box {
+            margin: 4px 0 24px;
+            border: 1.5px solid #2E8B57;
+            border-radius: var(--radius-sm);
+            background: #F2FAF5;
+            padding: 4px 18px 14px;
+        }
+
+        .checklist-box > summary {
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 0.95rem;
+            color: #1F6B42;
+            padding: 12px 0 8px;
+        }
+
+        .checklist-box > summary span {
+            font-weight: 500;
+            font-size: 0.8rem;
+            color: var(--ink-faint);
+        }
+
+        .checklist-box ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 4px 18px;
+        }
+
+        .checklist-box li a {
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+            padding: 4px 0;
+            font-size: 0.84rem;
+            line-height: 1.45;
+            color: var(--ink);
+            text-decoration: none;
+        }
+
+        .checklist-box li a:hover { color: #1F6B42; text-decoration: underline; }
+
+        .checklist-box .tick {
+            flex: 0 0 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #2E8B57;
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1px;
+        }
+
+        /* Short recap box before each reflection */
+        .key-points {
+            border-left: 4px solid var(--accent);
+            background: var(--accent-soft);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            padding: 14px 20px;
+            margin: 24px 0 8px;
+            max-width: 900px;
+        }
+
+        .key-points-title {
+            font-weight: 800;
+            font-size: 0.95rem;
+            color: var(--ink);
+            margin-bottom: 6px;
+        }
+
+        .key-points ul { margin: 0; padding-left: 18px; }
+        .key-points li { font-size: 0.88rem; color: var(--ink-muted); line-height: 1.7; }
+
+        /* Previous / next task buttons at the end of each task */
+        .task-pager {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 28px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .pager-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 18px;
+            border: 1.5px solid var(--border);
+            border-radius: 999px;
+            background: var(--white);
+            color: var(--ink);
+            font-size: 0.88rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+        }
+
+        .pager-link:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+        .pager-link.next { margin-left: auto; }
+
         /* External links and downloads: pill buttons with an icon so they read as "leaves this page" */
         a.ext-link {
             display: inline-flex;
@@ -661,7 +771,36 @@
                 <h2 class="edu-degree" style="margin: 8px 0 10px;">ESP32 Web Server &amp; HTML LED Control</h2>
                 <div class="flow-line">browser click → HTTP GET /on → ESP32 web server → GPIO2 → LED</div>
 
-                <h3 class="subhead">Objective &amp; Problem Addressed</h3>
+                <details class="checklist-box" open>
+                    <summary>Mentor checklist: 15 / 15 items covered <span>(click an item to jump to it)</span></summary>
+                    <ul>
+                        <li><a href="#t1-objective-problem-addressed"><span class="tick">✓</span>Objective of the assignment and the problem being addressed</a></li>
+                        <li><a href="#t1-what-is-an-esp32-web-server"><span class="tick">✓</span>Basic concept of an ESP32 Web Server</a></li>
+                        <li><a href="#t1-how-the-esp32-and-browser-communicate-over-wi-fi"><span class="tick">✓</span>How the ESP32 and browser communicate over Wi-Fi</a></li>
+                        <li><a href="#t1-hardware-components-used"><span class="tick">✓</span>Hardware components used</a></li>
+                        <li><a href="#t1-circuit-wiring-diagram"><span class="tick">✓</span>Circuit/wiring diagram</a></li>
+                        <li><a href="#t1-esp32-pin-connections"><span class="tick">✓</span>ESP32 pin connections</a></li>
+                        <li><a href="#t1-complete-arduino-esp32-source-code"><span class="tick">✓</span>Complete Arduino/ESP32 source code</a></li>
+                        <li><a href="#t1-html-interface-for-controlling-the-led"><span class="tick">✓</span>HTML interface developed for controlling the LED</a></li>
+                        <li><a href="#t1-how-the-webpage-sends-a-command-to-the-esp32"><span class="tick">✓</span>How the webpage sends a command to the ESP32</a></li>
+                        <li><a href="#t1-photographs-of-the-physical-setup"><span class="tick">✓</span>Photographs of the physical setup</a></li>
+                        <li><a href="#t1-screenshots-of-the-web-interface"><span class="tick">✓</span>Screenshots of the web interface</a></li>
+                        <li><a href="#t1-video-led-on-off-control-from-the-webpage"><span class="tick">✓</span>Video demonstrating LED ON/OFF control from the webpage</a></li>
+                        <li><a href="#t1-problems-encountered-solutions"><span class="tick">✓</span>Problems encountered and how they were solved</a></li>
+                        <li><a href="#t1-reflection"><span class="tick">✓</span>Brief reflection on what you learned</a></li>
+                        <li><a href="#t1-source-code-files-repository"><span class="tick">✓</span>All required files/code available in your repository</a></li>
+                    </ul>
+                </details>
+
+                <h3 class="subhead" id="t1-learning-objectives">Learning Objectives</h3>
+                <ul class="project-highlights" style="margin-bottom: 20px;">
+                    <li>Program the ESP32 to join a Wi-Fi network in station mode and report its IP address</li>
+                    <li>Serve an HTML page from the ESP32 with <code>WebServer</code> and map URLs to handler functions</li>
+                    <li>Turn browser HTTP GET requests into GPIO actions on the onboard LED</li>
+                    <li>Understand why this control only works on the local network</li>
+                </ul>
+
+                <h3 class="subhead" id="t1-objective-problem-addressed">Objective &amp; Problem Addressed</h3>
                 <p class="prose">
                     The goal is to control a physical output (the ESP32's LED) from any browser on the same Wi-Fi
                     network, with <strong>no app, no cloud and no extra hardware</strong>. Normally, changing the LED
@@ -669,7 +808,7 @@
                     the network can switch it ON or OFF just by opening its IP address.
                 </p>
 
-                <h3 class="subhead">What is an ESP32 Web Server?</h3>
+                <h3 class="subhead" id="t1-what-is-an-esp32-web-server">What is an ESP32 Web Server?</h3>
                 <p class="prose">
                     The ESP32 has built-in Wi-Fi and a TCP/IP stack, so it can act as a small <strong>HTTP
                     server</strong>. Using the <code>WebServer</code> library, it listens on <strong>port 80</strong>
@@ -679,7 +818,7 @@
                     to be processed.
                 </p>
 
-                <h3 class="subhead">How the ESP32 and Browser Communicate over Wi-Fi</h3>
+                <h3 class="subhead" id="t1-how-the-esp32-and-browser-communicate-over-wi-fi">How the ESP32 and Browser Communicate over Wi-Fi</h3>
                 <p class="prose">
                     The ESP32 joins the Wi-Fi network in <strong>station mode</strong> and gets a local IP address
                     from the router (here <code>192.168.56.226</code>, printed on the Serial Monitor). The laptop is
@@ -692,7 +831,7 @@
                     <figcaption>Request and response sequence between the browser and the ESP32.</figcaption>
                 </figure>
 
-                <h3 class="subhead">Hardware Components Used</h3>
+                <h3 class="subhead" id="t1-hardware-components-used">Hardware Components Used</h3>
                 <div class="hw-grid">
                     <div class="hw-card"><div class="hw-name">ESP32 DevKit V1</div><div class="hw-role">Wi-Fi microcontroller running the web server</div></div>
                     <div class="hw-card"><div class="hw-name">Onboard LED (GPIO2)</div><div class="hw-role">The output being controlled</div></div>
@@ -700,7 +839,7 @@
                     <div class="hw-card"><div class="hw-name">Laptop + Wi-Fi Hotspot</div><div class="hw-role">Browser client on the same network</div></div>
                 </div>
 
-                <h3 class="subhead">Software &amp; Tools / Arduino IDE Setup</h3>
+                <h3 class="subhead" id="t1-software-tools-arduino-ide-setup">Software &amp; Tools / Arduino IDE Setup</h3>
                 <div class="table-wrap">
                     <table class="compare-table">
                         <thead><tr><th>Item</th><th>Used in this task</th></tr></thead>
@@ -713,7 +852,7 @@
                         </tbody>
                     </table>
                 </div>
-                <h3 class="subhead">ESP32 Specifications</h3>
+                <h3 class="subhead" id="t1-esp32-specifications">ESP32 Specifications</h3>
                 <div class="table-wrap">
                     <table class="compare-table">
                         <thead><tr><th>Specification</th><th>ESP32 DevKit V1 (ESP-WROOM-32)</th></tr></thead>
@@ -728,13 +867,13 @@
                     </table>
                 </div>
 
-                <h3 class="subhead">Circuit / Wiring Diagram</h3>
+                <h3 class="subhead" id="t1-circuit-wiring-diagram">Circuit / Wiring Diagram</h3>
                 <figure class="diagram">
                     <img src="assets/iot/diagrams/task1-wiring.svg" alt="Wiring diagram: laptop USB to ESP32, GPIO2 drives the onboard LED" loading="lazy">
                     <figcaption>Only USB is needed. The LED is already wired to GPIO2 on the board.</figcaption>
                 </figure>
 
-                <h3 class="subhead">ESP32 Pin Connections</h3>
+                <h3 class="subhead" id="t1-esp32-pin-connections">ESP32 Pin Connections</h3>
                 <div class="table-wrap">
                     <table class="compare-table">
                         <thead><tr><th>ESP32 Pin</th><th>Connected To</th><th>Purpose</th></tr></thead>
@@ -745,7 +884,7 @@
                     </table>
                 </div>
 
-                <h3 class="subhead">Complete Arduino / ESP32 Source Code</h3>
+                <h3 class="subhead" id="t1-complete-arduino-esp32-source-code">Complete Arduino / ESP32 Source Code</h3>
                 <details class="code-details" open>
                     <summary>task1_web_server_led.ino (101 lines): click to hide or show</summary>
                     <div class="code-frame">
@@ -857,7 +996,7 @@ void loop() {
                     </div>
                 </details>
 
-                <h3 class="subhead">HTML Interface for Controlling the LED</h3>
+                <h3 class="subhead" id="t1-html-interface-for-controlling-the-led">HTML Interface for Controlling the LED</h3>
                 <p class="prose">
                     The page is stored in flash as a raw string literal (<code>R"rawliteral(...)"</code>). It has a
                     heading, two buttons (green <strong>ON</strong> and red <strong>OFF</strong>) and a status line.
@@ -865,7 +1004,7 @@ void loop() {
                     so the page always shows the real state.
                 </p>
 
-                <h3 class="subhead">How the Webpage Sends a Command to the ESP32</h3>
+                <h3 class="subhead" id="t1-how-the-webpage-sends-a-command-to-the-esp32">How the Webpage Sends a Command to the ESP32</h3>
                 <ol class="steps">
                     <li><strong>User clicks ON.</strong> The button is a link to <code>/on</code>, so the browser
                         sends <code>GET http://192.168.56.226/on</code>.</li>
@@ -877,21 +1016,21 @@ void loop() {
                         browser shows the new state.</li>
                 </ol>
 
-                <h3 class="subhead">Photographs of the Physical Setup</h3>
+                <h3 class="subhead" id="t1-photographs-of-the-physical-setup">Photographs of the Physical Setup</h3>
                 <div class="photo-grid">
                     <figure class="photo"><img src="assets/iot/images/task1-webpage-led.jpg" alt="ESP32 Light Control page open on the laptop with the ESP32 plugged in" loading="lazy"><figcaption>Control page open next to the ESP32.</figcaption></figure>
                     <figure class="photo"><img src="assets/iot/images/task1-esp32-board.jpg" alt="Close-up of the ESP32 DevKit board" loading="lazy"><figcaption>ESP32 DevKit used for every task.</figcaption></figure>
                     <figure class="photo"><img src="assets/iot/images/task1-testing.jpg" alt="Testing the web server at the lab bench" loading="lazy"><figcaption>Testing at the lab bench.</figcaption></figure>
                 </div>
 
-                <h3 class="subhead">Screenshots of the Web Interface</h3>
+                <h3 class="subhead" id="t1-screenshots-of-the-web-interface">Screenshots of the Web Interface</h3>
                 <div class="photo-grid">
                     <figure class="photo"><img src="assets/iot/images/task1-led-on.jpg" alt="Web interface with the LED switched on" loading="lazy"><figcaption>Web interface at http://192.168.56.226 with the board's LED lit.</figcaption></figure>
                     <figure class="photo"><img src="assets/iot/images/task1-led-off.jpg" alt="Web interface after clicking OFF" loading="lazy"><figcaption>After clicking OFF. The status bar shows the /off request.</figcaption></figure>
                     <figure class="photo"><img src="assets/iot/images/task1-webpage-led-2.jpg" alt="Second view of the control page" loading="lazy"><figcaption>ON / OFF buttons served by the ESP32.</figcaption></figure>
                 </div>
 
-                <h3 class="subhead">Video: LED ON/OFF Control from the Webpage</h3>
+                <h3 class="subhead" id="t1-video-led-on-off-control-from-the-webpage">Video: LED ON/OFF Control from the Webpage</h3>
                 <div class="video-frame">
                     <div class="terminal-bar">
                         <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
@@ -903,7 +1042,7 @@ void loop() {
                     </video>
                 </div>
 
-                <h3 class="subhead">Testing Procedure &amp; Results</h3>
+                <h3 class="subhead" id="t1-testing-procedure-results">Testing Procedure &amp; Results</h3>
                 <p class="prose">
                     How the web server was tested, step by step. <em>Evidence</em> shows which steps the photos and video prove.
                 </p>
@@ -921,7 +1060,7 @@ void loop() {
                     </table>
                 </div>
 
-                <h3 class="subhead">Problems Encountered &amp; Solutions</h3>
+                <h3 class="subhead" id="t1-problems-encountered-solutions">Problems Encountered &amp; Solutions</h3>
                 <div class="problem">
                     <p><b>Problem:</b> The page heading showed garbled characters ("ðŸ'¡") instead of the 💡 emoji.
                         You can see this in the photos.</p>
@@ -936,22 +1075,60 @@ void loop() {
                         same hotspot, and reading the current IP from the Serial Monitor after each reset, fixed it.</p>
                 </div>
 
-                <h3 class="subhead">Real-World Applications</h3>
+                <h3 class="subhead" id="t1-limitations">Limitations</h3>
+                <ul class="project-highlights" style="margin-bottom: 20px;">
+                    <li>Works only on the same Wi-Fi network: there is no access from outside</li>
+                    <li>Plain HTTP with no login: anyone on the network who knows the IP can switch the LED</li>
+                    <li>The IP address can change after a reboot, so it has to be read from Serial Monitor again</li>
+                    <li>The page reloads on every click, and the state isn't pushed to other open browsers</li>
+                </ul>
+                <h3 class="subhead" id="t1-possible-future-improvements">Possible Future Improvements</h3>
+                <ul class="project-highlights" style="margin-bottom: 20px;">
+                    <li>Reserve a fixed IP in the router, or use mDNS (e.g. <code>http://esp32.local</code>)</li>
+                    <li>Send commands with <code>fetch()</code> so the page doesn't reload, and show live state</li>
+                    <li>Add a simple password or token check before acting on <code>/on</code> and <code>/off</code></li>
+                    <li>Move to a cloud path (as in Task 2) for control from anywhere</li>
+                </ul>
+
+                <h3 class="subhead" id="t1-real-world-applications">Real-World Applications</h3>
                 <ul class="project-highlights" style="margin-bottom: 20px;">
                     <li>Router-style configuration pages built into smart plugs, cameras and printers</li>
                     <li>Local control of lab equipment or lighting without needing cloud access</li>
                     <li>Setup pages for new IoT devices before they are connected to the internet</li>
                 </ul>
 
-                <h3 class="subhead">Reflection</h3>
+                <div class="key-points">
+                    <div class="key-points-title">Key Technical Points</div>
+                    <ul>
+                        <li>The ESP32 runs an HTTP server on port 80; each URL route calls a handler</li>
+                        <li><code>/on</code> and <code>/off</code> drive GPIO2 HIGH/LOW</li>
+                        <li><code>&lt;meta charset="UTF-8"&gt;</code> fixed the garbled emoji in the page</li>
+                        <li>Local network only, at <code>192.168.56.226</code> on the lab hotspot</li>
+                    </ul>
+                </div>
+
+                <h3 class="subhead" id="t1-reflection">Reflection</h3>
                 <p class="prose">
                     I learned that an embedded board can be a real network service. The browser just sends normal
                     HTTP requests and the ESP32 decides what each URL does. The encoding bug showed that
                     "small" details like character sets matter once a device serves its own UI.
                 </p>
 
+                <h3 class="subhead" id="t1-source-code-files-repository">Source Code Files &amp; Repository</h3>
+                <p class="prose">
+                    Download a file directly, or open the full task folder on GitHub.
+                </p>
+                <div class="repo-links" style="margin-bottom: 12px;">
+                    <a href="iot-code/task1-web-server-led/task1_web_server_led.ino" download class="ext-link" title="Downloads task1_web_server_led.ino">task1_web_server_led.ino</a>
+                </div>
+
                 <div class="repo-links">
                     <a href="https://github.com/mkarthikaravind1/Personal-Portfolio-Website/tree/main/iot-code/task1-web-server-led" target="_blank" rel="noopener noreferrer" class="assign-link ext-link" title="Opens in a new tab">View Task 1 Code</a>
+                </div>
+
+                <div class="task-pager" role="navigation" aria-label="Task navigation">
+                    <span></span>
+                    <a class="pager-link next" href="#task2">Task 2: Adafruit IO &amp; MQTT →</a>
                 </div>
             </div>
         </div>
@@ -967,16 +1144,49 @@ void loop() {
                 <h2 class="edu-degree" style="margin: 8px 0 10px;">Adafruit IO Dashboard &amp; MQTT</h2>
                 <div class="flow-line">dashboard toggle → publish "relay" → Adafruit IO broker → ESP32 subscriber → relay → bulb</div>
 
-                <h3 class="subhead">Problem Being Addressed</h3>
+                <details class="checklist-box" open>
+                    <summary>Mentor checklist: 19 / 19 items covered <span>(click an item to jump to it)</span></summary>
+                    <ul>
+                        <li><a href="#t2-purpose-of-adafruit-io-in-an-iot-system"><span class="tick">✓</span>Purpose of Adafruit IO in an IoT system</a></li>
+                        <li><a href="#t2-basic-concept-of-mqtt"><span class="tick">✓</span>Basic concept of MQTT</a></li>
+                        <li><a href="#t2-publisher-subscriber-broker-in-this-project"><span class="tick">✓</span>MQTT Publisher, Subscriber, and Broker identified</a></li>
+                        <li><a href="#t2-role-of-an-mqtt-topic-feed"><span class="tick">✓</span>Role of an MQTT Topic/Feed</a></li>
+                        <li><a href="#t2-hardware-software-used"><span class="tick">✓</span>Hardware and software used</a></li>
+                        <li><a href="#t2-adafruit-io-account-feed-dashboard-configuration"><span class="tick">✓</span>Adafruit IO account created and documented</a></li>
+                        <li><a href="#t2-adafruit-io-account-feed-dashboard-configuration"><span class="tick">✓</span>Dashboard and feed configuration documented</a></li>
+                        <li><a href="#t2-communication-flow-between-esp32-mqtt-adafruit-i"><span class="tick">✓</span>Communication flow between ESP32, MQTT, and Adafruit IO</a></li>
+                        <li><a href="#t2-mqtt-settings-used-in-this-project"><span class="tick">✓</span>MQTT topic/feed structure used</a></li>
+                        <li><a href="#t2-complete-esp32-source-code"><span class="tick">✓</span>Complete ESP32 source code</a></li>
+                        <li><a href="#t2-important-code-sections-explained"><span class="tick">✓</span>Explanation of important code sections</a></li>
+                        <li><a href="#t2-photographs-of-the-hardware-setup"><span class="tick">✓</span>Photographs of the hardware setup</a></li>
+                        <li><a href="#t2-adafruit-io-dashboard-led-bulb-control-through-t"><span class="tick">✓</span>Screenshots of the Adafruit IO dashboard</a></li>
+                        <li><a href="#t2-adafruit-io-dashboard-led-bulb-control-through-t"><span class="tick">✓</span>LED control through the cloud dashboard demonstrated</a></li>
+                        <li><a href="#t2-working-demonstration-video"><span class="tick">✓</span>Working demonstration video</a></li>
+                        <li><a href="#t2-problems-encountered-during-mqtt-cloud-setup-sol"><span class="tick">✓</span>Problems encountered during MQTT/cloud setup</a></li>
+                        <li><a href="#t2-problems-encountered-during-mqtt-cloud-setup-sol"><span class="tick">✓</span>Solutions implemented</a></li>
+                        <li><a href="#t2-learning-reflection"><span class="tick">✓</span>Brief learning reflection</a></li>
+                        <li><a href="#t2-source-code-files-repository"><span class="tick">✓</span>All required files available in your repository</a></li>
+                    </ul>
+                </details>
+
+                <h3 class="subhead" id="t2-learning-objectives">Learning Objectives</h3>
+                <ul class="project-highlights" style="margin-bottom: 20px;">
+                    <li>Explain the MQTT publish/subscribe model: publisher, broker, subscriber and topic</li>
+                    <li>Create an Adafruit IO account, feed and dashboard toggle</li>
+                    <li>Subscribe the ESP32 to a cloud feed and switch a 230 V bulb safely through a relay</li>
+                    <li>Keep a long-lived MQTT connection alive and recover from drops</li>
+                </ul>
+
+                <h3 class="subhead" id="t2-problem-being-addressed">Problem Being Addressed</h3>
                 <p class="prose">
                     Task 1 only worked when the browser and the ESP32 were on the same Wi-Fi. To switch the bulb from anywhere, the device needs a cloud service that both the user and the ESP32 can reach, without opening ports on the router.
                 </p>
-                <h3 class="subhead">Project Summary</h3>
+                <h3 class="subhead" id="t2-project-summary">Project Summary</h3>
                 <p class="prose">
                     A <strong>Bulb control</strong> dashboard on Adafruit IO publishes <code>ON</code>/<code>OFF</code> to the <code>relay</code> feed. The ESP32 subscribes to that feed over MQTT and drives a 5 V relay on GPIO23, which switches a 230 V bulb.
                 </p>
 
-                <h3 class="subhead">Purpose of Adafruit IO in an IoT System</h3>
+                <h3 class="subhead" id="t2-purpose-of-adafruit-io-in-an-iot-system">Purpose of Adafruit IO in an IoT System</h3>
                 <p class="prose">
                     Task 1 only worked on the local network. <strong>Adafruit IO</strong> is a cloud IoT platform
                     that removes that limit. It stores device data in <strong>feeds</strong>, has a drag-and-drop
@@ -985,7 +1195,7 @@ void loop() {
                     internet access, and I didn't have to build any server.
                 </p>
 
-                <h3 class="subhead">Basic Concept of MQTT</h3>
+                <h3 class="subhead" id="t2-basic-concept-of-mqtt">Basic Concept of MQTT</h3>
                 <p class="prose">
                     <strong>MQTT</strong> (Message Queuing Telemetry Transport) is a lightweight
                     <strong>publish/subscribe</strong> protocol over TCP, made for low-power devices on unreliable
@@ -995,14 +1205,14 @@ void loop() {
                     messages arrive almost instantly with no polling.
                 </p>
 
-                <h3 class="subhead">Publisher, Subscriber &amp; Broker in this Project</h3>
+                <h3 class="subhead" id="t2-publisher-subscriber-broker-in-this-project">Publisher, Subscriber &amp; Broker in this Project</h3>
                 <div class="concept-grid">
                     <div class="concept"><h4>Publisher</h4><p>The <b>Adafruit IO dashboard toggle</b> publishes <code>ON</code>/<code>OFF</code> to the <code>relay</code> feed.</p></div>
                     <div class="concept"><h4>Broker</h4><p><b>io.adafruit.com:1883</b>. It authenticates clients with the username and AIO key, then forwards each message to the subscribers of that topic.</p></div>
                     <div class="concept"><h4>Subscriber</h4><p>The <b>ESP32</b> subscribes to <code>relay</code> and switches the relay on every message. The dashboard toggle also subscribes, so it always shows the feed's latest value.</p></div>
                 </div>
 
-                <h3 class="subhead">Role of an MQTT Topic / Feed</h3>
+                <h3 class="subhead" id="t2-role-of-an-mqtt-topic-feed">Role of an MQTT Topic / Feed</h3>
                 <p class="prose">
                     A <strong>topic</strong> is the address a message is published to. Adafruit IO calls each topic a
                     <strong>feed</strong> and also keeps a history of its values. Topics use the format
@@ -1014,7 +1224,7 @@ void loop() {
                     <figcaption>Communication flow between the dashboard, the Adafruit IO MQTT broker and the ESP32, with the feed structure used.</figcaption>
                 </figure>
 
-                <h3 class="subhead">MQTT Settings Used in this Project</h3>
+                <h3 class="subhead" id="t2-mqtt-settings-used-in-this-project">MQTT Settings Used in this Project</h3>
                 <div class="table-wrap">
                     <table class="compare-table">
                         <thead><tr><th>Setting</th><th>Value</th><th>Meaning</th></tr></thead>
@@ -1028,14 +1238,14 @@ void loop() {
                         </tbody>
                     </table>
                 </div>
-                <h3 class="subhead">MQTT Quality of Service (QoS) Levels</h3>
+                <h3 class="subhead" id="t2-mqtt-quality-of-service-qos-levels">MQTT Quality of Service (QoS) Levels</h3>
                 <div class="concept-grid">
                     <div class="concept"><h4>QoS 0: At most once</h4><p>Sent once with no acknowledgement. Lowest overhead. A message can be lost if the connection drops. Used here, because the next toggle simply resends the state.</p></div>
                     <div class="concept"><h4>QoS 1: At least once</h4><p>The receiver acknowledges each message (PUBACK) and the sender retries until it does. Delivery is guaranteed, but a message may arrive twice.</p></div>
                     <div class="concept"><h4>QoS 2: Exactly once</h4><p>A four-step handshake makes sure each message arrives once and only once. Most reliable, with the most overhead, e.g. for billing or metering data.</p></div>
                 </div>
 
-                <h3 class="subhead">Hardware &amp; Software Used</h3>
+                <h3 class="subhead" id="t2-hardware-software-used">Hardware &amp; Software Used</h3>
                 <div class="hw-grid">
                     <div class="hw-card"><div class="hw-name">ESP32 DevKit V1</div><div class="hw-role">MQTT client</div></div>
                     <div class="hw-card"><div class="hw-name">5V 1-Channel Relay</div><div class="hw-role">Switches the 230V bulb</div></div>
@@ -1044,7 +1254,7 @@ void loop() {
                     <div class="hw-card"><div class="hw-name">Adafruit IO (free tier)</div><div class="hw-role">Feeds, dashboard, MQTT broker</div></div>
                 </div>
 
-                <h3 class="subhead">Adafruit IO Account, Feed &amp; Dashboard Configuration</h3>
+                <h3 class="subhead" id="t2-adafruit-io-account-feed-dashboard-configuration">Adafruit IO Account, Feed &amp; Dashboard Configuration</h3>
                 <ol class="steps">
                     <li><strong>Create the account.</strong> Sign up at io.adafruit.com with the username
                         <code>Karthik_Aravind_M</code>. The <em>key</em> icon shows the username and the
@@ -1061,7 +1271,7 @@ void loop() {
                     <figure class="photo"><img src="assets/iot/images/task2-adafruit-feeds.png" alt="Adafruit IO Feeds page for Karthik_Aravind_M listing the bulb feed (last value 1) and the relay feed (last value ON)" loading="lazy"><figcaption>My Adafruit IO account (<code>Karthik_Aravind_M</code>) → <b>Feeds</b>: <code>relay</code> (dashboard, last value <code>ON</code>) and <code>bulb</code> (IFTTT, last value <code>1</code>).</figcaption></figure>
                 </div>
 
-                <h3 class="subhead">Communication Flow between ESP32, MQTT &amp; Adafruit IO</h3>
+                <h3 class="subhead" id="t2-communication-flow-between-esp32-mqtt-adafruit-i">Communication Flow between ESP32, MQTT &amp; Adafruit IO</h3>
                 <ol class="steps">
                     <li><strong>Connect.</strong> The ESP32 joins Wi-Fi, opens a TCP connection to the broker on port
                         1883 and logs in with the username and AIO key.</li>
@@ -1074,13 +1284,13 @@ void loop() {
                         toggle shows the same state when the dashboard is reopened.</li>
                 </ol>
 
-                <h3 class="subhead">Wiring &amp; Pin Connections</h3>
+                <h3 class="subhead" id="t2-wiring-pin-connections">Wiring &amp; Pin Connections</h3>
                 <figure class="diagram">
                     <img src="assets/iot/diagrams/relay-wiring.svg" alt="Relay wiring: ESP32 VIN, GND and GPIO23 to the relay; live wire through COM and NO to the bulb" loading="lazy">
                     <figcaption>Relay wiring, also used in Tasks 3 and 4. The relay is active HIGH on GPIO23.</figcaption>
                 </figure>
 
-                <h3 class="subhead">Pin Connection Table</h3>
+                <h3 class="subhead" id="t2-pin-connection-table">Pin Connection Table</h3>
                 <div class="table-wrap">
                     <table class="compare-table">
                         <thead><tr><th>From</th><th>To</th><th>Purpose</th></tr></thead>
@@ -1094,7 +1304,7 @@ void loop() {
                         </tbody>
                     </table>
                 </div>
-                <h3 class="subhead">Relay Module &amp; Libraries</h3>
+                <h3 class="subhead" id="t2-relay-module-libraries">Relay Module &amp; Libraries</h3>
                 <div class="table-wrap">
                     <table class="compare-table">
                         <thead><tr><th>Item</th><th>Details</th></tr></thead>
@@ -1107,7 +1317,7 @@ void loop() {
                     </table>
                 </div>
 
-                <h3 class="subhead">Complete ESP32 Source Code</h3>
+                <h3 class="subhead" id="t2-complete-esp32-source-code">Complete ESP32 Source Code</h3>
                 <details class="code-details" open>
                     <summary>task2_adafruit_mqtt.ino (97 lines): click to hide or show</summary>
                     <div class="code-frame">
@@ -1215,7 +1425,7 @@ void loop() {
                     </div>
                 </details>
 
-                <h3 class="subhead">Important Code Sections Explained</h3>
+                <h3 class="subhead" id="t2-important-code-sections-explained">Important Code Sections Explained</h3>
                 <ul class="project-highlights" style="margin-bottom: 20px;">
                     <li><code>Adafruit_MQTT_Client mqtt(&amp;client, AIO_SERVER, 1883, …)</code> creates an MQTT client over
                         a plain <code>WiFiClient</code> TCP socket, logging in with the Adafruit IO credentials.</li>
@@ -1231,7 +1441,7 @@ void loop() {
                         silent too long.</li>
                 </ul>
 
-                <h3 class="subhead">Photographs of the Hardware Setup</h3>
+                <h3 class="subhead" id="t2-photographs-of-the-hardware-setup">Photographs of the Hardware Setup</h3>
                 <div class="photo-grid">
                     <figure class="photo"><img src="assets/iot/images/task2-hardware-wiring.png" alt="ESP32 wired to a blue relay module, with the relay switching the bulb holder" loading="lazy"><figcaption>Hardware: ESP32 → relay module (GPIO23, 5V, GND) → bulb holder. Bulb OFF.</figcaption></figure>
                     <figure class="photo"><img src="assets/iot/images/task2-bulb-on.png" alt="Bulb lit after the dashboard toggle was switched ON" loading="lazy"><figcaption>Bulb ON after switching the dashboard toggle.</figcaption></figure>
@@ -1240,7 +1450,7 @@ void loop() {
                     <figure class="photo"><img src="assets/iot/images/task2-code-mqtt.jpg" alt="Arduino IDE compiling the MQTT sketch with relay settings" loading="lazy"><figcaption>MQTT server, port 1883 and relay pin 23 being compiled.</figcaption></figure>
                 </div>
 
-                <h3 class="subhead">Adafruit IO Dashboard &amp; LED/Bulb Control through the Cloud</h3>
+                <h3 class="subhead" id="t2-adafruit-io-dashboard-led-bulb-control-through-t">Adafruit IO Dashboard &amp; LED/Bulb Control through the Cloud</h3>
                 <div class="photo-grid wide">
                     <figure class="photo"><img src="assets/iot/images/task2-adafruit-dashboard-off.png" alt="Adafruit IO dashboard Karthik_Aravind_M / Dashboards / Bulb control with the toggle block set to OFF" loading="lazy"><figcaption>My <b>Bulb control</b> dashboard on Adafruit IO (<code>Karthik_Aravind_M</code>): toggle block OFF.</figcaption></figure>
                     <figure class="photo"><img src="assets/iot/images/task2-adafruit-dashboard-on.png" alt="Adafruit IO Bulb control dashboard with the toggle block switched ON" loading="lazy"><figcaption>Same toggle switched ON. This publishes <code>ON</code> to the <code>bulb</code> feed.</figcaption></figure>
@@ -1248,7 +1458,7 @@ void loop() {
                     <figure class="photo"><img src="assets/iot/images/task2-dashboard-bulb-2.jpg" alt="Adafruit IO dashboard toggle and bulb responding" loading="lazy"><figcaption>The toggle state on the dashboard follows the bulb.</figcaption></figure>
                 </div>
 
-                <h3 class="subhead">Working Demonstration Video</h3>
+                <h3 class="subhead" id="t2-working-demonstration-video">Working Demonstration Video</h3>
                 <div class="video-frame">
                     <div class="terminal-bar">
                         <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
@@ -1260,7 +1470,7 @@ void loop() {
                     </video>
                 </div>
 
-                <h3 class="subhead">Testing Procedure &amp; Results</h3>
+                <h3 class="subhead" id="t2-testing-procedure-results">Testing Procedure &amp; Results</h3>
                 <div class="table-wrap">
                     <table class="compare-table">
                         <thead><tr><th>Step</th><th>Action</th><th>Expected result</th><th>Evidence</th></tr></thead>
@@ -1274,7 +1484,7 @@ void loop() {
                     </table>
                 </div>
 
-                <h3 class="subhead">Problems Encountered during MQTT / Cloud Setup &amp; Solutions</h3>
+                <h3 class="subhead" id="t2-problems-encountered-during-mqtt-cloud-setup-sol">Problems Encountered during MQTT / Cloud Setup &amp; Solutions</h3>
                 <div class="problem">
                     <p><b>Problem:</b> The ESP32 connected once, then stopped reacting to the dashboard after a while.</p>
                     <p><b>Solution:</b> Adafruit IO closes MQTT connections that send nothing. I added
@@ -1292,14 +1502,39 @@ void loop() {
                         placeholders, and the AIO key should be regenerated. Real keys should never be committed.</p>
                 </div>
 
-                <h3 class="subhead">Real-World Applications</h3>
+                <h3 class="subhead" id="t2-limitations">Limitations</h3>
+                <ul class="project-highlights" style="margin-bottom: 20px;">
+                    <li>Port 1883 is unencrypted: the AIO key and messages travel in plain text</li>
+                    <li>QoS 0 means a command sent while the ESP32 is reconnecting can be lost</li>
+                    <li>Depends on Adafruit IO's free tier (rate limits, cloud availability)</li>
+                    <li>The ESP32 doesn't confirm the bulb's real state back to the dashboard</li>
+                </ul>
+                <h3 class="subhead" id="t2-possible-future-improvements">Possible Future Improvements</h3>
+                <ul class="project-highlights" style="margin-bottom: 20px;">
+                    <li>Use port 8883 with <code>WiFiClientSecure</code> (TLS)</li>
+                    <li>Publish a status feed after each switch so the dashboard shows the confirmed state</li>
+                    <li>Fetch the feed's last value on reconnect so the bulb matches the dashboard after a reboot</li>
+                    <li>Store Wi-Fi and AIO credentials outside the sketch (e.g. WiFiManager)</li>
+                </ul>
+
+                <h3 class="subhead" id="t2-real-world-applications">Real-World Applications</h3>
                 <ul class="project-highlights" style="margin-bottom: 20px;">
                     <li>Smart plugs and smart switches controlled from a phone app</li>
                     <li>Remote on/off of pumps, fans or lights in farms and warehouses</li>
                     <li>Telemetry dashboards for sensors spread across a building or campus</li>
                 </ul>
 
-                <h3 class="subhead">Learning Reflection</h3>
+                <div class="key-points">
+                    <div class="key-points-title">Key Technical Points</div>
+                    <ul>
+                        <li>Dashboard toggle publishes to <code>Karthik_Aravind_M/feeds/relay</code></li>
+                        <li>Broker <code>io.adafruit.com:1883</code>; ESP32 subscribes with the Adafruit MQTT Library</li>
+                        <li>GPIO23 drives a 5 V relay; the bulb is wired through COM/NO</li>
+                        <li><code>mqtt.ping()</code> keeps the connection alive</li>
+                    </ul>
+                </div>
+
+                <h3 class="subhead" id="t2-learning-reflection">Learning Reflection</h3>
                 <p class="prose">
                     MQTT changed how I think about device communication. In Task 1 the browser had to know the
                     ESP32's IP. Here both sides only know a topic name, and the broker does the routing. The device
@@ -1307,8 +1542,21 @@ void loop() {
                     value, the dashboard toggle always reopens showing the bulb's current command.
                 </p>
 
+                <h3 class="subhead" id="t2-source-code-files-repository">Source Code Files &amp; Repository</h3>
+                <p class="prose">
+                    Download a file directly, or open the full task folder on GitHub.
+                </p>
+                <div class="repo-links" style="margin-bottom: 12px;">
+                    <a href="iot-code/task2-adafruit-mqtt/task2_adafruit_mqtt.ino" download class="ext-link" title="Downloads task2_adafruit_mqtt.ino">task2_adafruit_mqtt.ino</a>
+                </div>
+
                 <div class="repo-links">
                     <a href="https://github.com/mkarthikaravind1/Personal-Portfolio-Website/tree/main/iot-code/task2-adafruit-mqtt" target="_blank" rel="noopener noreferrer" class="assign-link ext-link" title="Opens in a new tab">View Task 2 Code</a>
+                </div>
+
+                <div class="task-pager" role="navigation" aria-label="Task navigation">
+                    <a class="pager-link prev" href="#task1">← Task 1: Web Server &amp; LED</a>
+                    <a class="pager-link next" href="#task3">Task 3: IFTTT Automation →</a>
                 </div>
             </div>
         </div>
@@ -1324,30 +1572,64 @@ void loop() {
                 <h2 class="edu-degree" style="margin: 8px 0 10px;">IFTTT + Adafruit IO IoT Automation</h2>
                 <div class="flow-line">"Okay Google, activate Bulb On" → IFTTT applet → Adafruit IO feed → MQTT → ESP32 → bulb</div>
 
-                <h3 class="subhead">Objective of the IoT Automation</h3>
+                <details class="checklist-box" open>
+                    <summary>Mentor checklist: 20 / 20 items covered <span>(click an item to jump to it)</span></summary>
+                    <ul>
+                        <li><a href="#t3-objective-of-the-iot-automation"><span class="tick">✓</span>Objective of the IoT automation</a></li>
+                        <li><a href="#t3-basic-concept-of-iot-automation"><span class="tick">✓</span>Basic concept of IoT automation</a></li>
+                        <li><a href="#t3-what-is-ifttt-and-why-use-it"><span class="tick">✓</span>What IFTTT is and why it is used</a></li>
+                        <li><a href="#t3-trigger-action-concept"><span class="tick">✓</span>Trigger → Action concept explained</a></li>
+                        <li><a href="#t3-trigger-action-concept"><span class="tick">✓</span>Role of Adafruit IO in the automation</a></li>
+                        <li><a href="#t3-hardware-software-used"><span class="tick">✓</span>Hardware and software used</a></li>
+                        <li><a href="#t3-ifttt-applet-workflow"><span class="tick">✓</span>IFTTT Applet/workflow created and documented</a></li>
+                        <li><a href="#t3-ifttt-applet-workflow"><span class="tick">✓</span>Trigger used identified</a></li>
+                        <li><a href="#t3-ifttt-applet-workflow"><span class="tick">✓</span>Action performed identified</a></li>
+                        <li><a href="#t3-how-the-trigger-reaches-the-iot-system"><span class="tick">✓</span>How the trigger reaches the IoT system</a></li>
+                        <li><a href="#t3-how-the-trigger-reaches-the-iot-system"><span class="tick">✓</span>Communication/data-flow diagram</a></li>
+                        <li><a href="#t3-esp32-source-code"><span class="tick">✓</span>ESP32 source code</a></li>
+                        <li><a href="#t3-ifttt-applet-workflow"><span class="tick">✓</span>Screenshots of the IFTTT configuration</a></li>
+                        <li><a href="#t3-ifttt-trigger-adafruit-io-feed-in-action"><span class="tick">✓</span>Screenshots of the Adafruit IO dashboard/feed</a></li>
+                        <li><a href="#t3-photographs-of-the-working-prototype"><span class="tick">✓</span>Photographs of the working prototype</a></li>
+                        <li><a href="#t3-video-the-complete-automation"><span class="tick">✓</span>Video demonstrating the complete automation</a></li>
+                        <li><a href="#t3-automation-tested-under-different-conditions"><span class="tick">✓</span>Automation tested under different conditions</a></li>
+                        <li><a href="#t3-problems-solutions"><span class="tick">✓</span>Problems and their solutions documented</a></li>
+                        <li><a href="#t3-what-i-learned-about-cloud-based-automation"><span class="tick">✓</span>What you learned about cloud-based automation</a></li>
+                        <li><a href="#t3-reflection"><span class="tick">✓</span>Brief reflection on the assignment</a></li>
+                    </ul>
+                </details>
+
+                <h3 class="subhead" id="t3-learning-objectives">Learning Objectives</h3>
+                <ul class="project-highlights" style="margin-bottom: 20px;">
+                    <li>Explain trigger → action automation and where IFTTT fits</li>
+                    <li>Build an IFTTT applet linking Google Assistant to an Adafruit IO feed</li>
+                    <li>Reuse the Task 2 hardware so voice and dashboard control the same bulb</li>
+                    <li>Test the automation under different conditions</li>
+                </ul>
+
+                <h3 class="subhead" id="t3-objective-of-the-iot-automation">Objective of the IoT Automation</h3>
                 <p class="prose">
                     Switch the bulb with a <strong>voice command from a phone</strong>, without writing any server
                     code. IFTTT connects Google Assistant to Adafruit IO, and the ESP32 from Task 2 receives the
                     result over MQTT.
                 </p>
 
-                <h3 class="subhead">Problem Being Addressed</h3>
+                <h3 class="subhead" id="t3-problem-being-addressed">Problem Being Addressed</h3>
                 <p class="prose">
                     Switching the bulb still needed someone to open a dashboard. The goal was hands-free control by voice, using the existing ESP32 and relay, without writing a backend or exposing the ESP32 to the internet.
                 </p>
-                <h3 class="subhead">Project Summary</h3>
+                <h3 class="subhead" id="t3-project-summary">Project Summary</h3>
                 <p class="prose">
                     Saying <em>"Okay Google, activate Bulb On"</em> triggers an IFTTT applet that writes <code>1</code> to the Adafruit IO <code>bulb</code> feed. The ESP32, subscribed to that feed over MQTT, switches the relay on GPIO23. It also still follows the Task 2 <code>relay</code> feed.
                 </p>
 
-                <h3 class="subhead">Basic Concept of IoT Automation</h3>
+                <h3 class="subhead" id="t3-basic-concept-of-iot-automation">Basic Concept of IoT Automation</h3>
                 <p class="prose">
                     IoT automation means a device acts on its own when an <strong>event</strong> happens, instead of
                     someone operating it directly. The event can be a voice command, a time of day, a location or a
                     sensor reading. Cloud automation services watch for these events and send commands to devices.
                 </p>
 
-                <h3 class="subhead">What is IFTTT and Why Use It?</h3>
+                <h3 class="subhead" id="t3-what-is-ifttt-and-why-use-it">What is IFTTT and Why Use It?</h3>
                 <p class="prose">
                     <strong>IFTTT</strong> ("If This Then That") is a no-code automation service that links hundreds
                     of apps and devices with small rules called <strong>applets</strong>. It already integrates with
@@ -1355,14 +1637,14 @@ void loop() {
                     no custom backend, no public IP for the ESP32, and no changes to the Task 2 hardware.
                 </p>
 
-                <h3 class="subhead">Trigger → Action Concept</h3>
+                <h3 class="subhead" id="t3-trigger-action-concept">Trigger → Action Concept</h3>
                 <div class="concept-grid">
                     <div class="concept"><h4>Trigger ("If This")</h4><p>The event IFTTT watches for. Here: <b>Google Assistant: activate scene "Bulb On"</b>, said on the phone.</p></div>
                     <div class="concept"><h4>Action ("Then That")</h4><p>What IFTTT does when the trigger fires. Here: <b>Adafruit: send data to Adafruit IO</b>, which writes <code>1</code> into the <code>bulb</code> feed.</p></div>
                     <div class="concept"><h4>Role of Adafruit IO</h4><p>The bridge between IFTTT and the device. IFTTT can't reach an ESP32 on a hotspot, but it can write to a feed. Adafruit IO then pushes that value to the ESP32 over MQTT.</p></div>
                 </div>
 
-                <h3 class="subhead">Hardware &amp; Software Used</h3>
+                <h3 class="subhead" id="t3-hardware-software-used">Hardware &amp; Software Used</h3>
                 <div class="hw-grid">
                     <div class="hw-card"><div class="hw-name">ESP32 + Relay + Bulb</div><div class="hw-role">Same hardware as Task 2 (GPIO23)</div></div>
                     <div class="hw-card"><div class="hw-name">Android Phone</div><div class="hw-role">Google Assistant + IFTTT app</div></div>
@@ -1370,7 +1652,7 @@ void loop() {
                     <div class="hw-card"><div class="hw-name">Adafruit IO</div><div class="hw-role">Feed <code>bulb</code> + MQTT broker</div></div>
                 </div>
 
-                <h3 class="subhead">IFTTT Applet / Workflow</h3>
+                <h3 class="subhead" id="t3-ifttt-applet-workflow">IFTTT Applet / Workflow</h3>
                 <div class="table-wrap">
                     <table class="compare-table">
                         <thead><tr><th>Applet</th><th>Trigger (If This)</th><th>Action (Then That)</th><th>Feed → Value</th></tr></thead>
@@ -1391,7 +1673,7 @@ void loop() {
                     <figure class="photo"><img src="assets/iot/images/task3-ifttt-trigger-action.png" alt="IFTTT applet editor: If Google Assistant Activate scene, Then Send data to Adafruit IO, Karthik Aravind M" loading="lazy"><figcaption>Applet configuration. <b>If</b>: Google Assistant → <em>Activate scene</em>. <b>Then</b>: Adafruit → <em>Send data to Adafruit IO</em> (account Karthik Aravind M).</figcaption></figure>
                 </div>
 
-                <h3 class="subhead">How the Trigger Reaches the IoT System</h3>
+                <h3 class="subhead" id="t3-how-the-trigger-reaches-the-iot-system">How the Trigger Reaches the IoT System</h3>
                 <figure class="diagram">
                     <img src="assets/iot/diagrams/task3-flow.svg" alt="Data flow: voice command to Google Assistant to IFTTT applet to Adafruit IO feed to ESP32 to bulb" loading="lazy">
                     <figcaption>Communication and data flow from the spoken command to the bulb.</figcaption>
@@ -1404,12 +1686,12 @@ void loop() {
                     needed</strong>.
                 </p>
 
-                <h3 class="subhead">Pin Connections &amp; Libraries</h3>
+                <h3 class="subhead" id="t3-pin-connections-libraries">Pin Connections &amp; Libraries</h3>
                 <p class="prose">
                     The hardware is unchanged from Task 2: relay IN on <b>GPIO23</b>, VCC on <b>VIN (5 V)</b>, GND on <b>GND</b>, bulb wired through <b>COM/NO</b>. The sketch uses the same <b>Adafruit MQTT Library</b>, now subscribed to two feeds: <code>bulb</code> (IFTTT) and <code>relay</code> (dashboard).
                 </p>
 
-                <h3 class="subhead">ESP32 Source Code</h3>
+                <h3 class="subhead" id="t3-esp32-source-code">ESP32 Source Code</h3>
                 <details class="code-details" open>
                     <summary>task3_ifttt_adafruit.ino (110 lines): click to hide or show</summary>
                     <div class="code-frame">
@@ -1530,20 +1812,20 @@ void loop() {
                     </div>
                 </details>
 
-                <h3 class="subhead">IFTTT Trigger &amp; Adafruit IO Feed in Action</h3>
+                <h3 class="subhead" id="t3-ifttt-trigger-adafruit-io-feed-in-action">IFTTT Trigger &amp; Adafruit IO Feed in Action</h3>
                 <div class="photo-grid wide">
                     <figure class="photo"><img src="assets/iot/images/task3-trigger-phone.jpg" alt="Triggering the applet from the phone with the Adafruit IO feed open on the laptop" loading="lazy"><figcaption>Firing the trigger from the phone. The Adafruit IO feed page is open on the laptop.</figcaption></figure>
                     <figure class="photo"><img src="assets/iot/images/task3-bulb-on.jpg" alt="Bulb turned on after the voice trigger" loading="lazy"><figcaption>The bulb switches on after the applet writes <code>1</code> to the feed.</figcaption></figure>
                     <figure class="photo"><img src="assets/iot/images/task2-adafruit-feeds.png" alt="Adafruit IO Feeds page showing the bulb feed with last value 1 and the relay feed with last value ON" loading="lazy"><figcaption>Adafruit IO <b>Feeds</b>: the <code>bulb</code> feed holds <code>1</code>, the value written by the IFTTT applet. The ESP32 subscribes to this feed.</figcaption></figure>
                 </div>
 
-                <h3 class="subhead">Photographs of the Working Prototype</h3>
+                <h3 class="subhead" id="t3-photographs-of-the-working-prototype">Photographs of the Working Prototype</h3>
                 <div class="photo-grid">
                     <figure class="photo"><img src="assets/iot/images/task3-bulb-on-2.jpg" alt="Prototype with bulb on, phone in hand" loading="lazy"><figcaption>Prototype responding to the phone trigger.</figcaption></figure>
                     <figure class="photo"><img src="assets/iot/images/task3-setup.jpg" alt="Bench setup with the bulb and laptop" loading="lazy"><figcaption>Bench setup: ESP32, relay and bulb.</figcaption></figure>
                 </div>
 
-                <h3 class="subhead">Video: the Complete Automation</h3>
+                <h3 class="subhead" id="t3-video-the-complete-automation">Video: the Complete Automation</h3>
                 <div class="video-frame">
                     <div class="terminal-bar">
                         <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
@@ -1555,7 +1837,7 @@ void loop() {
                     </video>
                 </div>
 
-                <h3 class="subhead">Automation Tested under Different Conditions</h3>
+                <h3 class="subhead" id="t3-automation-tested-under-different-conditions">Automation Tested under Different Conditions</h3>
                 <p class="prose">
                     Test conditions for the automation, the expected behaviour in each case, and the part of the
                     system that handles it. The <em>Evidence</em> column says which case the demo video shows.
@@ -1576,7 +1858,7 @@ void loop() {
                     </table>
                 </div>
 
-                <h3 class="subhead">Problems &amp; Solutions</h3>
+                <h3 class="subhead" id="t3-problems-solutions">Problems &amp; Solutions</h3>
                 <div class="problem">
                     <p><b>Problem:</b> There was a delay of a few seconds between speaking and the bulb switching.</p>
                     <p><b>Solution:</b> The MQTT path itself is instant. The delay comes from IFTTT processing the
@@ -1597,29 +1879,68 @@ void loop() {
                         accepts <code>ON/1/TRUE</code> and <code>OFF/0/FALSE</code>.</p>
                 </div>
 
-                <h3 class="subhead">Real-World Applications</h3>
+                <h3 class="subhead" id="t3-limitations">Limitations</h3>
+                <ul class="project-highlights" style="margin-bottom: 20px;">
+                    <li>A few seconds of delay, set by how fast IFTTT runs the applet</li>
+                    <li>Relies on three cloud services (Google, IFTTT, Adafruit IO); if any is down, voice control stops</li>
+                    <li>The free IFTTT plan limits applets and credits</li>
+                    <li>Voice phrases must match the scene names exactly</li>
+                </ul>
+                <h3 class="subhead" id="t3-possible-future-improvements">Possible Future Improvements</h3>
+                <ul class="project-highlights" style="margin-bottom: 20px;">
+                    <li>Add a second route such as an Alexa or Home Assistant integration</li>
+                    <li>Use scheduled or location-based triggers (sunset, arriving home) as well as voice</li>
+                    <li>Send a notification back to the phone confirming the bulb's state</li>
+                    <li>Group several devices into one scene ("good night" turns everything off)</li>
+                </ul>
+
+                <h3 class="subhead" id="t3-real-world-applications">Real-World Applications</h3>
                 <ul class="project-highlights" style="margin-bottom: 20px;">
                     <li>Voice-controlled lights and appliances in smart homes</li>
                     <li>Routines such as "turn the porch light on at sunset" or "when I leave home"</li>
                     <li>Hands-free control for elderly or mobility-impaired users</li>
                 </ul>
 
-                <h3 class="subhead">What I Learned about Cloud-Based Automation</h3>
+                <div class="key-points">
+                    <div class="key-points-title">Key Technical Points</div>
+                    <ul>
+                        <li>Trigger: Google Assistant scene "Bulb On" / "Bulb Off"</li>
+                        <li>Action: IFTTT writes <code>1</code>/<code>0</code> to the <code>bulb</code> feed</li>
+                        <li>The ESP32 listens to both <code>bulb</code> (voice) and <code>relay</code> (dashboard)</li>
+                        <li>No port forwarding: the ESP32 only makes outgoing connections</li>
+                    </ul>
+                </div>
+
+                <h3 class="subhead" id="t3-what-i-learned-about-cloud-based-automation">What I Learned about Cloud-Based Automation</h3>
                 <p class="prose">
                     Cloud automation is mostly about <strong>connecting services</strong>, not writing code. The
                     firmware hardly changed from Task 2. What changed was who publishes to the feed. Each extra
                     service makes things easier to build, but also adds some delay and another account that can fail.
                 </p>
 
-                <h3 class="subhead">Reflection</h3>
+                <h3 class="subhead" id="t3-reflection">Reflection</h3>
                 <p class="prose">
                     The key idea was separating the trigger from the device. Because the ESP32 listens to a feed and
                     not to a particular sender, any source (a dashboard, a voice assistant, a schedule) can control
                     it with no firmware changes.
                 </p>
 
+                <h3 class="subhead" id="t3-source-code-files-repository">Source Code Files &amp; Repository</h3>
+                <p class="prose">
+                    Download a file directly, or open the full task folder on GitHub.
+                </p>
+                <div class="repo-links" style="margin-bottom: 12px;">
+                    <a href="iot-code/task3-ifttt-adafruit/task3_ifttt_adafruit.ino" download class="ext-link" title="Downloads task3_ifttt_adafruit.ino">task3_ifttt_adafruit.ino</a>
+                    <a href="iot-code/task3-ifttt-adafruit/ifttt_applets.md" download class="ext-link" title="Downloads ifttt_applets.md">ifttt_applets.md</a>
+                </div>
+
                 <div class="repo-links">
                     <a href="https://github.com/mkarthikaravind1/Personal-Portfolio-Website/tree/main/iot-code/task3-ifttt-adafruit" target="_blank" rel="noopener noreferrer" class="assign-link ext-link" title="Opens in a new tab">View Task 3 Code &amp; Applet Config</a>
+                </div>
+
+                <div class="task-pager" role="navigation" aria-label="Task navigation">
+                    <a class="pager-link prev" href="#task2">← Task 2: Adafruit IO &amp; MQTT</a>
+                    <a class="pager-link next" href="#task4">Task 4: Firebase Dashboard →</a>
                 </div>
             </div>
         </div>
@@ -1635,32 +1956,66 @@ void loop() {
                 <h2 class="edu-degree" style="margin: 8px 0 10px;">Firebase IoT Monitoring Dashboard</h2>
                 <div class="flow-line">login → Firebase Auth → dashboard → Firestore control/device → ESP32 → relay → bulb</div>
 
-                <h3 class="subhead">Objective of the Firebase IoT Monitoring System</h3>
+                <details class="checklist-box" open>
+                    <summary>Mentor checklist: 20 / 20 items covered <span>(click an item to jump to it)</span></summary>
+                    <ul>
+                        <li><a href="#t4-objective-of-the-firebase-iot-monitoring-system"><span class="tick">✓</span>Objective of the Firebase IoT monitoring system</a></li>
+                        <li><a href="#t4-cloud-computing"><span class="tick">✓</span>Basic concept of Cloud Computing</a></li>
+                        <li><a href="#t4-iaas-paas-saas-baas"><span class="tick">✓</span>IaaS, PaaS, SaaS, and BaaS explained</a></li>
+                        <li><a href="#t4-what-is-a-cloud-platform"><span class="tick">✓</span>What a Cloud Platform is</a></li>
+                        <li><a href="#t4-what-is-a-database"><span class="tick">✓</span>What a Database is</a></li>
+                        <li><a href="#t4-firebase-database-realtime-database-cloud-firest"><span class="tick">✓</span>Firebase Realtime Database explained</a></li>
+                        <li><a href="#t4-what-is-a-cloud-based-dashboard"><span class="tick">✓</span>What a Cloud-Based Dashboard is</a></li>
+                        <li><a href="#t4-authentication-the-purpose-of-a-login-system"><span class="tick">✓</span>Authentication and the purpose of a login system</a></li>
+                        <li><a href="#t4-authentication-vs-authorization"><span class="tick">✓</span>Difference between Authentication and Authorization</a></li>
+                        <li><a href="#t4-firebase-project-setup"><span class="tick">✓</span>Firebase project setup documented</a></li>
+                        <li><a href="#t4-firebase-authentication-configuration"><span class="tick">✓</span>Firebase Authentication configuration documented</a></li>
+                        <li><a href="#t4-database-structure"><span class="tick">✓</span>Realtime Database structure documented</a></li>
+                        <li><a href="#t4-database-data-flow-architecture"><span class="tick">✓</span>Database/data-flow architecture</a></li>
+                        <li><a href="#t4-complete-dashboard-source-code"><span class="tick">✓</span>Complete dashboard source code</a></li>
+                        <li><a href="#t4-login-page"><span class="tick">✓</span>Screenshots of the login page</a></li>
+                        <li><a href="#t4-database-structure"><span class="tick">✓</span>Screenshots of the Firebase database</a></li>
+                        <li><a href="#t4-working-dashboard"><span class="tick">✓</span>Screenshots of the working dashboard</a></li>
+                        <li><a href="#t4-video-webpage-workflow"><span class="tick">✓</span>Video demonstrating webpage workflow</a></li>
+                        <li><a href="#t4-problems-encountered-solutions"><span class="tick">✓</span>Problems encountered and their solutions</a></li>
+                        <li><a href="#t4-reflection"><span class="tick">✓</span>Brief reflection on the assignment</a></li>
+                    </ul>
+                </details>
+
+                <h3 class="subhead" id="t4-learning-objectives">Learning Objectives</h3>
+                <ul class="project-highlights" style="margin-bottom: 20px;">
+                    <li>Explain cloud computing, the IaaS/PaaS/SaaS/BaaS models, and databases</li>
+                    <li>Set up a Firebase project with Hosting, Authentication and Cloud Firestore</li>
+                    <li>Build a login-protected dashboard and protect data with security rules</li>
+                    <li>Connect the ESP32 so dashboard commands reach the relay and its state is reported back</li>
+                </ul>
+
+                <h3 class="subhead" id="t4-objective-of-the-firebase-iot-monitoring-system">Objective of the Firebase IoT Monitoring System</h3>
                 <p class="prose">
                     Build my own <strong>cloud dashboard with a login</strong>, hosted at
                     <code>iot-dashboard-karthik.web.app</code>. Only signed-in users can see readings or switch the
                     bulb. Commands and readings go through a Firebase database instead of a third-party dashboard.
                 </p>
 
-                <h3 class="subhead">Problem Being Addressed</h3>
+                <h3 class="subhead" id="t4-problem-being-addressed">Problem Being Addressed</h3>
                 <p class="prose">
                     Third-party dashboards are quick to set up, but the data and the access control belong to someone else. A self-built dashboard needs a database, a login system and hosting, and running servers for those is a lot of work for one prototype.
                 </p>
-                <h3 class="subhead">Project Summary</h3>
+                <h3 class="subhead" id="t4-project-summary">Project Summary</h3>
                 <p class="prose">
                     A Firebase project provides <strong>Hosting</strong> (the website), <strong>Authentication</strong> (email/password and Google sign-in) and <strong>Cloud Firestore</strong> (the data). The dashboard writes commands to <code>control/device</code>. The ESP32 reads them, switches the relay on GPIO23 and reports its state to <code>sensors/current</code>.
                 </p>
 
                 <div class="part-head">Concepts</div>
 
-                <h3 class="subhead">Cloud Computing</h3>
+                <h3 class="subhead" id="t4-cloud-computing">Cloud Computing</h3>
                 <p class="prose">
                     <strong>Cloud computing</strong> means using computing resources (servers, storage, databases,
                     software) over the internet, when you need them, and paying for what you use, instead of owning
                     and running the hardware yourself. The provider handles uptime, scaling and maintenance.
                 </p>
 
-                <h3 class="subhead">IaaS, PaaS, SaaS &amp; BaaS</h3>
+                <h3 class="subhead" id="t4-iaas-paas-saas-baas">IaaS, PaaS, SaaS &amp; BaaS</h3>
                 <div class="concept-grid">
                     <div class="concept"><h4>IaaS: Infrastructure as a Service</h4><p>Rented virtual machines, storage and networks. You manage the OS and everything above it. <em>e.g. AWS EC2, Google Compute Engine.</em></p></div>
                     <div class="concept"><h4>PaaS: Platform as a Service</h4><p>A managed runtime. You deploy code and the platform runs it and scales it. <em>e.g. Heroku, Google App Engine.</em></p></div>
@@ -1672,14 +2027,14 @@ void loop() {
                     <figcaption>Who manages each layer in each service model.</figcaption>
                 </figure>
 
-                <h3 class="subhead">What is a Cloud Platform?</h3>
+                <h3 class="subhead" id="t4-what-is-a-cloud-platform">What is a Cloud Platform?</h3>
                 <p class="prose">
                     A <strong>cloud platform</strong> is a provider's full set of services under one account and
                     console, for example Google Cloud, AWS or Azure. Firebase runs on Google Cloud. One Firebase
                     project gave me Hosting, Authentication and Cloud Firestore, all linked together.
                 </p>
 
-                <h3 class="subhead">What is a Database?</h3>
+                <h3 class="subhead" id="t4-what-is-a-database">What is a Database?</h3>
                 <p class="prose">
                     A <strong>database</strong> is an organised store of data that can be searched and updated
                     efficiently and shared safely by many users. <em>Relational</em> databases (MySQL) use tables with
@@ -1687,7 +2042,7 @@ void loop() {
                     readings well, because different devices can send different fields.
                 </p>
 
-                <h3 class="subhead">Firebase Database (Realtime Database &amp; Cloud Firestore)</h3>
+                <h3 class="subhead" id="t4-firebase-database-realtime-database-cloud-firest">Firebase Database (Realtime Database &amp; Cloud Firestore)</h3>
                 <p class="prose">
                     Firebase offers two NoSQL databases. The <strong>Realtime Database</strong> stores everything as
                     one big JSON tree and syncs changes to connected clients in milliseconds.
@@ -1698,14 +2053,14 @@ void loop() {
                     "newest 50 entries sorted by timestamp".
                 </p>
 
-                <h3 class="subhead">What is a Cloud-Based Dashboard?</h3>
+                <h3 class="subhead" id="t4-what-is-a-cloud-based-dashboard">What is a Cloud-Based Dashboard?</h3>
                 <p class="prose">
                     A web page, hosted online, that shows live device data and sends commands. It works from any
                     browser and needs no installation. Because it reads from the cloud database and not from the
                     device, it keeps working when the user and the device are on different networks.
                 </p>
 
-                <h3 class="subhead">Authentication &amp; the Purpose of a Login System</h3>
+                <h3 class="subhead" id="t4-authentication-the-purpose-of-a-login-system">Authentication &amp; the Purpose of a Login System</h3>
                 <p class="prose">
                     <strong>Authentication</strong> proves who a user is. Without a login, anyone who found the URL
                     could switch someone's appliances. Firebase Authentication checks the email/password (or Google
@@ -1713,7 +2068,7 @@ void loop() {
                     that token. The ESP32 signs in with its own device account in the same way.
                 </p>
 
-                <h3 class="subhead">Authentication vs Authorization</h3>
+                <h3 class="subhead" id="t4-authentication-vs-authorization">Authentication vs Authorization</h3>
                 <div class="table-wrap">
                     <table class="compare-table">
                         <thead><tr><th></th><th>Authentication</th><th>Authorization</th></tr></thead>
@@ -1732,7 +2087,7 @@ void loop() {
 
                 <div class="part-head">Implementation</div>
 
-                <h3 class="subhead">Firebase Project Setup</h3>
+                <h3 class="subhead" id="t4-firebase-project-setup">Firebase Project Setup</h3>
                 <ol class="steps">
                     <li><strong>Create the project.</strong> In the Firebase console, add a project named <em>IoT Dashboard</em> (ID <code>iot-dashboard-karthik</code>) on the free Spark plan.</li>
                     <li><strong>Register a web app</strong> (<em>IoT Dashboard Web</em>) and copy its config into <code>firebase-config.js</code>.</li>
@@ -1746,7 +2101,7 @@ void loop() {
                     <figure class="photo"><img src="assets/iot/images/task4-firebase-init.jpg" alt="Firebase CLI running firebase init auth" loading="lazy"><figcaption><code>firebase init auth</code> in the CLI, setting up Google Sign-In.</figcaption></figure>
                 </div>
 
-                <h3 class="subhead">Firebase Authentication Configuration</h3>
+                <h3 class="subhead" id="t4-firebase-authentication-configuration">Firebase Authentication Configuration</h3>
                 <ol class="steps">
                     <li><strong>Enable providers.</strong> In Authentication → Sign-in method, turn on <em>Email/Password</em> and <em>Google</em>.</li>
                     <li><strong>Add users.</strong> Users sign up from the login page ("Create Account" or "Continue with Google"), or are added in the console with <em>Add user</em>.</li>
@@ -1758,7 +2113,7 @@ void loop() {
                     <figure class="photo"><img src="assets/iot/images/task4-auth-users.png" alt="Firebase Authentication Users tab listing three users: one Google account and two email/password accounts with created and signed-in dates" loading="lazy"><figcaption><b>Users</b>: 3 registered accounts, one signed in with Google and two with email/password, with their created and last-signed-in dates.</figcaption></figure>
                 </div>
 
-                <h3 class="subhead">Database Structure</h3>
+                <h3 class="subhead" id="t4-database-structure">Database Structure</h3>
                 <figure class="diagram">
                     <img src="assets/iot/diagrams/task5-database.svg" alt="Firestore structure: control/device, sensors/current and readings collection with their fields" loading="lazy">
                     <figcaption>Firestore collections. Task 4 uses <code>control</code> and <code>sensors</code>. Task 5 adds <code>readings</code>.</figcaption>
@@ -1768,13 +2123,41 @@ void loop() {
                     <figure class="photo"><img src="assets/iot/images/task4-firestore-sensors.png" alt="Firestore sensors/current document with temperature, humidity, ldr and more" loading="lazy"><figcaption><code>sensors/current</code>: latest values reported by the ESP32.</figcaption></figure>
                 </div>
 
-                <h3 class="subhead">Database / Data-Flow Architecture</h3>
+                <h3 class="subhead" id="t4-database-data-flow-architecture">Database / Data-Flow Architecture</h3>
                 <figure class="diagram">
                     <img src="assets/iot/diagrams/task4-architecture.svg" alt="Architecture: browser loads pages from Firebase Hosting, signs in with Firebase Auth, writes control/device and listens to sensors/current; ESP32 reads control and writes sensors" loading="lazy">
                     <figcaption>The dashboard and the ESP32 never talk directly. Firestore sits between them.</figcaption>
                 </figure>
 
-                <h3 class="subhead">Software, Libraries &amp; Tools</h3>
+                <h3 class="subhead" id="t4-sensors-bulb-control-on-the-dashboard">Sensors &amp; Bulb Control on the Dashboard</h3>
+                <p class="prose">
+                    The dashboard's four cards show live values from the <code>sensors/current</code> document, and the bulb button writes to <code>control/device</code>:
+                </p>
+                <div class="table-wrap">
+                    <table class="compare-table">
+                        <thead><tr><th>Dashboard item</th><th>Source</th><th>Hardware</th></tr></thead>
+                        <tbody>
+                            <tr><td>Temperature</td><td><code>sensors/current.temperature</code></td><td>DHT11 DATA → GPIO4 (10 kΩ pull-up)</td></tr>
+                            <tr><td>Humidity</td><td><code>sensors/current.humidity</code></td><td>DHT11 (same sensor)</td></tr>
+                            <tr><td>Ambient Light</td><td><code>sensors/current.ldr</code></td><td>LDR module AO → GPIO34 (ADC1)</td></tr>
+                            <tr><td>Bulb Status</td><td><code>sensors/current.bulbState</code></td><td>Relay IN → GPIO23</td></tr>
+                            <tr><td>Turn ON / Turn OFF button</td><td>writes <code>control/device.bulbState</code></td><td>ESP32 reads it and switches GPIO23</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h3 class="subhead" id="t4-communication-flow-esp32-firebase-dashboard">Communication Flow: ESP32 ↔ Firebase ↔ Dashboard</h3>
+                <ol class="steps">
+                    <li><strong>Sign in.</strong> The user logs in on <code>login.html</code>; the ESP32 signs in with its own device account.</li>
+                    <li><strong>Sensor data up.</strong> The ESP32 reads the DHT11 and LDR and writes them to <code>sensors/current</code>.</li>
+                    <li><strong>Live display.</strong> The dashboard's <code>onSnapshot</code> listener updates the cards as soon as the document changes.</li>
+                    <li><strong>Command down.</strong> Clicking <em>Turn ON</em> writes <code>bulbState: true</code> to <code>control/device</code>.</li>
+                    <li><strong>Act and confirm.</strong> The ESP32 reads the command, switches the relay on GPIO23, and reports the new <code>bulbState</code> back to <code>sensors/current</code>.</li>
+                </ol>
+                <p class="prose">
+                    The full sensor wiring, pin table and reading code are documented in <a href="#task5">Task 5</a>, which builds on this dashboard.
+                </p>
+
+                <h3 class="subhead" id="t4-software-libraries-tools">Software, Libraries &amp; Tools</h3>
                 <div class="table-wrap">
                     <table class="compare-table">
                         <thead><tr><th>Item</th><th>Role</th></tr></thead>
@@ -1787,12 +2170,12 @@ void loop() {
                         </tbody>
                     </table>
                 </div>
-                <h3 class="subhead">Pin Connections</h3>
+                <h3 class="subhead" id="t4-pin-connections">Pin Connections</h3>
                 <p class="prose">
                     Same relay circuit as Task 2: relay IN on <b>GPIO23</b>, VCC on <b>VIN (5 V)</b>, GND on <b>GND</b>, bulb through <b>COM/NO</b>.
                 </p>
 
-                <h3 class="subhead">Complete Dashboard Source Code</h3>
+                <h3 class="subhead" id="t4-complete-dashboard-source-code">Complete Dashboard Source Code</h3>
                 <details class="code-details" open>
                     <summary>login.html (34 lines): click to hide or show</summary>
                     <div class="code-frame">
@@ -2206,21 +2589,21 @@ void loop() {
                 </details>
                 <p class="prose">The stylesheet (<code>css/style.css</code>) and <code>firebase.json</code> are in the repository.</p>
 
-                <h3 class="subhead">Login Page</h3>
+                <h3 class="subhead" id="t4-login-page">Login Page</h3>
                 <div class="photo-grid wide">
                     <figure class="photo"><img src="assets/iot/images/task4-login.png" alt="Login page with email, password, Login and Continue with Google buttons" loading="lazy"><figcaption>Login page at <code>/login.html</code>: email/password, Google sign-in and Create Account.</figcaption></figure>
                     <figure class="photo"><img src="assets/iot/images/task4-google-signin.png" alt="Continue with Google opens the Google account chooser for iot-dashboard-karthik.firebaseapp.com" loading="lazy"><figcaption>"Continue with Google" opens Google's account chooser for <code>iot-dashboard-karthik.firebaseapp.com</code>.</figcaption></figure>
                     <figure class="photo"><img src="assets/iot/images/task4-console-auth.png" alt="Browser console showing Logged in user and Bulb command true" loading="lazy"><figcaption>DevTools console: the signed-in user and a bulb command being sent.</figcaption></figure>
                 </div>
 
-                <h3 class="subhead">Working Dashboard</h3>
+                <h3 class="subhead" id="t4-working-dashboard">Working Dashboard</h3>
                 <div class="photo-grid wide">
                     <figure class="photo"><img src="assets/iot/images/task4-dashboard.jpg" alt="IoT Dashboard showing temperature 24 C, humidity 52 percent, bulb control and mode" loading="lazy"><figcaption>Dashboard after login: live cards, bulb control and operating mode.</figcaption></figure>
                     <figure class="photo"><img src="assets/iot/images/task4-demo.jpg" alt="Controlling the bulb from the Firebase dashboard" loading="lazy"><figcaption>Switching the bulb from the dashboard.</figcaption></figure>
                     <figure class="photo"><img src="assets/iot/images/task4-building.jpg" alt="Wiring the prototype for the Firebase dashboard" loading="lazy"><figcaption>Wiring the hardware for the dashboard.</figcaption></figure>
                 </div>
 
-                <h3 class="subhead">Video: Webpage Workflow</h3>
+                <h3 class="subhead" id="t4-video-webpage-workflow">Video: Webpage Workflow</h3>
                 <div class="video-frame">
                     <div class="terminal-bar">
                         <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
@@ -2232,7 +2615,7 @@ void loop() {
                     </video>
                 </div>
 
-                <h3 class="subhead">Problems Encountered &amp; Solutions</h3>
+                <h3 class="subhead" id="t4-problems-encountered-solutions">Problems Encountered &amp; Solutions</h3>
                 <div class="problem">
                     <p><b>Problem:</b> The Firebase CLI printed <code>Assertion failed: !(handle-&gt;flags &amp; UV_HANDLE_CLOSING)</code> on Windows.</p>
                     <p><b>Solution:</b> This is a known Node.js/libuv message on Windows terminals that appears after a
@@ -2251,14 +2634,39 @@ void loop() {
                     <p><b>Solution:</b> Added the hosting domain under Authentication → Settings → Authorized domains.</p>
                 </div>
 
-                <h3 class="subhead">Real-World Applications</h3>
+                <h3 class="subhead" id="t4-limitations">Limitations</h3>
+                <ul class="project-highlights" style="margin-bottom: 20px;">
+                    <li>The ESP32 polls Firestore every 2 s, so commands take up to 2 s and use read quota</li>
+                    <li>Every signed-in user can control the device: there are no roles</li>
+                    <li>Depends on internet access: no local fallback if the cloud is unreachable</li>
+                    <li>The Spark free plan has daily read/write limits</li>
+                </ul>
+                <h3 class="subhead" id="t4-possible-future-improvements">Possible Future Improvements</h3>
+                <ul class="project-highlights" style="margin-bottom: 20px;">
+                    <li>Use a real-time listener or MQTT bridge instead of polling</li>
+                    <li>Add roles with custom claims (admin vs viewer) in the security rules</li>
+                    <li>Support several devices per user, each with its own control document</li>
+                    <li>Add App Check to block requests that don't come from the real app</li>
+                </ul>
+
+                <h3 class="subhead" id="t4-real-world-applications">Real-World Applications</h3>
                 <ul class="project-highlights" style="margin-bottom: 20px;">
                     <li>Login-protected control panels for smart homes and offices</li>
                     <li>Facility dashboards where only authorised staff can switch equipment</li>
                     <li>A template for any device that needs secure remote control plus live status</li>
                 </ul>
 
-                <h3 class="subhead">Reflection</h3>
+                <div class="key-points">
+                    <div class="key-points-title">Key Technical Points</div>
+                    <ul>
+                        <li>Firebase Hosting + Authentication (email/password, Google) + Cloud Firestore</li>
+                        <li>Dashboard writes <code>control/device</code>; ESP32 reports <code>sensors/current</code></li>
+                        <li>Security rules require <code>request.auth</code> on every read and write</li>
+                        <li>Live at <code>iot-dashboard-karthik.web.app</code></li>
+                    </ul>
+                </div>
+
+                <h3 class="subhead" id="t4-reflection">Reflection</h3>
                 <p class="prose">
                     This was the first task where I built the whole stack myself: front end, authentication, database
                     rules and device firmware. Using BaaS meant I wrote no server code, but I still had to think
@@ -2266,9 +2674,27 @@ void loop() {
                     and who is allowed to do it.
                 </p>
 
+                <h3 class="subhead" id="t4-source-code-files-repository">Source Code Files &amp; Repository</h3>
+                <p class="prose">
+                    Download a file directly, or open the full task folder on GitHub.
+                </p>
+                <div class="repo-links" style="margin-bottom: 12px;">
+                    <a href="iot-code/task4-firebase-dashboard/firmware/task4_firebase_dashboard.ino" download class="ext-link" title="Downloads task4_firebase_dashboard.ino">task4_firebase_dashboard.ino</a>
+                    <a href="iot-code/task4-firebase-dashboard/web/login.html" download class="ext-link" title="Downloads login.html">login.html</a>
+                    <a href="iot-code/task4-firebase-dashboard/web/dashboard.html" download class="ext-link" title="Downloads dashboard.html">dashboard.html</a>
+                    <a href="iot-code/task4-firebase-dashboard/web/js/auth.js" download class="ext-link" title="Downloads auth.js">auth.js</a>
+                    <a href="iot-code/task4-firebase-dashboard/web/js/dashboard.js" download class="ext-link" title="Downloads dashboard.js">dashboard.js</a>
+                    <a href="iot-code/task4-firebase-dashboard/firestore.rules" download class="ext-link" title="Downloads firestore.rules">firestore.rules</a>
+                </div>
+
                 <div class="repo-links">
                     <a href="https://github.com/mkarthikaravind1/Personal-Portfolio-Website/tree/main/iot-code/task4-firebase-dashboard" target="_blank" rel="noopener noreferrer" class="assign-link ext-link" title="Opens in a new tab">View Task 4 Code</a>
                     <a href="https://iot-dashboard-karthik.web.app/login.html" target="_blank" rel="noopener noreferrer" class="assign-link ext-link" title="Opens in a new tab">Open Live Dashboard</a>
+                </div>
+
+                <div class="task-pager" role="navigation" aria-label="Task navigation">
+                    <a class="pager-link prev" href="#task3">← Task 3: IFTTT Automation</a>
+                    <a class="pager-link next" href="#task5">Task 5: Logging &amp; Export →</a>
                 </div>
             </div>
         </div>
@@ -2284,7 +2710,49 @@ void loop() {
                 <h2 class="edu-degree" style="margin: 8px 0 10px;">Firebase Logging, Automation &amp; Data Export</h2>
                 <div class="flow-line">DHT11 + LDR → ESP32 logic → Firestore (current + readings) → dashboard chart → CSV</div>
 
-                <h3 class="subhead">Objective of the Complete IoT System</h3>
+                <details class="checklist-box" open>
+                    <summary>Mentor checklist: 28 / 28 items covered <span>(click an item to jump to it)</span></summary>
+                    <ul>
+                        <li><a href="#t5-objective-of-the-complete-iot-system"><span class="tick">✓</span>Objective of the complete IoT system</a></li>
+                        <li><a href="#t5-final-system-architecture"><span class="tick">✓</span>Final system architecture documented</a></li>
+                        <li><a href="#t5-dht11-temperature-humidity-monitoring"><span class="tick">✓</span>DHT11 Temperature and Humidity Monitoring demonstrated</a></li>
+                        <li><a href="#t5-ldr-based-light-level-monitoring"><span class="tick">✓</span>LDR-based Light Level Monitoring demonstrated</a></li>
+                        <li><a href="#t5-manual-bulb-control"><span class="tick">✓</span>Manual Bulb Control implemented</a></li>
+                        <li><a href="#t5-automatic-bulb-control-using-the-ldr"><span class="tick">✓</span>Automatic Bulb Control using LDR implemented</a></li>
+                        <li><a href="#t5-manual-automatic-mode"><span class="tick">✓</span>Manual / Automatic Mode implemented and documented</a></li>
+                        <li><a href="#t5-logic-used-for-automatic-lighting"><span class="tick">✓</span>Logic used for automatic lighting explained</a></li>
+                        <li><a href="#t5-ldr-threshold-calibration-method"><span class="tick">✓</span>LDR threshold/calibration method documented</a></li>
+                        <li><a href="#t5-historical-data-logging-in-firebase"><span class="tick">✓</span>Historical data logging in Firebase implemented</a></li>
+                        <li><a href="#t5-database-structure-for-logs-readings"><span class="tick">✓</span>Database structure used for logs documented</a></li>
+                        <li><a href="#t5-firebase-log-data"><span class="tick">✓</span>Timestamped sensor readings recorded</a></li>
+                        <li><a href="#t5-firebase-log-data"><span class="tick">✓</span>Temperature and humidity values recorded</a></li>
+                        <li><a href="#t5-firebase-log-data"><span class="tick">✓</span>LDR/light-level values recorded</a></li>
+                        <li><a href="#t5-firebase-log-data"><span class="tick">✓</span>Bulb status and operating mode recorded</a></li>
+                        <li><a href="#t5-historical-data-displayed-on-the-dashboard"><span class="tick">✓</span>Historical data displayed on the dashboard</a></li>
+                        <li><a href="#t5-graph-chart-for-recorded-sensor-data"><span class="tick">✓</span>Graph/chart for recorded sensor data included</a></li>
+                        <li><a href="#t5-csv-data-download"><span class="tick">✓</span>CSV data download implemented</a></li>
+                        <li><a href="#t5-downloaded-file-contains-the-recorded-data"><span class="tick">✓</span>Downloaded file demonstrated to contain the recorded data</a></li>
+                        <li><a href="#t5-firebase-log-data"><span class="tick">✓</span>Screenshots of the Firebase log data</a></li>
+                        <li><a href="#t5-graph-chart-for-recorded-sensor-data"><span class="tick">✓</span>Screenshots of the dashboard and data visualization</a></li>
+                        <li><a href="#t5-photographs-of-the-complete-prototype"><span class="tick">✓</span>Photographs of the complete prototype</a></li>
+                        <li><a href="#t5-video-the-complete-system"><span class="tick">✓</span>Video demonstrating the complete system</a></li>
+                        <li><a href="#t5-problems-encountered-solutions"><span class="tick">✓</span>Problems encountered and solutions implemented</a></li>
+                        <li><a href="#t5-limitations-of-the-current-prototype"><span class="tick">✓</span>Limitations of the current prototype explained</a></li>
+                        <li><a href="#t5-possible-future-improvements"><span class="tick">✓</span>Possible future improvements suggested</a></li>
+                        <li><a href="#t5-final-learning-reflection"><span class="tick">✓</span>Final learning reflection included</a></li>
+                        <li><a href="#t5-source-code-files-repository"><span class="tick">✓</span>All source code and project files available in the repository</a></li>
+                    </ul>
+                </details>
+
+                <h3 class="subhead" id="t5-learning-objectives">Learning Objectives</h3>
+                <ul class="project-highlights" style="margin-bottom: 20px;">
+                    <li>Read a DHT11 (digital) and an LDR (analog) sensor on the ESP32</li>
+                    <li>Implement manual and automatic lighting with a calibrated threshold and hysteresis</li>
+                    <li>Log timestamped readings to Firestore and show them as a table and charts</li>
+                    <li>Export the recorded data as a CSV file from the dashboard</li>
+                </ul>
+
+                <h3 class="subhead" id="t5-objective-of-the-complete-iot-system">Objective of the Complete IoT System</h3>
                 <p class="prose">
                     A complete smart-room system that <strong>monitors</strong> temperature, humidity and light,
                     <strong>controls</strong> a bulb manually or automatically, <strong>records</strong> a timestamped
@@ -2292,22 +2760,22 @@ void loop() {
                     It builds on the Task 4 dashboard and login.
                 </p>
 
-                <h3 class="subhead">Problem Being Addressed</h3>
+                <h3 class="subhead" id="t5-problem-being-addressed">Problem Being Addressed</h3>
                 <p class="prose">
                     Live readings alone show what is happening now, but not what happened earlier. Lights left on in a bright room also waste energy. The system needed to sense the room, light it automatically, and keep a history that can be reviewed and exported.
                 </p>
-                <h3 class="subhead">Project Summary</h3>
+                <h3 class="subhead" id="t5-project-summary">Project Summary</h3>
                 <p class="prose">
                     An ESP32 reads a DHT11 and an LDR, controls the bulb manually or automatically, updates <code>sensors/current</code> and appends timestamped readings to the <code>readings</code> collection. The dashboard shows the history as a table and three charts, and exports it as CSV.
                 </p>
 
-                <h3 class="subhead">Final System Architecture</h3>
+                <h3 class="subhead" id="t5-final-system-architecture">Final System Architecture</h3>
                 <figure class="diagram">
                     <img src="assets/iot/diagrams/task5-architecture.svg" alt="Three-layer architecture: ESP32 device layer, Firestore cloud layer with control, sensors and readings, and dashboard application layer" loading="lazy">
                     <figcaption>Device, cloud and application layers, with how often each one reads and writes.</figcaption>
                 </figure>
 
-                <h3 class="subhead">Hardware &amp; Wiring</h3>
+                <h3 class="subhead" id="t5-hardware-wiring">Hardware &amp; Wiring</h3>
                 <div class="hw-grid">
                     <div class="hw-card"><div class="hw-name">ESP32 DevKit V1</div><div class="hw-role">Sensing, logic, Firestore client</div></div>
                     <div class="hw-card"><div class="hw-name">DHT11</div><div class="hw-role">Temperature (0–50 °C, ±2 °C) &amp; humidity (20–90 %, ±5 %)</div></div>
@@ -2319,7 +2787,7 @@ void loop() {
                     <figcaption>DHT11 → GPIO4, LDR AO → GPIO34, relay IN → GPIO23.</figcaption>
                 </figure>
 
-                <h3 class="subhead">Pin Connection Table</h3>
+                <h3 class="subhead" id="t5-pin-connection-table">Pin Connection Table</h3>
                 <div class="table-wrap">
                     <table class="compare-table">
                         <thead><tr><th>Component</th><th>Component pin</th><th>ESP32 pin</th><th>Notes</th></tr></thead>
@@ -2334,7 +2802,7 @@ void loop() {
                         </tbody>
                     </table>
                 </div>
-                <h3 class="subhead">Component Specifications &amp; Libraries</h3>
+                <h3 class="subhead" id="t5-component-specifications-libraries">Component Specifications &amp; Libraries</h3>
                 <div class="table-wrap">
                     <table class="compare-table">
                         <thead><tr><th>Item</th><th>Specification</th></tr></thead>
@@ -2348,7 +2816,7 @@ void loop() {
                     </table>
                 </div>
 
-                <h3 class="subhead">DHT11 Temperature &amp; Humidity Monitoring</h3>
+                <h3 class="subhead" id="t5-dht11-temperature-humidity-monitoring">DHT11 Temperature &amp; Humidity Monitoring</h3>
                 <p class="prose">
                     Every 2 s the ESP32 reads the DHT11. If a reading fails, it keeps the last good value (the DHT11
                     sometimes returns <code>NaN</code>). Every 5 s it writes the values to <code>sensors/current</code>.
@@ -2356,7 +2824,7 @@ void loop() {
                     screenshot below they show 24 °C and 52 %.
                 </p>
 
-                <h3 class="subhead">LDR-Based Light Level Monitoring</h3>
+                <h3 class="subhead" id="t5-ldr-based-light-level-monitoring">LDR-Based Light Level Monitoring</h3>
                 <p class="prose">
                     The LDR module's analog output goes to <strong>GPIO34</strong> (an ADC1 pin, because ADC2 can't be
                     used while Wi-Fi is on). With this module, <strong>a lower reading means a darker room</strong>.
@@ -2364,14 +2832,14 @@ void loop() {
                     <em>Ambient Light</em> card.
                 </p>
 
-                <h3 class="subhead">Manual Bulb Control</h3>
+                <h3 class="subhead" id="t5-manual-bulb-control">Manual Bulb Control</h3>
                 <p class="prose">
                     In <strong>Manual</strong> mode, the dashboard's Turn ON / Turn OFF button writes
                     <code>bulbState</code> to <code>control/device</code>. The ESP32 reads it every 2 s and sets the
                     relay to match.
                 </p>
 
-                <h3 class="subhead">Automatic Bulb Control using the LDR</h3>
+                <h3 class="subhead" id="t5-automatic-bulb-control-using-the-ldr">Automatic Bulb Control using the LDR</h3>
                 <p class="prose">
                     In <strong>Automatic</strong> mode the ESP32 ignores the manual command and decides from the light
                     level. The dashboard disables the bulb button so the two modes can't conflict. The threshold is
@@ -2379,7 +2847,7 @@ void loop() {
                     uploading new firmware.
                 </p>
 
-                <h3 class="subhead">Manual / Automatic Mode</h3>
+                <h3 class="subhead" id="t5-manual-automatic-mode">Manual / Automatic Mode</h3>
                 <div class="table-wrap">
                     <table class="compare-table">
                         <thead><tr><th>Mode</th><th>Who controls the bulb</th><th>Firestore value</th><th>Dashboard</th></tr></thead>
@@ -2390,7 +2858,7 @@ void loop() {
                     </table>
                 </div>
 
-                <h3 class="subhead">Logic Used for Automatic Lighting</h3>
+                <h3 class="subhead" id="t5-logic-used-for-automatic-lighting">Logic Used for Automatic Lighting</h3>
                 <figure class="diagram">
                     <img src="assets/iot/diagrams/task5-logic.svg" alt="Flowchart: if automatic and LDR below threshold minus 50 turn bulb on; if above threshold plus 50 turn off; otherwise keep state" loading="lazy">
                     <figcaption>Hysteresis: a ±50 dead band around the threshold stops the relay from chattering.</figcaption>
@@ -2405,7 +2873,7 @@ void loop() {
                     <figure class="photo"><img src="assets/iot/images/task5-serial-auto.png" alt="Serial Monitor showing LDR 305 and 0 with Dark detected Bulb ON" loading="lazy"><figcaption>Readings of 305 and then 0 (sensor covered) both count as dark.</figcaption></figure>
                 </div>
 
-                <h3 class="subhead">LDR Threshold / Calibration Method</h3>
+                <h3 class="subhead" id="t5-ldr-threshold-calibration-method">LDR Threshold / Calibration Method</h3>
                 <ol class="steps">
                     <li><strong>Upload the calibration sketch</strong> (<code>ldr_calibration.ino</code>), which prints the raw value every 250 ms.</li>
                     <li><strong>Measure both extremes.</strong> Note the reading with the room lights on, then with the sensor covered. Covered, it read 0–19.</li>
@@ -2444,7 +2912,7 @@ void loop() {
 
                 <div class="part-head">Data Logging &amp; Export</div>
 
-                <h3 class="subhead">Historical Data Logging in Firebase</h3>
+                <h3 class="subhead" id="t5-historical-data-logging-in-firebase">Historical Data Logging in Firebase</h3>
                 <p class="prose">
                     <code>sensors/current</code> is overwritten every 5 s, so on its own it keeps no history. For
                     logging, the ESP32 also <strong>adds a new document</strong> to the <code>readings</code> collection
@@ -2453,7 +2921,7 @@ void loop() {
                     edited or deleted from a client.
                 </p>
 
-                <h3 class="subhead">Database Structure for Logs (<code>readings</code>)</h3>
+                <h3 class="subhead" id="t5-database-structure-for-logs-readings">Database Structure for Logs (<code>readings</code>)</h3>
                 <div class="table-wrap">
                     <table class="compare-table">
                         <thead><tr><th>Field</th><th>Type</th><th>Records</th></tr></thead>
@@ -2473,14 +2941,14 @@ void loop() {
                     what the system did.
                 </p>
 
-                <h3 class="subhead">Firebase Log Data</h3>
+                <h3 class="subhead" id="t5-firebase-log-data">Firebase Log Data</h3>
                 <div class="photo-grid wide">
                     <figure class="photo"><img src="assets/iot/images/task5-firestore-readings.png" alt="Firestore readings collection with documents sep11_1745 to sep11_1812; sep11_1745 shows bulbState true, humidity 64, ldr 420, mode automatic, temperature 25 and timestamp" loading="lazy"><figcaption><code>readings</code> collection: one document every 3 minutes (<code>sep11_1745</code> → <code>sep11_1812</code>), each with a timestamp, temperature, humidity, LDR, bulb state and mode.</figcaption></figure>
                     <figure class="photo"><img src="assets/iot/images/task5-firestore-sensors.png" alt="Firestore sensors/current with temperature 29.5, humidity 65, ldr 700, mode manual, threshold 500 and timestamp" loading="lazy"><figcaption><code>sensors/current</code>: 29.5 °C, 65 %, LDR 700, mode, threshold and timestamp.</figcaption></figure>
                     <figure class="photo"><img src="assets/iot/images/task5-firestore-auto.png" alt="Firestore control/device in automatic mode with bulbState true" loading="lazy"><figcaption><code>control/device</code> switched to <code>automatic</code>, bulb ON.</figcaption></figure>
                 </div>
 
-                <h3 class="subhead">Historical Data Displayed on the Dashboard</h3>
+                <h3 class="subhead" id="t5-historical-data-displayed-on-the-dashboard">Historical Data Displayed on the Dashboard</h3>
                 <p class="prose">
                     The live dashboard at <code>iot-dashboard-karthik.web.app</code> loads the <code>readings</code>
                     collection from Firestore (<code>orderBy("timestamp", "asc"), limit(50)</code>) after login and
@@ -2491,7 +2959,7 @@ void loop() {
                     <figure class="photo"><img src="assets/iot/images/task5-dashboard-history-table.png" alt="Live dashboard Historical Data table with 10 rows from 11/09/2026 05:45:05 pm to 06:12:53 pm, all automatic mode with bulb ON" loading="lazy"><figcaption>Live dashboard: <b>Historical Data</b> table with all 10 readings from 11 Sep 2026 (5:45:05 PM to 6:12:53 PM).</figcaption></figure>
                 </div>
 
-                <h3 class="subhead">Graph / Chart for Recorded Sensor Data</h3>
+                <h3 class="subhead" id="t5-graph-chart-for-recorded-sensor-data">Graph / Chart for Recorded Sensor Data</h3>
                 <p class="prose">
                     The same readings are plotted with <strong>Chart.js</strong> as three line charts in the
                     dashboard's <strong>Sensor History</strong> section, one each for temperature, humidity and LDR,
@@ -2532,7 +3000,7 @@ void loop() {
                     <a href="iot-code/task5-logging-automation/data/firebase-readings-2026-09-11.xlsx" download class="assign-link ext-link" title="Downloads the Excel file">Readings summary with averages (Excel)</a>
                 </div>
 
-                <h3 class="subhead">CSV Data Download</h3>
+                <h3 class="subhead" id="t5-csv-data-download">CSV Data Download</h3>
                 <p class="prose">
                     The <strong>Download CSV</strong> button queries every document in <code>readings</code>
                     (newest first), builds a CSV file in the browser and downloads it as
@@ -2547,13 +3015,13 @@ void loop() {
 "11/09/2026, 06:12:53 pm",25,65,420,ON,automatic</code></pre>
                 </div>
 
-                <h3 class="subhead">Downloaded File Contains the Recorded Data</h3>
+                <h3 class="subhead" id="t5-downloaded-file-contains-the-recorded-data">Downloaded File Contains the Recorded Data</h3>
                 <div class="photo-grid wide">
                     <figure class="photo"><img src="assets/iot/images/task5-csv-download.png" alt="Browser download panel showing iot-sensor-history.csv, 541 bytes, done, downloaded from the live dashboard" loading="lazy"><figcaption>Clicking <b>Download CSV</b> on the live dashboard: <code>iot-sensor-history.csv</code> (541 B) downloaded.</figcaption></figure>
                     <figure class="photo"><img src="assets/iot/images/task5-csv-excel.png" alt="The downloaded CSV opened in Excel with columns Timestamp, Temperature, Humidity, LDR, Bulb State, Mode and 10 data rows" loading="lazy"><figcaption>The downloaded file opened in Excel: the same 10 readings (newest first) with all six columns.</figcaption></figure>
                 </div>
 
-                <h3 class="subhead">Complete Source Code</h3>
+                <h3 class="subhead" id="t5-complete-source-code">Complete Source Code</h3>
                 <details class="code-details" open>
                     <summary>task5_logging_automation.ino (230 lines): click to hide or show</summary>
                     <div class="code-frame">
@@ -3059,7 +3527,7 @@ $("logoutBtn").addEventListener("click", () =&gt; signOut(auth));</code></pre>
                 </details>
                 <p class="prose">Login, auth, Firebase config, styles and security rules are the same as in Task 4.</p>
 
-                <h3 class="subhead">Photographs of the Complete Prototype</h3>
+                <h3 class="subhead" id="t5-photographs-of-the-complete-prototype">Photographs of the Complete Prototype</h3>
                 <div class="photo-grid">
                     <figure class="photo"><img src="assets/iot/images/task5-prototype.jpg" alt="Complete prototype with bulb, sensors and laptop dashboard" loading="lazy"><figcaption>Complete prototype: ESP32, DHT11, LDR, relay and bulb.</figcaption></figure>
                     <figure class="photo"><img src="assets/iot/images/task5-prototype-2.jpg" alt="Prototype at the bench with dashboard open" loading="lazy"><figcaption>Dashboard open next to the hardware.</figcaption></figure>
@@ -3067,7 +3535,7 @@ $("logoutBtn").addEventListener("click", () =&gt; signOut(auth));</code></pre>
                     <figure class="photo"><img src="assets/iot/images/task5-bulb-auto-2.jpg" alt="Bulb responding to changes in the light level" loading="lazy"><figcaption>The bulb responding as the light level changes.</figcaption></figure>
                 </div>
 
-                <h3 class="subhead">Video: the Complete System</h3>
+                <h3 class="subhead" id="t5-video-the-complete-system">Video: the Complete System</h3>
                 <div class="video-frame">
                     <div class="terminal-bar">
                         <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
@@ -3079,7 +3547,7 @@ $("logoutBtn").addEventListener("click", () =&gt; signOut(auth));</code></pre>
                     </video>
                 </div>
 
-                <h3 class="subhead">Problems Encountered &amp; Solutions</h3>
+                <h3 class="subhead" id="t5-problems-encountered-solutions">Problems Encountered &amp; Solutions</h3>
                 <div class="problem">
                     <p><b>Problem:</b> The relay chattered (clicked on and off quickly) when the light level was close
                         to the threshold.</p>
@@ -3117,7 +3585,7 @@ $("logoutBtn").addEventListener("click", () =&gt; signOut(auth));</code></pre>
                         before it starts logging.</p>
                 </div>
 
-                <h3 class="subhead">Limitations of the Current Prototype</h3>
+                <h3 class="subhead" id="t5-limitations-of-the-current-prototype">Limitations of the Current Prototype</h3>
                 <ul class="project-highlights" style="margin-bottom: 20px;">
                     <li>The ESP32 <strong>polls</strong> Firestore every 2 s, so commands can take up to 2 s, and the
                         reads count against the free-tier quota.</li>
@@ -3130,7 +3598,7 @@ $("logoutBtn").addEventListener("click", () =&gt; signOut(auth));</code></pre>
                         safe for permanent use.</li>
                 </ul>
 
-                <h3 class="subhead">Possible Future Improvements</h3>
+                <h3 class="subhead" id="t5-possible-future-improvements">Possible Future Improvements</h3>
                 <ul class="project-highlights" style="margin-bottom: 20px;">
                     <li>Replace polling with a Firestore stream, or MQTT, for instant commands and fewer reads.</li>
                     <li>Use a DHT22/BME280 and a BH1750 lux sensor for accurate, calibrated readings.</li>
@@ -3140,13 +3608,13 @@ $("logoutBtn").addEventListener("click", () =&gt; signOut(auth));</code></pre>
                     <li>A Cloud Function to delete readings older than 30 days, and a date-range picker for CSV export.</li>
                 </ul>
 
-                <h3 class="subhead">Real-World Applications</h3>
+                <h3 class="subhead" id="t5-real-world-applications">Real-World Applications</h3>
                 <ul class="project-highlights" style="margin-bottom: 20px;">
                     <li>Automatic corridor, street or parking lighting that turns on only when it is dark</li>
                     <li>Indoor climate logging for server rooms, greenhouses and storage areas</li>
                     <li>Energy audits: comparing light usage and room conditions over days or weeks</li>
                 </ul>
-                <h3 class="subhead">Repository Structure</h3>
+                <h3 class="subhead" id="t5-repository-structure">Repository Structure</h3>
                 <p class="prose">
                     All source code is in the <code>iot-code</code> folder of this portfolio's GitHub repository:
                 </p>
@@ -3176,7 +3644,17 @@ $("logoutBtn").addEventListener("click", () =&gt; signOut(auth));</code></pre>
     └── web/  (dashboard.html, js/dashboard.js)</code></pre>
                 </div>
 
-                <h3 class="subhead">Final Learning Reflection</h3>
+                <div class="key-points">
+                    <div class="key-points-title">Key Technical Points</div>
+                    <ul>
+                        <li>DHT11 on GPIO4, LDR on GPIO34 (ADC1), relay on GPIO23</li>
+                        <li>Automatic mode: dark below threshold − 50, bright above threshold + 50</li>
+                        <li>Readings appended to the <code>readings</code> collection every 3 minutes</li>
+                        <li>Dashboard: history table, 3 charts and CSV export</li>
+                    </ul>
+                </div>
+
+                <h3 class="subhead" id="t5-final-learning-reflection">Final Learning Reflection</h3>
                 <p class="prose">
                     Task 5 brought everything together: sensing, local decisions, cloud state, history and a user
                     interface. My main lesson was to keep the <em>live state</em> (<code>sensors/current</code>)
@@ -3186,9 +3664,25 @@ $("logoutBtn").addEventListener("click", () =&gt; signOut(auth));</code></pre>
                     is reliable.
                 </p>
 
+                <h3 class="subhead" id="t5-source-code-files-repository">Source Code Files &amp; Repository</h3>
+                <p class="prose">
+                    Download a file directly, or open the full task folder on GitHub.
+                </p>
+                <div class="repo-links" style="margin-bottom: 12px;">
+                    <a href="iot-code/task5-logging-automation/firmware/task5_logging_automation.ino" download class="ext-link" title="Downloads task5_logging_automation.ino">task5_logging_automation.ino</a>
+                    <a href="iot-code/task5-logging-automation/calibration/ldr_calibration.ino" download class="ext-link" title="Downloads ldr_calibration.ino">ldr_calibration.ino</a>
+                    <a href="iot-code/task5-logging-automation/web/js/dashboard.js" download class="ext-link" title="Downloads dashboard.js">dashboard.js</a>
+                    <a href="iot-code/task5-logging-automation/web/dashboard.html" download class="ext-link" title="Downloads dashboard.html">dashboard.html</a>
+                </div>
+
                 <div class="repo-links">
                     <a href="https://github.com/mkarthikaravind1/Personal-Portfolio-Website/tree/main/iot-code/task5-logging-automation" target="_blank" rel="noopener noreferrer" class="assign-link ext-link" title="Opens in a new tab">View Task 5 Code</a>
                     <a href="https://github.com/mkarthikaravind1/Personal-Portfolio-Website/tree/main/iot-code" target="_blank" rel="noopener noreferrer" class="assign-link ext-link" title="Opens in a new tab">All Project Files</a>
+                </div>
+
+                <div class="task-pager" role="navigation" aria-label="Task navigation">
+                    <a class="pager-link prev" href="#task4">← Task 4: Firebase Dashboard</a>
+                    <a class="pager-link next" href="#compare">Comparison of all tasks →</a>
                 </div>
             </div>
         </div>

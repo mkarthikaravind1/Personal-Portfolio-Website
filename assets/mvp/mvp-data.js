@@ -13,7 +13,7 @@ window.MVP_DATA = {
     eyebrow: 'ProtoSem 1.18 · Team 8 · MVP Project',
     title: 'MVP Project — Multilingual Call Intelligence',
     role: 'Team Visionary: Next Question Engine, end-to-end integration, system design and architecture. Led the team meetings and the MUP reviews.',
-    period: '17 Sep 2026 – 21 Nov 2026',
+    period: '26 Aug 2026 – 21 Nov 2026',
     mentor: 'Gowrishankar S, Forge Innovation & Ventures',
     partner: 'Hive Crest Tech (problem and access)',
     team: 'Karthik Aravind M, Elakiya, Praveen, Sairam, Viswes',
@@ -31,7 +31,7 @@ window.MVP_DATA = {
   stats: [
     { value: '190', label: 'Commits by me', source: 'git shortlog -sne --all: 179 as “mkarthikaravind1” + 11 as “Karthik Aravind M”, all branches. Includes 10 merges. Teammates’ 29 commits are not counted.' },
     { value: '37', label: 'Feature branches', source: 'git for-each-ref refs/heads: my branches, not counting main, pr-*, team/* and one branch that only merges a teammate’s work. One branch per SRD stage, fix or feature.' },
-    { value: '7', label: 'Active weeks', source: 'Weeks with at least one commit by me (git log --all, by ISO week), on 28 separate days between 17 Sep and 21 Nov 2026.' },
+    { value: '7', label: 'Weeks with commits', source: 'Counts only weeks with at least one commit by me (git log --all, by ISO week), on 28 separate days between 17 Sep and 21 Nov 2026.' },
     { value: '85/121', label: 'SRD requirements met', source: 'SRD-STATUS.md on GitHub (main): 121 requirements, 85 met, 27 built and waiting for an access, 9 not met. Each was checked in the code and its tests.' },
     { value: '3,000+', label: 'Automated backend tests', source: 'Review meeting script, 20 Nov 2026 (“over 3,000 backend tests pass”). On 11 Oct the suite was 2,674 tests, all passing (SRD-STATUS.md, row 108).' },
     { value: '2 of 5', label: 'Languages tested end to end', source: 'SRD-STATUS.md row 1: English and Tamil–English replayed for real. Telugu, Kannada and Malayalam are accepted but still need recordings.' }
@@ -47,6 +47,19 @@ window.MVP_DATA = {
 
   /* Dated timeline. "commits" is the number of my commits in that period. */
   timeline: [
+    {
+      week: 'Weeks 5–8 (before the repo)',
+      dates: '26 Aug – 16 Sep 2026',
+      commits: 0,
+      countLabel: 'Before the repo',
+      title: 'Groundwork: questions for the startup, Next Question Engine prototype, system design',
+      points: [
+        '26 Aug 2026: listed the questions to clear with the startup (Hive Crest Tech) before starting.',
+        '6 Sep 2026: built the first Next Question Engine prototype as a FastAPI module (question generator with rules and LLM, question templates, coverage tracking, language strategy, live state, API routes and tests), before the project repository existed.',
+        '14 Sep 2026: drew the system architecture and wrote the project document, with a demo of the question engine’s output.'
+      ],
+      evidence: []
+    },
     {
       week: 'Week 8',
       dates: '17 Sep – 20 Sep 2026',

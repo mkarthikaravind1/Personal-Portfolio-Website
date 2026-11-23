@@ -80,7 +80,7 @@
   fill('mvpTimeline', D.timeline.map((t, i) => {
     const docs = (t.docs || []).map(d =>
       `<a class="ext-link" href="${esc(d.href)}"${linkAttrs(d)}>${esc(d.label)}</a>`).join('');
-    const count = t.commits === 1 ? '1 commit' : `${t.commits} commits`;
+    const count = t.countLabel || (t.commits === 1 ? '1 commit' : `${t.commits} commits`);
     return `
     <li class="mvp-week fade-up">
       <details${i === D.timeline.length - 1 ? ' open' : ''}>

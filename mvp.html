@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MVP Project | Karthik Aravind M</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Syne:wght@700;800&display=swap"
+        rel="stylesheet" />
+
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="assets/mvp/mvp.css" />
+    <meta name="description"
+        content="Karthik Aravind M's record of work on the ProtoSem Team 8 MVP, Multilingual Call Intelligence: a dated timeline, contribution areas, evidence and learnings." />
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+</head>
+
+<body class="mvp-page">
+    <div id="scroll-progress"></div>
+
+    <nav id="navbar">
+        <a class="nav-logo" href="index.html#hero">KAM<span>.</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html#about" class="nav-link">About</a></li>
+            <li><a href="index.html#experience" class="nav-link">Experience</a></li>
+            <li><a href="index.html#protosem" class="nav-link">ProtoSem</a></li>
+            <li><a href="index.html#projects" class="nav-link">Projects</a></li>
+            <li><a href="iot.html" class="nav-link">IoT Works</a></li>
+            <li><a href="mvp.html" class="nav-link active" aria-current="page">MVP Project</a></li>
+            <li><a href="index.html#education" class="nav-link">Education</a></li>
+            <li><a href="index.html#certifications" class="nav-link">Certifications</a></li>
+            <li><a href="index.html#contact" class="nav-cta nav-link">Contact Me</a></li>
+        </ul>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+    </nav>
+
+    <main>
+        <!-- HEADER -->
+        <section id="hero" class="mvp-hero">
+            <div class="hero-glow"></div>
+            <div class="hero-glow-2"></div>
+            <div class="section-inner mvp-hero-inner">
+                <a href="index.html#protosem" class="iot-back-link">← Back to ProtoSem</a>
+                <p class="section-eyebrow" data-mvp="eyebrow"></p>
+                <h1 class="section-title mvp-h1" data-mvp="title"></h1>
+                <dl class="mvp-meta" id="mvpMeta"></dl>
+                <div class="mvp-summary" id="mvpSummary"></div>
+                <div class="hero-actions mvp-actions" id="mvpButtons"></div>
+
+                <h2 class="mvp-visually-hidden">At a glance</h2>
+                <div class="mvp-stats" id="mvpStats"></div>
+
+                <div class="mvp-jump" role="navigation" aria-label="On this page">
+                    <span class="mvp-jump-label">Jump to</span>
+                    <div class="about-chips" id="mvpJump"></div>
+                </div>
+
+                <noscript>
+                    <p class="mvp-noscript">This page needs JavaScript to show its content. The project is on
+                        <a href="https://github.com/mkarthikaravind1/Multilingual-Call-Intelligence">GitHub</a>.</p>
+                </noscript>
+            </div>
+        </section>
+
+        <!-- TIMELINE -->
+        <section id="mvp-timeline" class="mvp-section">
+            <div class="section-inner">
+                <div class="mvp-section-head fade-up">
+                    <div>
+                        <p class="section-eyebrow">Dated record</p>
+                        <h2 class="section-title">Timeline, week by week</h2>
+                        <p class="section-sub">Every week from my first commit to my latest, with what I did and
+                            links to the commits that prove it. Open a week for details.</p>
+                    </div>
+                    <button type="button" class="btn-secondary mvp-expand" id="mvpExpandAll"
+                        aria-controls="mvpTimeline">Expand all</button>
+                </div>
+                <ol class="mvp-timeline" id="mvpTimeline"></ol>
+            </div>
+        </section>
+
+        <!-- CONTRIBUTION AREAS -->
+        <section id="mvp-areas" class="mvp-section mvp-tint">
+            <div class="section-inner">
+                <div class="fade-up">
+                    <p class="section-eyebrow">What I worked on</p>
+                    <h2 class="section-title">Contribution areas</h2>
+                    <p class="section-sub">My work grouped by area, with the key items and the commits behind
+                        them.</p>
+                </div>
+                <div class="mvp-areas" id="mvpAreas"></div>
+            </div>
+        </section>
+
+        <!-- EVIDENCE -->
+        <section id="mvp-evidence" class="mvp-section">
+            <div class="section-inner">
+                <div class="fade-up">
+                    <p class="section-eyebrow">Proof</p>
+                    <h2 class="section-title">Evidence &amp; links</h2>
+                    <p class="section-sub">The product, the code, the documents I prepared and the project's own
+                        status records. Links open in a new tab.</p>
+                </div>
+                <ul class="mvp-links" id="mvpLinks"></ul>
+                <h3 class="mvp-h3">Documents and diagrams</h3>
+                <div class="mvp-gallery" id="mvpGallery"></div>
+            </div>
+        </section>
+
+        <!-- SKILLS & LEARNINGS -->
+        <section id="mvp-skills" class="mvp-section mvp-tint">
+            <div class="section-inner">
+                <div class="fade-up">
+                    <p class="section-eyebrow">Growth</p>
+                    <h2 class="section-title">Skills &amp; learnings</h2>
+                    <p class="section-sub">The technologies I used on the project, and real problems I solved
+                        along the way.</p>
+                </div>
+                <div class="mvp-skills" id="mvpSkills"></div>
+                <h3 class="mvp-h3">Challenges I solved</h3>
+                <div class="mvp-challenges" id="mvpChallenges"></div>
+            </div>
+        </section>
+
+        <!-- REFLECTION -->
+        <section id="mvp-reflection" class="mvp-section">
+            <div class="section-inner">
+                <div class="fade-up">
+                    <p class="section-eyebrow">Looking back</p>
+                    <h2 class="section-title">Reflection</h2>
+                </div>
+                <div class="mvp-reflection fade-up" id="mvpReflection"></div>
+            </div>
+        </section>
+    </main>
+
+    <button id="scroll-top" aria-label="Scroll to top">↑</button>
+
+    <dialog class="mvp-lightbox" id="mvpLightbox" aria-label="Enlarged image">
+        <button type="button" class="mvp-lightbox-close" id="mvpLightboxClose" aria-label="Close">✕</button>
+        <img id="mvpLightboxImg" src="" alt="" />
+        <p id="mvpLightboxCaption"></p>
+    </dialog>
+
+    <script src="assets/mvp/mvp-commits.js"></script>
+    <script src="assets/mvp/mvp-data.js"></script>
+    <script src="assets/mvp/mvp.js"></script>
+</body>
+
+</html>
